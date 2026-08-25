@@ -1,4 +1,20 @@
 import collection from "../collection.config.js";
+import EntryCard from "../components/EntryCard";
+
+const sampleEntries = [
+  {
+    title: "និយាយជាម្ចរដៃទឹកភ្នែកសៃនៅតំបន់សៀមរាប",
+    description: "នេះជាចម្រៀងគ្រូបង្ហាត់ដែលម្តាយ ឬជីដូនជីតា បានច្រៀងឲ្យកូនៗរបស់ពួកគេដេកលក់។ ប្រជាជននៅតំបន់សៀមរាប បានរក្សាទុកចម្រៀងនេះជាមរតកវប្បធម៌។",
+    contributor: "ជំមានស",
+    place: "សៀមរាប"
+  },
+  {
+    title: "Lullaby of the Mekong Riverside",
+    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
+    contributor: "Chandara",
+    place: "Phnom Penh"
+  }
+];
 
 const styles = {
   wrap: {
@@ -72,7 +88,19 @@ export default function Home() {
         <p style={styles.cardValue}>{collection.source}</p>
       </div>
 
-      <p style={styles.count}>entries in the archive: 0 (for now)</p>
+      <p style={styles.count}>entries in the archive: {sampleEntries.length} (for now)</p>
+
+      <section style={{ marginTop: 48 }}>
+        {sampleEntries.map((entry, index) => (
+          <EntryCard
+            key={index}
+            title={entry.title}
+            description={entry.description}
+            contributor={entry.contributor}
+            place={entry.place}
+          />
+        ))}
+      </section>
 
       <footer style={styles.footer}>
         Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
