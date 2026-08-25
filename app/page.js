@@ -13,6 +13,24 @@ const sampleEntries = [
     description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
     contributor: "Chandara",
     place: "Phnom Penh"
+  },
+  {
+    title: "Lullaby of the Mekong Riverside",
+    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
+    contributor: "Chandara",
+    place: "Phnom Penh"
+  },
+  {
+    title: "Lullaby of the Mekong Riverside",
+    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
+    contributor: "Chandara",
+    place: "Phnom Penh"
+  },
+  {
+    title: "Lullaby of the Mekong Riverside",
+    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
+    contributor: "Chandara",
+    place: "Phnom Penh"
   }
 ];
 
