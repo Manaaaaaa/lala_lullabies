@@ -64,7 +64,7 @@ export default function EntryCard({
     },
     cover: {
       width: "100%",
-      height: "5/4",
+      height: "auto",
       objectFit: "cover",
       borderRadius: 8,
       marginBottom: 16,
