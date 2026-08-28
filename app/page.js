@@ -3,18 +3,18 @@ import EntryCard from "../components/EntryCard";
 
 const sampleEntries = [
   {
-    title: "និយាយជាម្ចរដៃទឹកភ្នែកសៃនៅតំបន់សៀមរាប",
-    description: "នេះជាចម្រៀងគ្រូបង្ហាត់ដែលម្តាយ ឬជីដូនជីតា បានច្រៀងឲ្យកូនៗរបស់ពួកគេដេកលក់។ ប្រជាជននៅតំបន់សៀមរាប បានរក្សាទុកចម្រៀងនេះជាមរតកវប្បធម៌។",
-    contributor: "ជំមានស",
-    place: "សៀមរាប",
+    title: "Most used lullaby in Cambodia",
+    description: "នេះជាចម្រៀងគ្រូបង្ហាត់ដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេដេកលក់។",
+    contributor: "អមរា",
+    place: "ពោធិ៍សាត់",
     image: "/images/lullaby-01.jpg",
     audio: "/audio/lullaby-01.mp3"
   },
   {
-    title: "Lullaby of the Mekong Riverside",
-    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
-    contributor: "Chandara",
-    place: "Phnom Penh",
+    title: "មាន់រងាវ",
+    description: "នេះជាចម្រៀងដែលលោកយាយបាន​ច្រៀងឲ្យក្មេងៗដេកលក់ព្រោះមានសំលេងរន្តំចិត្ត។",
+    contributor: "លោកយាយ អ៊ាង",
+    place: "តាកែវ",
     image: "/images/lullaby-02.jpg",
     audio: "/audio/lullaby-02.mp3"
   },
