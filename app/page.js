@@ -4,15 +4,15 @@ import EntryCard from "../components/EntryCard";
 const sampleEntries = [
   {
     title: "Most used lullaby in Cambodia",
-    description: "នេះជាចម្រៀងគ្រូបង្ហាត់ដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេដេកលក់។",
-    contributor: "អមរា",
+    description: "នេះជាចម្រៀងដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេគេងលក់។",
+    contributor: "ថោង អមរា",
     place: "ពោធិ៍សាត់",
     image: "/images/lullaby-01.jpg",
-    audio: "/audio/lullaby-01.mp3"
+    audio: "/audio/lullaby-01.ogg"
   },
   {
     title: "មាន់រងាវ",
-    description: "នេះជាចម្រៀងដែលលោកយាយបាន​ច្រៀងឲ្យក្មេងៗដេកលក់ព្រោះមានសំលេងរន្តំចិត្ត។",
+    description: "នេះជាចម្រៀងដែលលោកយាយបាន​ច្រៀងឲ្យក្មេងៗគេងលក់ព្រោះមានសំលេងរន្តំចិត្ត។",
     contributor: "លោកយាយ អ៊ាង",
     place: "តាកែវ",
     image: "/images/lullaby-02.jpg",
