@@ -6,7 +6,7 @@ const sampleEntries = [
     title: "បំពេរកូន",
     description: "នេះជាចម្រៀងដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេគេងលក់។",
     contributor: "ថោង អមរា",
-    place: "ពោធិ៍សាត់",
+    place: "តាកែវ",
     image: "/images/lullaby-01.jpg",
     audio: "/audio/lullaby-01.ogg"
   },
@@ -20,9 +20,9 @@ const sampleEntries = [
   },
   {
     title: "Grandmother's Evening Melody",
-    description: "An evening lullaby passed down through generations in a rural village near Battambang. Sung by grandmothers to their grandchildren during evening prayers.",
+    description: "An evening lullaby passed down through generations in a rural village near Takeo city. Sung by grandmothers to their grandchildren during evening prayers.",
     contributor: "Sokha",
-    place: "Battambang",
+    place: "Takeo",
     image: "/images/lullaby-03.jpg",
     audio: "/audio/lullaby-03.mp3"
   },
@@ -38,7 +38,7 @@ const sampleEntries = [
     title: "Waterside Lullaby",
     description: "A lullaby from families living along the Mekong River delta. Sung by waterside mothers to children before sleep, carrying the rhythm of water and wind.",
     contributor: "Srey Srey",
-    place: "Kampong Cham",
+    place: "Takeo",
     image: "/images/lullaby-05.jpg",
     audio: "/audio/lullaby-05.mp3"
   }
