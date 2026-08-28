@@ -123,7 +123,7 @@ export default function Home() {
         <p style={styles.cardValue}>{collection.source}</p>
       </div>
 
-      <p style={styles.count}>entries in the archive: {sampleEntries.length} (for now)</p>
+
 
       <section style={styles.section}>
         {sampleEntries.map((entry, index) => (
