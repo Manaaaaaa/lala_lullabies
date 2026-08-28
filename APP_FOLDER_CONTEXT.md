@@ -40,7 +40,7 @@ components/
     - Kicker: "KHMER LIVING ARCHIVE"
     - Title: Collection name ("Localized lullabies")
     - Description: Collection description
-    - Two info cards: "CURATED BY" (Kimsourmana) and "SOURCE" (community recordings)
+    - Two info cards: "CREATED BY" (Kimsourmana) and "SOURCE" (community recordings)
     - Entry count: Shows actual number of audio entries (5) using `sampleEntries.length`
     - Audio entries section: Displays 5 sample lullaby entries as audio cards with cover images and audio players
     - Footer with course/project information
@@ -65,7 +65,7 @@ components/
 const collection = {
   name: "Localized lullabies",
   description: "A living archive of a piece of Khmer culture, built for ICT 340.",
-  curator: "Kimsourmana",
+  creator: "Kimsourmana",
   source: "To be gathered from recording mothers and grandmothers singing lullabies to their children, and from the Khmer community in Cambodia."
 };
 ```

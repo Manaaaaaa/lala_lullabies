@@ -3,7 +3,7 @@ import EntryCard from "../components/EntryCard";
 
 const sampleEntries = [
   {
-    title: "Most used lullaby in Cambodia",
+    title: "បំពេរកូន",
     description: "នេះជាចម្រៀងដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេគេងលក់។",
     contributor: "ថោង អមរា",
     place: "ពោធិ៍សាត់",
@@ -27,15 +27,15 @@ const sampleEntries = [
     audio: "/audio/lullaby-03.mp3"
   },
   {
-    title: "និយាយភ្លើងឆេះ",
-    description: "និយាយដែលមានផ្លើងឆេះផ្នែករបស់ជីតានិងម្តាយជីក។ គ្រឹត្ផង់ជីបានបានការចូរឆ្នោតដោយពួកគេជីតាន។",
-    contributor: "ចន",
-    place: "កំពង់សព្ប",
+    title: "តាក់ទីងណឹងៗ",
+    description: "និយាយពីបងស្រីច្រៀងឲ្យប្អូនៗគេងលក់។",
+    contributor: "ចន្នី",
+    place: "តាកែវ",
     image: "/images/lullaby-04.jpg",
     audio: "/audio/lullaby-04.mp3"
   },
   {
-    title: "River Child's Song",
+    title: "Waterside Lullaby",
     description: "A lullaby from families living along the Mekong River delta. Sung by waterside mothers to children before sleep, carrying the rhythm of water and wind.",
     contributor: "Srey Srey",
     place: "Kampong Cham",
@@ -115,8 +115,8 @@ export default function Home() {
       <p style={styles.description}>{collection.description}</p>
 
       <div style={styles.card}>
-        <p style={styles.cardLabel}>CURATED BY</p>
-        <p style={styles.cardValue}>{collection.curator}</p>
+        <p style={styles.cardLabel}>CREATED BY</p>
+        <p style={styles.cardValue}>{collection.creator}</p>
       </div>
       <div style={styles.card}>
         <p style={styles.cardLabel}>SOURCE</p>
