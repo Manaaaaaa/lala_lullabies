@@ -6,31 +6,41 @@ const sampleEntries = [
     title: "និយាយជាម្ចរដៃទឹកភ្នែកសៃនៅតំបន់សៀមរាប",
     description: "នេះជាចម្រៀងគ្រូបង្ហាត់ដែលម្តាយ ឬជីដូនជីតា បានច្រៀងឲ្យកូនៗរបស់ពួកគេដេកលក់។ ប្រជាជននៅតំបន់សៀមរាប បានរក្សាទុកចម្រៀងនេះជាមរតកវប្បធម៌។",
     contributor: "ជំមានស",
-    place: "សៀមរាប"
+    place: "សៀមរាប",
+    image: "/images/lullaby-01.jpg",
+    audio: "/audio/lullaby-01.mp3"
   },
   {
     title: "Lullaby of the Mekong Riverside",
     description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
     contributor: "Chandara",
-    place: "Phnom Penh"
+    place: "Phnom Penh",
+    image: "/images/lullaby-02.jpg",
+    audio: "/audio/lullaby-02.mp3"
   },
   {
-    title: "Lullaby of the Mekong Riverside",
-    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
-    contributor: "Chandara",
-    place: "Phnom Penh"
+    title: "Grandmother's Evening Melody",
+    description: "An evening lullaby passed down through generations in a rural village near Battambang. Sung by grandmothers to their grandchildren during evening prayers.",
+    contributor: "Sokha",
+    place: "Battambang",
+    image: "/images/lullaby-03.jpg",
+    audio: "/audio/lullaby-03.mp3"
   },
   {
-    title: "Lullaby of the Mekong Riverside",
-    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
-    contributor: "Chandara",
-    place: "Phnom Penh"
+    title: "និយាយភ្លើងឆេះ",
+    description: "និយាយដែលមានផ្លើងឆេះផ្នែករបស់ជីតានិងម្តាយជីក។ គ្រឹត្ផង់ជីបានបានការចូរឆ្នោតដោយពួកគេជីតាន។",
+    contributor: "ចន",
+    place: "កំពង់សព្ប",
+    image: "/images/lullaby-04.jpg",
+    audio: "/audio/lullaby-04.mp3"
   },
   {
-    title: "Lullaby of the Mekong Riverside",
-    description: "A gentle lullaby shared by a family living along the Mekong River in Phnom Penh. The song has been passed down through three generations of mothers singing to their children at bedtime.",
-    contributor: "Chandara",
-    place: "Phnom Penh"
+    title: "River Child's Song",
+    description: "A lullaby from families living along the Mekong River delta. Sung by waterside mothers to children before sleep, carrying the rhythm of water and wind.",
+    contributor: "Srey Srey",
+    place: "Kampong Cham",
+    image: "/images/lullaby-05.jpg",
+    audio: "/audio/lullaby-05.mp3"
   }
 ];
 
@@ -88,6 +98,13 @@ const styles = {
     fontSize: 13,
     color: "#5A6373",
   },
+  section: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 24,
+    justifyContent: "center",
+    marginTop: 48,
+  },
 };
 
 export default function Home() {
@@ -108,7 +125,7 @@ export default function Home() {
 
       <p style={styles.count}>entries in the archive: {sampleEntries.length} (for now)</p>
 
-      <section style={{ marginTop: 48 }}>
+      <section style={styles.section}>
         {sampleEntries.map((entry, index) => (
           <EntryCard
             key={index}
@@ -116,6 +133,8 @@ export default function Home() {
             description={entry.description}
             contributor={entry.contributor}
             place={entry.place}
+            image={entry.image}
+            audio={entry.audio}
           />
         ))}
       </section>

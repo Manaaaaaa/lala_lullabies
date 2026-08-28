@@ -1,4 +1,4 @@
-export default function EntryCard({ title, description, contributor, place }) {
+export default function EntryCard({ title, description, contributor, place, image, audio }) {
   const styles = {
     card: {
       padding: "24px",
@@ -38,10 +38,22 @@ export default function EntryCard({ title, description, contributor, place }) {
       fontSize: 14,
       color: "#E8EDF2",
     },
+    cover: {
+      width: "100%",
+      height: "auto",
+      objectFit: "cover",
+      borderRadius: 8,
+      marginBottom: 16,
+    },
   };
 
   return (
     <article style={styles.card}>
+      <img
+        src={image}
+        alt={title}
+        style={styles.cover}
+      />
       <h2 style={styles.title}>{title}</h2>
       <p style={styles.description}>
         {description || "No description currently available."}
@@ -56,6 +68,7 @@ export default function EntryCard({ title, description, contributor, place }) {
           <span style={styles.metaValue}>{place}</span>
         </p>
       </div>
+      <audio controls src={audio} />
     </article>
   );
 }
