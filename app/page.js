@@ -19,9 +19,9 @@ const sampleEntries = [
     audio: "/audio/lullaby-02.mp3"
   },
   {
-    title: "Grandmother's Evening Melody",
-    description: "An evening lullaby passed down through generations in a rural village near Takeo city. Sung by grandmothers to their grandchildren during evening prayers.",
-    contributor: "Sokha",
+    title: "ពេលមេឃស្រទុំ",
+    description: "ជាបទដែលមានអត្ថន័យក្រៀមក្រោះ បង្កប់ដោយមនោសញ្ចេតនាជ្រាលជ្រៅ ដែលពោរពេញដោយការស្រណោះស្រទន់",
+    contributor: "គន្ធា",
     place: "Takeo",
     image: "/images/lullaby-03.jpg",
     audio: "/audio/lullaby-03.mp3"
@@ -35,9 +35,9 @@ const sampleEntries = [
     audio: "/audio/lullaby-04.mp3"
   },
   {
-    title: "Waterside Lullaby",
-    description: "A lullaby from families living along the Mekong River delta. Sung by waterside mothers to children before sleep, carrying the rhythm of water and wind.",
-    contributor: "Srey Srey",
+    title: "ស្រណោះម្ដាយថ្នម",
+    description: "ជាបទដែលមានអត្ថន័យបង្កប់ដោយមនោសញ្ចេតនាជ្រាលជ្រៅពីម្តាយស្រឡាញ់មើលថែរកូនពីតូចដល់ពេញវ័យរៀបការ ដែលម្ដាយច្រៀងឲ្យកូនៗគេងលក់។",
+    contributor: "ខាត់ សុឃីម",
     place: "Takeo",
     image: "/images/lullaby-05.jpg",
     audio: "/audio/lullaby-05.mp3"
