@@ -1,0 +1,198 @@
+/* ===================================================================
+   Night sky background — cinematic deep-night UI
+
+   Layered radial / linear gradients build the sky, the diagonal
+   Milky Way band, the muted horizon glow, the atmospheric haze,
+   and a soft vignette. Stars are placed in NightSky.js as a
+   constellation of small divs; their cross-flare is drawn here.
+   =================================================================== */
+
+.night-sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #04060f;
+  background-image:
+    /* warm muted-magenta / pink glow directly behind the mountain ridge */
+    radial-gradient(
+      ellipse 60% 18% at 50% 92%,
+      rgba(176, 88, 120, 0.22) 0%,
+      rgba(140, 70, 110, 0.12) 30%,
+      rgba(80, 50, 90, 0.04) 55%,
+      transparent 75%
+    ),
+    /* dark blue-to-purple atmospheric gradient near the horizon */
+    linear-gradient(
+      to top,
+      #0a0a1f 0%,
+      #0d0d24 15%,
+      #0f1235 35%,
+      #0a0e2a 55%,
+      #060818 100%
+    ),
+    /* rich cobalt / sapphire toward mid sky */
+    radial-gradient(
+      ellipse 120% 80% at 50% 40%,
+      #0c1a45 0%,
+      #08122e 40%,
+      #050818 80%,
+      #02030a 100%
+    );
+}
+
+/* Diagonal Milky Way-like band: upper-right → center-left.
+   Two crossed elongated radials blend icy blue / muted violet / lavender. */
+.milky-way-band {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background-image:
+    radial-gradient(
+      ellipse 70% 18% at 70% 25%,
+      rgba(200, 210, 255, 0.18) 0%,
+      rgba(160, 175, 220, 0.10) 25%,
+      rgba(120, 130, 200, 0.04) 50%,
+      transparent 75%
+    ),
+    radial-gradient(
+      ellipse 60% 12% at 55% 30%,
+      rgba(180, 160, 220, 0.12) 0%,
+      rgba(140, 130, 195, 0.06) 35%,
+      transparent 65%
+    );
+  transform: rotate(-22deg);
+  transform-origin: 70% 30%;
+  filter: blur(2px);
+}
+
+/* Small pinpoint stars: the dominant population. */
+.star {
+  position: absolute;
+  width: 1.5px;
+  height: 1.5px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 1.5px rgba(255, 255, 255, 0.9);
+  opacity: 0.7;
+}
+
+/* Larger stars with a four-point / cross-shaped luminous flare.
+   Drawn with two thin, perpendicular stretched boxes centered on the dot. */
+.star-flare {
+  width: 3px;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  opacity: 1;
+  box-shadow:
+    0 0 4px 1px rgba(255, 255, 255, 0.95),
+    0 0 10px 2px rgba(200, 220, 255, 0.55);
+}
+
+.star-flare::before,
+.star-flare::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.star-flare::before {
+  width: 22px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.star-flare::after {
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.85) 50%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%);
+}
+
+/* Mountain silhouette. The clip-path defines a centered rounded peak
+   with low rolling slopes extending to both sides. A subtle gradient
+   gives deep-navy tonal variation instead of flat black. */
+.mountain {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    #060818 0%,
+    #070a1a 40%,
+    #04060f 100%
+  );
+  clip-path: polygon(
+    0% 100%,
+    0% 78%,
+    6% 74%,
+    12% 70%,
+    18% 72%,
+    24% 68%,
+    30% 60%,
+    36% 50%,
+    42% 40%,
+    48% 28%,
+    50% 18%,
+    52% 28%,
+    58% 40%,
+    64% 50%,
+    70% 58%,
+    76% 66%,
+    82% 72%,
+    88% 74%,
+    94% 76%,
+    100% 78%,
+    100% 100%
+  );
+}
+
+/* Faint atmospheric blue haze separating the mountain from the sky. */
+.mountain::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(80, 110, 180, 0.18) 0%,
+    transparent 100%
+  );
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Soft cinematic vignette around the edges. */
+.night-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 110% 90% at 50% 55%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.35) 90%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}

@@ -1,148 +1,180 @@
+import Link from "next/link";
 import collection from "../collection.config.js";
-import EntryCard from "../components/EntryCard";
+import RecordingCard from "../components/RecordingCard";
+import "./home.css";
 
-const sampleEntries = [
+const featuredRecordings = [
   {
     title: "បំពេរកូន",
-    description: "នេះជាចម្រៀងដែលប្រជាជនខ្មែរ បានច្រៀងឲ្យកូនៗរបស់ពួកគេគេងលក់។",
+    description:
+      "Traditional lullaby sung by mothers in Takeo province to soothe their children to sleep.",
     contributor: "ថោង អមរា",
-    place: "តាកែវ",
+    place: "Takeo",
     image: "/images/lullaby-01.jpg",
-    audio: "/audio/lullaby-01.ogg"
+    audio: "/audio/lullaby-01.ogg",
+    duration: "3:24",
+    year: "2024",
   },
   {
     title: "មាន់រងាវ",
-    description: "នេះជាចម្រៀងដែលលោកយាយបាន​ច្រៀងឲ្យក្មេងៗគេងលក់ព្រោះមានសំលេងរន្តំចិត្ត។",
+    description:
+      "Gentle melody from grandmother អ៊ាង, known for its calming rhythm that quiets restless children.",
     contributor: "លោកយាយ អ៊ាង",
-    place: "តាកែវ",
+    place: "Takeo",
     image: "/images/lullaby-02.jpg",
-    audio: "/audio/lullaby-02.mp3"
+    audio: "/audio/lullaby-02.mp3",
+    duration: "2:58",
+    year: "2023",
   },
   {
     title: "ពេលមេឃស្រទុំ",
-    description: "ជាបទដែលមានអត្ថន័យក្រៀមក្រោះ បង្កប់ដោយមនោសញ្ចេតនាជ្រាលជ្រៅ ដែលពោរពេញដោយការស្រណោះស្រទន់",
+    description:
+      "A melancholic tune expressing deep longing and tenderness, filled with heartfelt emotion.",
     contributor: "គន្ធា",
     place: "Takeo",
     image: "/images/lullaby-03.jpg",
-    audio: "/audio/lullaby-03.mp3"
+    audio: "/audio/lullaby-03.mp3",
+    duration: "4:12",
+    year: "2024",
   },
-  {
-    title: "តាក់ទីងណឹងៗ",
-    description: "និយាយពីបងស្រីច្រៀងឲ្យប្អូនៗគេងលក់។",
-    contributor: "ចន្នី",
-    place: "តាកែវ",
-    image: "/images/lullaby-04.jpg",
-    audio: "/audio/lullaby-04.mp3"
-  },
-  {
-    title: "ស្រណោះម្ដាយថ្នម",
-    description: "ជាបទដែលមានអត្ថន័យបង្កប់ដោយមនោសញ្ចេតនាជ្រាលជ្រៅពីម្តាយស្រឡាញ់មើលថែរកូនពីតូចដល់ពេញវ័យរៀបការ ដែលម្ដាយច្រៀងឲ្យកូនៗគេងលក់។",
-    contributor: "ខាត់ សុឃីម",
-    place: "Takeo",
-    image: "/images/lullaby-05.jpg",
-    audio: "/audio/lullaby-05.mp3"
-  }
 ];
 
-const styles = {
-  wrap: {
-    maxWidth: 720,
-    margin: "0 auto",
-    padding: "80px 24px",
-  },
-  kicker: {
-    fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 700,
-    margin: "16px 0 12px",
-    lineHeight: 1.1,
-  },
-  description: {
-    fontSize: 18,
-    color: "#97A1B3",
-    lineHeight: 1.6,
-    margin: 0,
-  },
-  card: {
-    marginTop: 48,
-    padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
-    borderRadius: 10,
-  },
-  cardLabel: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 12,
-    color: "#97A1B3",
-    margin: 0,
-  },
-  cardValue: {
-    fontSize: 16,
-    margin: "6px 0 0",
-  },
-  count: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    color: "#2EE6A8",
-    marginTop: 48,
-  },
-  footer: {
-    marginTop: 64,
-    paddingTop: 24,
-    borderTop: "1px solid #2E3644",
-    fontSize: 13,
-    color: "#5A6373",
-  },
-  section: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 24,
-    justifyContent: "center",
-    marginTop: 48,
-  },
-};
-
 export default function Home() {
+  const styles = {
+    wrap: {
+      maxWidth: 1200,
+      margin: "0 auto",
+      padding: "80px 24px",
+      backgroundColor: "transparent",
+    },
+    hero: {
+      textAlign: "center",
+      marginBottom: 80,
+    },
+    kicker: {
+      fontFamily: "'Courier New', monospace",
+      color: "#2EE6A8",
+      fontSize: 14,
+      letterSpacing: 1,
+      marginBottom: 16,
+    },
+    heroTitle: {
+      fontSize: 48,
+      fontWeight: 700,
+      margin: "0 0 12px",
+      lineHeight: 1.1,
+      color: "#E8EDF2",
+    },
+    heroDescription: {
+      fontSize: 18,
+      color: "#97A1B3",
+      lineHeight: 1.6,
+      margin: 0,
+      maxWidth: 600,
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    exploreSection: {
+      marginTop: 64,
+      textAlign: "center",
+    },
+    sectionHeading: {
+      fontSize: 32,
+      fontWeight: 600,
+      margin: "0 0 12px",
+      color: "#E8EDF2",
+      letterSpacing: "-0.5px",
+    },
+    sectionDescription: {
+      fontSize: 16,
+      color: "#97A1B3",
+      lineHeight: 1.6,
+      margin: "0 0 24px",
+    },
+    featuredSection: {
+      marginTop: 96,
+    },
+    featuredHeader: {
+      textAlign: "center",
+      marginBottom: 48,
+    },
+    featuredHeading: {
+      fontSize: 28,
+      fontWeight: 600,
+      margin: "0 0 16px",
+      color: "#E8EDF2",
+    },
+    divider: {
+      width: 60,
+      height: 2,
+      backgroundColor: "rgba(46, 230, 168, 0.4)",
+      margin: "0 auto",
+      borderRadius: 1,
+    },
+    cardGrid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+      gap: 24,
+    },
+    footer: {
+      marginTop: 96,
+      paddingTop: 24,
+      borderTop: "1px solid #2E3644",
+      fontSize: 13,
+      color: "#5A6373",
+      textAlign: "center",
+    },
+  };
+
   return (
     <main style={styles.wrap}>
-      <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
-      <h1 style={styles.title}>{collection.name}</h1>
-      <p style={styles.description}>{collection.description}</p>
-
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>CREATED BY</p>
-        <p style={styles.cardValue}>{collection.creator}</p>
-      </div>
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>SOURCE</p>
-        <p style={styles.cardValue}>{collection.source}</p>
-      </div>
-
-
-
-      <section style={styles.section}>
-        {sampleEntries.map((entry, index) => (
-          <EntryCard
-            key={index}
-            title={entry.title}
-            description={entry.description}
-            contributor={entry.contributor}
-            place={entry.place}
-            image={entry.image}
-            audio={entry.audio}
-          />
-        ))}
+      {/* Hero Section */}
+      <section style={styles.hero}>
+        <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
+        <h1 style={styles.heroTitle}>{collection.name}</h1>
+        <p style={styles.heroDescription}>{collection.description}</p>
       </section>
 
+      {/* Explore the Archive Section */}
+      <section style={styles.exploreSection}>
+        <h2 style={styles.sectionHeading}>Explore the Archive</h2>
+        <p style={styles.sectionDescription}>
+          Discover lullabies collected from Khmer communities.
+        </p>
+        <Link href="/browse" className="cta-button">
+          Browse lullabies <span className="cta-arrow">→</span>
+        </Link>
+      </section>
+
+      {/* Featured Recordings Section */}
+      <section style={styles.featuredSection}>
+        <div style={styles.featuredHeader}>
+          <h2 style={styles.featuredHeading}>Featured recordings</h2>
+          <div style={styles.divider} />
+        </div>
+
+        <div style={styles.cardGrid}>
+          {featuredRecordings.map((recording, index) => (
+            <RecordingCard
+              key={index}
+              title={recording.title}
+              description={recording.description}
+              contributor={recording.contributor}
+              place={recording.place}
+              image={recording.image}
+              audio={recording.audio}
+              duration={recording.duration}
+              year={recording.year}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
       <footer style={styles.footer}>
-        Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
-        2026. This archive is under construction all semester. Come back in
-        December.
+        Built in ICT 340 — Vibe Coding, American University of Phnom Penh,
+        Fall 2026. This archive is under construction all semester. Come
+        back in December.
       </footer>
     </main>
   );
