@@ -1,5 +1,6 @@
 import collection from "../../collection.config.js";
 import EntryCard from "../../components/EntryCard";
+import "../home.css";
 
 const allEntries = [
   {
@@ -28,7 +29,7 @@ const allEntries = [
   },
   {
     title: "តាក់ទីងណឹងៗ",
-    description: "និយាយᖇីបងស្រីច្រៀងᲙ្យឲ្យប្អូនៗគេងលក់។",
+    description: "និយាយពីបងស្រីជាច្រើនបានច្រៀ​​ងដើម្បីបំពេរ​ឲ្យប្អូនៗរបស់គេគេងលក់។",
     contributor: "ចន្នី",
     place: "តាកែវ",
     image: "/images/lullaby-04.jpg",
@@ -36,7 +37,7 @@ const allEntries = [
   },
   {
     title: "ស្រណោះម្ដាយថ្នម",
-    description: "ជាបទដែលមានអត្ថន័យបង្កប់ដោយមនោសញ្ចេតនាជ្រាលជ្រៅពីម្តាយស្រឡាញ់មើលថែរកូនពីតូចដល់ពេញវ័យរៀបការ ដែលម្ដាយច្រៀងᲙ្យឲ្យកូនៗគេងលក់។",
+    description: "ជាបទបង្កប់ដោយមនោសញ្ចេតនាពីម្តាយស្រឡាញ់មើលថែរកូនពីតូចដល់ពេញវ័យរៀបការ។",
     contributor: "ខាត់ សុឃីម",
     place: "Takeo",
     image: "/images/lullaby-05.jpg",
@@ -81,7 +82,7 @@ export default function Browse() {
     {collection.description}
   </p>
 
-      <section style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "center", marginTop: 48 }}>
+      <section className="card-grid" style={{ marginTop: 48 }}>
         {allEntries.map((entry, index) => (
           <EntryCard
             key={index}

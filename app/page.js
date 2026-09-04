@@ -12,8 +12,8 @@ const featuredRecordings = [
     place: "Takeo",
     image: "/images/lullaby-01.jpg",
     audio: "/audio/lullaby-01.ogg",
-    duration: "3:24",
-    year: "2024",
+    duration: "0:18",
+    year: "2026",
   },
   {
     title: "មាន់រងាវ",
@@ -23,8 +23,8 @@ const featuredRecordings = [
     place: "Takeo",
     image: "/images/lullaby-02.jpg",
     audio: "/audio/lullaby-02.mp3",
-    duration: "2:58",
-    year: "2023",
+    duration: "1:00",
+    year: "2026",
   },
   {
     title: "ពេលមេឃស្រទុំ",
@@ -34,8 +34,8 @@ const featuredRecordings = [
     place: "Takeo",
     image: "/images/lullaby-03.jpg",
     audio: "/audio/lullaby-03.mp3",
-    duration: "4:12",
-    year: "2024",
+    duration: "1:30",
+    year: "2026",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function Home() {
     },
     cardGrid: {
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+      gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
       gap: 24,
     },
     footer: {
@@ -153,7 +153,7 @@ export default function Home() {
           <div style={styles.divider} />
         </div>
 
-        <div style={styles.cardGrid}>
+        <div className="card-grid">
           {featuredRecordings.map((recording, index) => (
             <RecordingCard
               key={index}
@@ -173,8 +173,7 @@ export default function Home() {
       {/* Footer */}
       <footer style={styles.footer}>
         Built in ICT 340 — Vibe Coding, American University of Phnom Penh,
-        Fall 2026. This archive is under construction all semester. Come
-        back in December.
+        Fall 2026.
       </footer>
     </main>
   );

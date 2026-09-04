@@ -54,29 +54,48 @@ export default function RecordingCard({
       borderRadius: 10,
       marginTop: 24,
       transition: "transform 0.2s ease, box-shadow 0.2s ease",
-      ":hover": {
-        transform: "translateY(-4px)",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.3)",
-      },
+      minHeight: 0,
+      display: "flex",
+      flexDirection: "column",
+    },
+    imageContainer: {
+      width: "100%",
+      aspectRatio: "16 / 9",
+      overflow: "hidden",
+      marginBottom: 16,
+      flexShrink: 0,
     },
     cover: {
       width: "100%",
-      height: "auto",
+      height: "100%",
       objectFit: "cover",
       borderRadius: 8,
-      marginBottom: 16,
+    },
+    contentContainer: {
+      flex: 1,
+      minHeight: 0,
+      display: "flex",
+      flexDirection: "column",
     },
     title: {
       fontSize: 22,
       fontWeight: 600,
       margin: "0 0 12px",
       color: "#E8EDF2",
+      display: "-webkit-box",
+      "-webkit-line-clamp": 2,
+      "-webkit-box-orient": "vertical",
+      overflow: "hidden",
     },
     description: {
       fontSize: 16,
       lineHeight: 1.6,
       color: "#97A1B3",
       margin: "0 0 16px",
+      display: "-webkit-box",
+      "-webkit-line-clamp": 3,
+      "-webkit-box-orient": "vertical",
+      overflow: "hidden",
     },
     meta: {
       display: "flex",
@@ -100,9 +119,12 @@ export default function RecordingCard({
     player: {
       display: "flex",
       alignItems: "center",
-      gap: 24,
-      marginTop: 24,
+      gap: 16,
+      marginTop: "auto",
       padding: "8px 0",
+      width: "100%",
+      minWidth: 0,
+      boxSizing: "border-box",
     },
     button: {
       width: 48,
@@ -127,13 +149,15 @@ export default function RecordingCard({
       height: 48,
       display: "flex",
       alignItems: "center",
-      gap: 5,
+      gap: 3,
       cursor: "pointer",
+      minWidth: 0,
+      overflow: "hidden",
     },
     bar: {
       flex: 1,
-      minWidth: 2,
-      maxWidth: 7,
+      minWidth: 1,
+      maxWidth: 6,
       borderRadius: 3,
       backgroundColor: "#343C4B",
     },
@@ -163,40 +187,44 @@ export default function RecordingCard({
       tabIndex={0}
       aria-label={`${title}, ${contributor || "unknown contributor"}. ${description || ""}. Activate to play.`}
     >
-      <img src={image} alt={title} style={styles.cover} />
+      <div style={styles.imageContainer}>
+        <img src={image} alt={title} style={styles.cover} />
+      </div>
 
-      <h2 style={styles.title}>{title}</h2>
+      <div style={styles.contentContainer}>
+        <h2 style={styles.title}>{title}</h2>
 
-      <p style={styles.description}>
-        {description || "No description currently available."}
-      </p>
+        <p style={styles.description}>
+          {description || "No description currently available."}
+        </p>
 
-      <div style={styles.meta}>
-        {contributor && (
+        <div style={styles.meta}>
+          {contributor && (
+            <p style={styles.metaItem}>
+              <span style={styles.metaLabel}>CONTRIBUTOR</span>
+              <span style={styles.metaValue}>{contributor}</span>
+            </p>
+          )}
+
           <p style={styles.metaItem}>
-            <span style={styles.metaLabel}>CONTRIBUTOR</span>
-            <span style={styles.metaValue}>{contributor}</span>
+            <span style={styles.metaLabel}>PLACE</span>
+            <span style={styles.metaValue}>{place || "Unknown"}</span>
+          </p>
+        </div>
+
+        {duration && (
+          <p style={styles.durationLabel}>
+            {duration}
           </p>
         )}
 
-        <p style={styles.metaItem}>
-          <span style={styles.metaLabel}>PLACE</span>
-          <span style={styles.metaValue}>{place || "Unknown"}</span>
-        </p>
+        {year && (
+          <p style={{ ...styles.metaItem, fontSize: 11, color: "#5A6373" }}>
+            <span style={styles.metaLabel}>YEAR</span>
+            <span style={styles.metaValue}>{year}</span>
+          </p>
+        )}
       </div>
-
-      {duration && (
-        <p style={styles.durationLabel}>
-          {duration}
-        </p>
-      )}
-
-      {year && (
-        <p style={{ ...styles.metaItem, fontSize: 11, color: "#5A6373" }}>
-          <span style={styles.metaLabel}>YEAR</span>
-          <span style={styles.metaValue}>{year}</span>
-        </p>
-      )}
 
       <div style={styles.player}>
         <button
