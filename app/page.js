@@ -1,43 +1,10 @@
 import Link from "next/link";
 import collection from "../collection.config.js";
-import RecordingCard from "../components/RecordingCard";
+import entries from "../data/entries.js";
+import EntryCard from "../components/EntryCard";
 import "./home.css";
 
-const featuredRecordings = [
-  {
-    title: "បំពេរកូន",
-    description:
-      "Traditional lullaby sung by mothers in Takeo province to soothe their children to sleep.",
-    contributor: "ថោង អមរា",
-    place: "Takeo",
-    image: "/images/lullaby-01.jpg",
-    audio: "/audio/lullaby-01.ogg",
-    duration: "0:18",
-    year: "2026",
-  },
-  {
-    title: "មាន់រងាវ",
-    description:
-      "Gentle melody from grandmother អ៊ាង, known for its calming rhythm that quiets restless children.",
-    contributor: "លោកយាយ អ៊ាង",
-    place: "Takeo",
-    image: "/images/lullaby-02.jpg",
-    audio: "/audio/lullaby-02.mp3",
-    duration: "1:00",
-    year: "2026",
-  },
-  {
-    title: "ពេលមេឃស្រទុំ",
-    description:
-      "A melancholic tune expressing deep longing and tenderness, filled with heartfelt emotion.",
-    contributor: "គន្ធា",
-    place: "Takeo",
-    image: "/images/lullaby-03.jpg",
-    audio: "/audio/lullaby-03.mp3",
-    duration: "1:30",
-    year: "2026",
-  },
-];
+const featuredRecordings = entries.slice(0, 3);
 
 export default function Home() {
   const styles = {
@@ -111,11 +78,6 @@ export default function Home() {
       margin: "0 auto",
       borderRadius: 1,
     },
-    cardGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-      gap: 24,
-    },
     footer: {
       marginTop: 96,
       paddingTop: 24,
@@ -154,17 +116,15 @@ export default function Home() {
         </div>
 
         <div className="card-grid">
-          {featuredRecordings.map((recording, index) => (
-            <RecordingCard
-              key={index}
-              title={recording.title}
-              description={recording.description}
-              contributor={recording.contributor}
-              place={recording.place}
-              image={recording.image}
-              audio={recording.audio}
-              duration={recording.duration}
-              year={recording.year}
+          {featuredRecordings.map((entry) => (
+            <EntryCard
+              key={entry.id}
+              title={entry.title}
+              description={entry.description}
+              contributor={entry.contributor}
+              place={entry.place}
+              image={entry.image}
+              audio={entry.audio}
             />
           ))}
         </div>

@@ -91,8 +91,8 @@ export default function EntryCard({
       margin: "0 0 12px",
       color: "#E8EDF2",
       display: "-webkit-box",
-      "-webkit-line-clamp": 2,
-      "-webkit-box-orient": "vertical",
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: "vertical",
       overflow: "hidden",
     },
     description: {
@@ -101,8 +101,8 @@ export default function EntryCard({
       color: "#97A1B3",
       margin: "0 0 16px",
       display: "-webkit-box",
-      "-webkit-line-clamp": 3,
-      "-webkit-box-orient": "vertical",
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: "vertical",
       overflow: "hidden",
     },
     meta: {

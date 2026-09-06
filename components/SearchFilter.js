@@ -41,19 +41,53 @@ export default function SearchFilter({ entries }) {
         }}
       />
 
-      <section className="card-grid" style={{ marginTop: 48 }}>
-        {filtered.map((entry) => (
-          <EntryCard
-            key={entry.id}
-            title={entry.title}
-            description={entry.description}
-            contributor={entry.contributor}
-            place={entry.place}
-            image={entry.image}
-            audio={entry.audio}
-          />
-        ))}
-      </section>
+      {filtered.length === 0 ? (
+        <div
+          style={{
+            marginTop: 48,
+            padding: "32px 24px",
+            textAlign: "center",
+            border: "1px solid #2E3644",
+            borderRadius: 10,
+            backgroundColor: "rgba(28, 34, 44, 0.4)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: 18,
+              color: "#E8EDF2",
+              margin: "0 0 8px",
+            }}
+          >
+            គ្មានបទចម្រៀងណាត្រូវនឹងការស្វែងរករបស់អ្នកទេ។
+          </p>
+          <p
+            style={{
+              fontSize: 15,
+              color: "#97A1B3",
+              margin: 0,
+            }}
+          >
+            No lullabies match "{query}" yet — the archive is still growing.
+            Try a different word, or browse everything by clearing the
+            search.
+          </p>
+        </div>
+      ) : (
+        <section className="card-grid" style={{ marginTop: 48 }}>
+          {filtered.map((entry) => (
+            <EntryCard
+              key={entry.id}
+              title={entry.title}
+              description={entry.description}
+              contributor={entry.contributor}
+              place={entry.place}
+              image={entry.image}
+              audio={entry.audio}
+            />
+          ))}
+        </section>
+      )}
     </>
   );
 }
