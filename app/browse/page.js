@@ -13,7 +13,7 @@ export default function Browse() {
   const t = uiText[language];
 
   return (
-    <main style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 24px" }}>
+    <main className="page-wrap" style={{ maxWidth: 1200, margin: "0 auto" }}>
       <Header />
 
       <p

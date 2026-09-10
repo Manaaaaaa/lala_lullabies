@@ -16,7 +16,6 @@ export default function Home() {
     wrap: {
       maxWidth: 1200,
       margin: "0 auto",
-      padding: "80px 24px",
       backgroundColor: "transparent",
     },
     hero: {
@@ -94,7 +93,7 @@ export default function Home() {
   };
 
   return (
-    <main style={styles.wrap}>
+    <main className="page-wrap" style={styles.wrap}>
       <Header />
 
       {/* Hero Section */}
