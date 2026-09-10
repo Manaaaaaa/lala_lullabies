@@ -79,8 +79,8 @@ const entries = [
       en: "A song that many older sisters sang to soothe their younger siblings to sleep when their younger siblings were crying.",
     },
     contributor: {
-      km: "គន្ធា",
-      en: "Kantha",
+      km: "សាង​ គន្ធា",
+      en: "Seang Kunthea",
     },
     place: {
       km: "តាកែវ",
