@@ -1,0 +1,33 @@
+.archive-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  background-color: rgba(28, 34, 44, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid #2E3644;
+  border-radius: 10px;
+  margin-top: 24px;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.archive-card:hover {
+  transform: translateY(-3px);
+  border-color: #3E4A5C;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-card {
+    transition: none;
+  }
+
+  .archive-card:hover {
+    transform: none;
+  }
+}

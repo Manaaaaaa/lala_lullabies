@@ -1,6 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useLanguage } from "./LanguageProvider";
+import { useAudio } from "./AudioContext";
+import uiText from "./uiText";
+import "./entry-card.css";
 
 const bars = [
   14, 22, 34, 42, 30, 18, 12, 28, 38, 46,
@@ -18,20 +22,34 @@ export default function EntryCard({
   image,
   audio,
 }) {
+  const { language } = useLanguage();
+  const t = uiText[language];
+  const { registerAudio, unregisterAudio, requestPlay, requestPause } = useAudio();
+
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      registerAudio(audioRef.current.dataset.id, audioRef.current);
+    }
+
+    return () => {
+      if (audioRef.current) {
+        unregisterAudio(audioRef.current.dataset.id);
+      }
+    };
+  }, [audioRef, registerAudio, unregisterAudio]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
 
     if (playing) {
-      audioRef.current.pause();
+      requestPause(audioRef.current.dataset.id);
     } else {
-      audioRef.current.play();
+      requestPlay(audioRef.current.dataset.id);
     }
-
-    setPlaying(!playing);
   };
 
   const updateProgress = () => {
@@ -53,19 +71,6 @@ export default function EntryCard({
   };
 
   const styles = {
-    card: {
-      width: "100%",
-      boxSizing: "border-box",
-      padding: 24,
-      backgroundColor: "rgba(28, 34, 44, 0.55)",
-      backdropFilter: "blur(8px)",
-      border: "1px solid #2E3644",
-      borderRadius: 10,
-      marginTop: 24,
-      minHeight: 0,
-      display: "flex",
-      flexDirection: "column",
-    },
     imageContainer: {
       width: "100%",
       aspectRatio: "16 / 9",
@@ -168,27 +173,27 @@ export default function EntryCard({
   };
 
   return (
-    <article style={styles.card}>
+    <article className="archive-card">
       <div style={styles.imageContainer}>
-        <img src={image} alt={title} style={styles.cover} />
+        <img src={image} alt={title[language]} style={styles.cover} />
       </div>
 
       <div style={styles.contentContainer}>
-        <h2 style={styles.title}>{title}</h2>
+        <h2 style={styles.title}>{title[language]}</h2>
 
         <p style={styles.description}>
-          {description || "No description currently available."}
+          {description[language] || t.noDescription}
         </p>
 
         <div style={styles.meta}>
           <p style={styles.metaItem}>
-            <span style={styles.metaLabel}>CONTRIBUTOR</span>
-            <span style={styles.metaValue}>{contributor}</span>
+            <span style={styles.metaLabel}>{t.contributor}</span>
+            <span style={styles.metaValue}>{contributor[language]}</span>
           </p>
 
           <p style={styles.metaItem}>
-            <span style={styles.metaLabel}>PLACE</span>
-            <span style={styles.metaValue}>{place || "Unknown"}</span>
+            <span style={styles.metaLabel}>{t.place}</span>
+            <span style={styles.metaValue}>{place[language] || "Unknown"}</span>
           </p>
         </div>
       </div>
@@ -229,6 +234,7 @@ export default function EntryCard({
 
         <audio
           ref={audioRef}
+          data-id={audio}
           src={audio}
           onTimeUpdate={updateProgress}
           onEnded={() => {
@@ -237,6 +243,7 @@ export default function EntryCard({
           }}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
+          onError={() => setPlaying(false)}
           style={{ display: "none" }}
         />
       </div>

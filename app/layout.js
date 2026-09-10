@@ -1,5 +1,7 @@
 import collection from "../collection.config.js";
 import NightSky from "../components/NightSky";
+import LanguageProvider from "../components/LanguageProvider";
+import AudioProvider from "../components/AudioContext";
 
 export const metadata = {
   title: `${collection.name} — Khmer Living Archive`,
@@ -20,7 +22,11 @@ export default function RootLayout({ children }) {
         }}
       >
         <NightSky />
-        {children}
+        <LanguageProvider>
+          <AudioProvider>
+            {children}
+          </AudioProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

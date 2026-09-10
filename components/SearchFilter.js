@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "./LanguageProvider";
+import uiText from "./uiText";
 import EntryCard from "./EntryCard";
 
 export default function SearchFilter({ entries }) {
+  const { language } = useLanguage();
+  const t = uiText[language];
   const [query, setQuery] = useState("");
 
   const trimmed = query.trim().toLowerCase();
@@ -11,9 +15,16 @@ export default function SearchFilter({ entries }) {
     trimmed === ""
       ? entries
       : entries.filter((entry) => {
-          const title = (entry.title || "").toLowerCase();
-          const description = (entry.description || "").toLowerCase();
-          return title.includes(trimmed) || description.includes(trimmed);
+          const title = (entry.title[language] || "").toLowerCase();
+          const description = (entry.description[language] || "").toLowerCase();
+          const contributor = (entry.contributor[language] || "").toLowerCase();
+          const place = (entry.place[language] || "").toLowerCase();
+          return (
+            title.includes(trimmed) ||
+            description.includes(trimmed) ||
+            contributor.includes(trimmed) ||
+            place.includes(trimmed)
+          );
         });
 
   return (
@@ -22,8 +33,8 @@ export default function SearchFilter({ entries }) {
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search lullabies..."
-        aria-label="Search lullabies"
+        placeholder={t.searchPlaceholder}
+        aria-label={t.searchPlaceholder}
         style={{
           width: "100%",
           maxWidth: 480,
@@ -59,7 +70,7 @@ export default function SearchFilter({ entries }) {
               margin: "0 0 8px",
             }}
           >
-            គ្មានបទចម្រៀងណាត្រូវនឹងការស្វែងរករបស់អ្នកទេ។
+            {t.emptyKhmer}
           </p>
           <p
             style={{
@@ -68,9 +79,7 @@ export default function SearchFilter({ entries }) {
               margin: 0,
             }}
           >
-            No lullabies match "{query}" yet — the archive is still growing.
-            Try a different word, or browse everything by clearing the
-            search.
+            {t.emptyEnglish(query)}
           </p>
         </div>
       ) : (

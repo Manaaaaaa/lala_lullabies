@@ -1,12 +1,17 @@
+"use client";
 import Link from "next/link";
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
 import EntryCard from "../components/EntryCard";
+import Header from "../components/Header";
+import { useLanguage } from "../components/LanguageProvider";
+import uiText from "../components/uiText";
 import "./home.css";
 
-const featuredRecordings = entries.slice(0, 3);
-
 export default function Home() {
+  const { language } = useLanguage();
+  const t = uiText[language];
+  const featuredRecordings = entries.slice(0, 3);
   const styles = {
     wrap: {
       maxWidth: 1200,
@@ -90,28 +95,30 @@ export default function Home() {
 
   return (
     <main style={styles.wrap}>
+      <Header />
+
       {/* Hero Section */}
       <section style={styles.hero}>
-        <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
+        <p style={styles.kicker}>{t.kicker}</p>
         <h1 style={styles.heroTitle}>{collection.name}</h1>
         <p style={styles.heroDescription}>{collection.description}</p>
       </section>
 
       {/* Explore the Archive Section */}
       <section style={styles.exploreSection}>
-        <h2 style={styles.sectionHeading}>Explore the Archive</h2>
+        <h2 style={styles.sectionHeading}>{t.exploreHeading}</h2>
         <p style={styles.sectionDescription}>
-          Discover lullabies collected from Khmer communities.
+          {t.exploreDesc}
         </p>
         <Link href="/browse" className="cta-button">
-          Browse lullabies <span className="cta-arrow">→</span>
+          {t.browseLink} <span className="cta-arrow">→</span>
         </Link>
       </section>
 
       {/* Featured Recordings Section */}
       <section style={styles.featuredSection}>
         <div style={styles.featuredHeader}>
-          <h2 style={styles.featuredHeading}>Featured recordings</h2>
+          <h2 style={styles.featuredHeading}>{t.featuredHeading}</h2>
           <div style={styles.divider} />
         </div>
 
@@ -131,10 +138,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer style={styles.footer}>
-        Built in ICT 340 — Vibe Coding, American University of Phnom Penh,
-        Fall 2026.
-      </footer>
+      <footer style={styles.footer}>{t.footer}</footer>
     </main>
   );
 }

@@ -1,11 +1,21 @@
+"use client";
+
 import collection from "../../collection.config.js";
 import entries from "../../data/entries.js";
 import SearchFilter from "../../components/SearchFilter";
+import Header from "../../components/Header";
+import { useLanguage } from "../../components/LanguageProvider";
+import uiText from "../../components/uiText";
 import "../home.css";
 
 export default function Browse() {
+  const { language } = useLanguage();
+  const t = uiText[language];
+
   return (
     <main style={{ maxWidth: 1200, margin: "0 auto", padding: "80px 24px" }}>
+      <Header />
+
       <p
         style={{
           fontFamily: "'Courier New', monospace",
@@ -14,7 +24,7 @@ export default function Browse() {
           letterSpacing: 1,
         }}
       >
-        KHMER LIVING ARCHIVE
+        {t.kicker}
       </p>
 
       <h1
