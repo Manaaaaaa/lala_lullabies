@@ -114,6 +114,75 @@ const entries = [
     category: "Lullaby",
     language: "Khmer",
   },
+  {
+    id: "lullaby-06",
+    title: {
+      km: "យូរឆ្នាំដែលចាំអូន",
+      en: "Years of waiting for you (Yoo Chnam Del Cham Aun)",
+    },
+    description: {
+      km: "បទនេះមានភាពស្រទន់បង្ហាញពីសេចក្តីស្នេហាដ៏ស្មោះស្ម័គ្រការរង់ចាំនិងក្តីនឹករលឹកដែលឆ្លងកាត់ពេលវេលាយ៉ាងយូរ។",
+      en: "This song is gentle, showing true love, waiting, and longing that lasts for a long time.",
+    },
+    contributor: {
+      km: "សាទ គន្ធី",
+      en: "Sath Kunthy",
+    },
+    place: {
+      km: "តាកែវ",
+      en: "Takeo",
+    },
+    image: "/images/lullaby-06.jpg",
+    audio: "/audio/lullaby-06.ogg",
+    category: "Lullaby",
+    language: "Khmer",
+  },
+  {
+    id: "lullaby-07",
+    title: {
+      km: "ជំនោរប៉ៃលិន",
+      en: "The breeze of Pailin (Jumno Pailin)",
+    },
+    description: {
+      km: "បទនេះរៀបរាប់ពីខ្យល់ត្រជាក់ដែលបក់នាំមកនូវអនុស្សាវរីយ៍ និងក្តីនឹករលឹក",
+      en: "It is a timeless song filled with nostalgia and soft emotion.",
+    },
+    contributor: {
+      km: "សាទ គន្ធី",
+      en: "Sath Kunthy",
+    },
+    place: {
+      km: "តាកែវ",
+      en: "Takeo",
+    },
+    image: "/images/lullaby-07.jpg",
+    audio: "/audio/lullaby-07.ogg",
+    category: "Lullaby",
+    language: "Khmer",
+  },
+  {
+    id: "lullaby-0៨",
+    title: {
+      km: "កូនស្រីអ្នកនេសាទ",
+      en: "The Fisherman's Daughter (Kon Srey Neak Nesat)",
+    },
+    description: {
+      km: "បទចម្រៀងដ៏ស្រទន់និងរំលេចពីមនោសញ្ចេតនាដ៏ស៊ីជម្រៅនាំយើងឱ្យស្រមៃឃើញនូវសម្រស់ធម្មជាតិ និងភាពបរិសុទ្ធនៃបេះដូងកូនស្រីអ្នកនេសាទ",
+      en: "The song portrays a touching story of simple life, devotion, and gentle emotion along the peaceful waterside.",
+    },
+    contributor: {
+      km: "សាទ គន្ធី",
+      en: "Sath Kunthy",
+    },
+    place: {
+      km: "តាកែវ",
+      en: "Takeo",
+    },
+    image: "/images/lullaby-08.jpg",
+    audio: "/audio/lullaby-08.ogg",
+    category: "Lullaby",
+    language: "Khmer",
+  },
 ];
 
 export default entries;
