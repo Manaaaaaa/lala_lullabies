@@ -193,7 +193,7 @@ export default function EntryCard({
 
           <p style={styles.metaItem}>
             <span style={styles.metaLabel}>{t.place}</span>
-            <span style={styles.metaValue}>{place[language] || "Unknown"}</span>
+            <span style={styles.metaValue}>{place[language] || t.unknownPlace}</span>
           </p>
         </div>
       </div>
