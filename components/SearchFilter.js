@@ -10,7 +10,11 @@ export default function SearchFilter({ entries }) {
   const t = uiText[language];
   const [query, setQuery] = useState("");
 
-  const trimmed = query.trim().toLowerCase();
+  const trimmed = query
+  .trim()
+  .replace(/^['"‘’“”]+|['"‘’“”]+$/g, "")
+  .trim()
+  .toLowerCase();
   const filtered =
     trimmed === ""
       ? entries
