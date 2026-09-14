@@ -79,7 +79,7 @@ export default function SearchFilter({ entries }) {
               margin: 0,
             }}
           >
-            {t.emptyEnglish(query)}
+            {t.emptyDetail(query)}
           </p>
         </div>
       ) : (

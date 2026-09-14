@@ -11,7 +11,7 @@ const uiText = {
       "Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall 2026.",
     kicker: "KHMER LIVING ARCHIVE",
     emptyKhmer: "គ្មានបទចម្រៀងដែលត្រូវនឹងការស្វែងរករបស់អ្នក។",
-    emptyEnglish: (query) =>
+    emptyDetail: (query) =>
       `No lullabies match "${query}" yet. Try a different word, or browse everything by clearing the search.`,
     noDescription: "No description currently available.",
     playAudio: "Play audio",
