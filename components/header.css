@@ -1,0 +1,33 @@
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.hamburger-btn {
+  display: none;
+}
+
+.mobile-panel {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .header-search {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-links {
+    display: none;
+  }
+  .sign-in-btn {
+    display: none;
+  }
+  .hamburger-btn {
+    display: inline-flex;
+  }
+  .mobile-panel.open {
+    display: flex;
+  }
+}
