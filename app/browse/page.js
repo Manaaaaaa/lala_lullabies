@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import collection from "../../collection.config.js";
 import entries from "../../data/entries.js";
 import SearchFilter from "../../components/SearchFilter";
@@ -9,7 +10,8 @@ import { useSearchParams } from "next/navigation";
 import uiText from "../../components/uiText";
 import "../home.css";
 
-export default function Browse() {
+// Sub-component that safely uses useSearchParams
+function BrowseContent() {
   const { language } = useLanguage();
   const t = uiText[language];
   const searchParams = useSearchParams();
@@ -55,5 +57,14 @@ export default function Browse() {
 
       <SearchFilter entries={entries} initialQuery={query} />
     </main>
+  );
+}
+
+// Main page component wrapped with Suspense boundary
+export default function Browse() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20, color: "#E8EDF2" }}>Loading...</div>}>
+      <BrowseContent />
+    </Suspense>
   );
 }
