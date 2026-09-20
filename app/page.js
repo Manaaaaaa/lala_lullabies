@@ -3,7 +3,6 @@ import Link from "next/link";
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
 import EntryCard from "../components/EntryCard";
-import Header from "../components/Header";
 import { useLanguage } from "../components/LanguageProvider";
 import uiText from "../components/uiText";
 import "./home.css";
@@ -28,11 +27,14 @@ export default function Home() {
     wrap: {
       maxWidth: 1200,
       margin: "0 auto",
+      padding: "0 24px 48px",
       backgroundColor: "transparent",
+      boxSizing: "border-box",
     },
     hero: {
       textAlign: "center",
       marginBottom: 56,
+      marginTop: 24,
     },
     heroTitle: {
       fontSize: 48,
@@ -88,8 +90,6 @@ export default function Home() {
 
   return (
     <main className="page-wrap" style={styles.wrap}>
-      <Header />
-
       {/* Hero Section */}
       <section style={styles.hero}>
         <p className="hero-kicker">{t.kicker}</p>
@@ -113,7 +113,7 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Featured Recordings Section — unchanged */}
+      {/* Featured Recordings Section */}
       <section style={styles.featuredSection}>
         <div style={styles.featuredHeader}>
           <h2 style={styles.featuredHeading}>{t.featuredHeading}</h2>

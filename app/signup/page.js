@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Header from "../../components/Header";
 import { createClient } from "../../lib/supabase/client";
 
 export default function SignUp() {
@@ -131,8 +130,6 @@ export default function SignUp() {
 
   return (
     <main className="page-wrap" style={styles.wrap}>
-      <Header />
-
       <div style={styles.card}>
         <div style={styles.headerBox}>
           <h1 style={styles.heading}>Create an account</h1>

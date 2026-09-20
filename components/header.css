@@ -1,33 +1,56 @@
-.nav-links {
-  display: flex;
-  gap: 24px;
+/* Strip unwanted link default styling */
+header a,
+.mobile-panel a {
+  text-decoration: none !important;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+/* Hide hamburger button completely on laptop / desktop */
 .hamburger-btn {
-  display: none;
+  display: none !important;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  font-size: 16px;
+  color: #E8EDF2;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .mobile-panel {
   display: none;
+  margin-top: 8px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: rgba(10, 14, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-direction: column;
+  gap: 12px;
 }
 
 @media (max-width: 900px) {
   .header-search {
-    display: none;
+    display: none !important;
   }
 }
 
-@media (max-width: 640px) {
+/* Only show hamburger and swap nav links on mobile devices */
+@media (max-width: 680px) {
   .nav-links {
-    display: none;
-  }
-  .sign-in-btn {
-    display: none;
+    display: none !important;
   }
   .hamburger-btn {
-    display: inline-flex;
+    display: inline-flex !important;
   }
   .mobile-panel.open {
-    display: flex;
+    display: flex !important;
   }
 }
