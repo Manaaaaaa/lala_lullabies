@@ -5,10 +5,10 @@ import { useLanguage } from "./LanguageProvider";
 import uiText from "./uiText";
 import EntryCard from "./EntryCard";
 
-export default function SearchFilter({ entries }) {
+export default function SearchFilter({ entries, initialQuery = "" }) {
   const { language } = useLanguage();
   const t = uiText[language];
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
 
   const trimmed = query
   .trim()

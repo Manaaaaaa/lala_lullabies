@@ -52,9 +52,15 @@ export default function Header() {
     { href: "/about", label: t.aboutLink },
   ];
 
+  const [query, setQuery] = useState("");
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    router.push("/browse");
+    router.push(`/browse?q=${encodeURIComponent(query)}`);
+  };
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
   };
 
   const styles = {
@@ -183,10 +189,16 @@ export default function Header() {
           ))}
         </nav>
 
-        <form className="header-search" style={styles.searchWrap} onSubmit={handleSearchSubmit}>
+        <form
+          className="header-search"
+          style={{ ...styles.searchWrap, ...(pathname === "/browse" ? { display: "none" } : {}) }}
+          onSubmit={handleSearchSubmit}
+        >
           <SearchIcon />
           <input
             type="text"
+            value={query}
+            onChange={handleInputChange}
             placeholder={t.searchPlaceholder}
             style={styles.searchInput}
             aria-label={t.searchPlaceholder}

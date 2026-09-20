@@ -9,6 +9,9 @@ const uiText = {
     featuredHeading: "Featured recordings",
     footer:
       "Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall 2026.",
+    aboutTitle: "About this Archive",
+    creatorLabel: "Created by",
+    sourceLabel: "Sources",
     kicker: "KHMER LIVING ARCHIVE",
     emptyKhmer: "គ្មានបទចម្រៀងដែលត្រូវនឹងការស្វែងរករបស់អ្នក។",
     emptyDetail: (query) =>
@@ -29,6 +32,9 @@ const uiText = {
     featuredHeading: "ការថតសំឡេងដែលបានជ្រើសរើសជាពិសេស",
     footer:
       "បង្កើតឡើងក្នុងថ្នាក់ ICT 340 — Vibe Coding, សកលវិទ្យាល័យអាមេរិកកាំងភ្នំពេញ, Fall 2026.",
+    aboutTitle: "អំពីបណ្ដុំឯកសារនេះ",
+    creatorLabel: "បង្កើតដោយ",
+    sourceLabel: "ប្រភព",
     kicker: "បណ្ដុំឯកសារចម្រៀងខ្មែរ",
     emptyKhmer: "គ្មានបទចម្រៀងដែលត្រូវនឹងការស្វែងរករបស់អ្នក។",
     emptyDetail: (query) =>

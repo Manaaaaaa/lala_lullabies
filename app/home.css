@@ -59,3 +59,79 @@
     grid-template-columns: 1fr;
   }
 }
+
+.hero-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-family: "Courier New", monospace;
+  color: #2ee6a8;
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.hero-kicker::before,
+.hero-kicker::after {
+  content: "";
+  height: 1px;
+  width: 40px;
+  background-color: rgba(46, 230, 168, 0.4);
+}
+
+.explore-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto 64px;
+  padding: 24px 28px;
+  border-radius: 20px;
+  border: 1px solid rgba(46, 230, 168, 0.2);
+  background-color: rgba(10, 14, 28, 0.4);
+}
+
+.explore-card-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(46, 230, 168, 0.3);
+  background-color: rgba(46, 230, 168, 0.08);
+}
+
+.explore-card-text {
+  flex: 1;
+  text-align: left;
+}
+
+.explore-card-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: #e8edf2;
+  margin: 0 0 4px;
+}
+
+.explore-card-desc {
+  font-size: 14px;
+  color: #97a1b3;
+  margin: 0;
+}
+
+.explore-card-cta {
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .explore-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .explore-card-text {
+    text-align: center;
+  }
+}

@@ -8,10 +8,22 @@ import { useLanguage } from "../components/LanguageProvider";
 import uiText from "../components/uiText";
 import "./home.css";
 
+const CompassIcon = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2EE6A8" strokeWidth="1.6">
+    <circle cx="12" cy="12" r="9" />
+    <polygon points="15,9 13,13 9,15 11,11" fill="#2EE6A8" stroke="none" />
+  </svg>
+);
+
 export default function Home() {
   const { language } = useLanguage();
   const t = uiText[language];
   const featuredRecordings = entries.slice(0, 3);
+
+  const nameWords = collection.name.trim().split(" ");
+  const lastWord = nameWords.pop();
+  const heroLead = nameWords.join(" ");
+
   const styles = {
     wrap: {
       maxWidth: 1200,
@@ -20,14 +32,7 @@ export default function Home() {
     },
     hero: {
       textAlign: "center",
-      marginBottom: 80,
-    },
-    kicker: {
-      fontFamily: "'Courier New', monospace",
-      color: "#2EE6A8",
-      fontSize: 14,
-      letterSpacing: 1,
-      marginBottom: 16,
+      marginBottom: 56,
     },
     heroTitle: {
       fontSize: 48,
@@ -35,6 +40,12 @@ export default function Home() {
       margin: "0 0 12px",
       lineHeight: 1.1,
       color: "#E8EDF2",
+    },
+    heroTitleAccent: {
+      background: "linear-gradient(90deg, #2EE6A8, #E8EDF2)",
+      WebkitBackgroundClip: "text",
+      backgroundClip: "text",
+      WebkitTextFillColor: "transparent",
     },
     heroDescription: {
       fontSize: 18,
@@ -44,23 +55,6 @@ export default function Home() {
       maxWidth: 600,
       marginLeft: "auto",
       marginRight: "auto",
-    },
-    exploreSection: {
-      marginTop: 64,
-      textAlign: "center",
-    },
-    sectionHeading: {
-      fontSize: 32,
-      fontWeight: 600,
-      margin: "0 0 12px",
-      color: "#E8EDF2",
-      letterSpacing: "-0.5px",
-    },
-    sectionDescription: {
-      fontSize: 16,
-      color: "#97A1B3",
-      lineHeight: 1.6,
-      margin: "0 0 24px",
     },
     featuredSection: {
       marginTop: 96,
@@ -98,23 +92,28 @@ export default function Home() {
 
       {/* Hero Section */}
       <section style={styles.hero}>
-        <p style={styles.kicker}>{t.kicker}</p>
-        <h1 style={styles.heroTitle}>{collection.name}</h1>
+        <p className="hero-kicker">{t.kicker}</p>
+        <h1 style={styles.heroTitle}>
+          {heroLead} <span style={styles.heroTitleAccent}>{lastWord}</span>
+        </h1>
         <p style={styles.heroDescription}>{collection.description}</p>
       </section>
 
       {/* Explore the Archive Section */}
-      <section style={styles.exploreSection}>
-        <h2 style={styles.sectionHeading}>{t.exploreHeading}</h2>
-        <p style={styles.sectionDescription}>
-          {t.exploreDesc}
-        </p>
-        <Link href="/browse" className="cta-button">
+      <section className="explore-card">
+        <div className="explore-card-icon">
+          <CompassIcon />
+        </div>
+        <div className="explore-card-text">
+          <h2 className="explore-card-heading">{t.exploreHeading}</h2>
+          <p className="explore-card-desc">{t.exploreDesc}</p>
+        </div>
+        <Link href="/browse" className="cta-button explore-card-cta">
           {t.browseLink} <span className="cta-arrow">→</span>
         </Link>
       </section>
 
-      {/* Featured Recordings Section */}
+      {/* Featured Recordings Section — unchanged */}
       <section style={styles.featuredSection}>
         <div style={styles.featuredHeader}>
           <h2 style={styles.featuredHeading}>{t.featuredHeading}</h2>
