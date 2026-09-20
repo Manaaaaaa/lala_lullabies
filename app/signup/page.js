@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Header from "../../components/Header";
 import { createClient } from "../../lib/supabase/client";
 
-export default function Signup() {
+export default function SignUp() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +19,7 @@ export default function Signup() {
     setLoading(true);
 
     const supabase = createClient();
-    const { data, error: signUpError } = await supabase.auth.signUp({
+    const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -30,101 +31,161 @@ export default function Signup() {
       return;
     }
 
-    if (data.session) {
-      router.push("/");
-    } else {
-      setError("Account created — check your email to confirm before logging in.");
-    }
+    router.push("/");
   };
 
   const styles = {
-    wrap: { maxWidth: 420, margin: "0 auto" },
-    heading: {
-      fontSize: 32,
-      fontWeight: 700,
-      color: "#E8EDF2",
-      margin: "0 0 24px",
-      textAlign: "center",
+    wrap: {
+      maxWidth: 440,
+      margin: "0 auto",
+      padding: "0 16px 40px",
     },
-    form: { display: "flex", flexDirection: "column", gap: 16 },
-    label: { fontSize: 14, color: "#97A1B3", marginBottom: 6, display: "block" },
+    card: {
+      backgroundColor: "rgba(19, 25, 43, 0.8)",
+      backdropFilter: "blur(12px)",
+      border: "1px solid #222f4a",
+      borderRadius: 16,
+      padding: "32px 28px",
+      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5)",
+      marginTop: 24,
+    },
+    headerBox: {
+      textAlign: "center",
+      marginBottom: 28,
+    },
+    heading: {
+      fontSize: 28,
+      fontWeight: 700,
+      color: "#FFFFFF",
+      margin: "0 0 8px",
+      letterSpacing: "-0.5px",
+    },
+    subheading: {
+      fontSize: 14,
+      color: "#97A1B3",
+      margin: 0,
+    },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 20,
+    },
+    fieldGroup: {
+      display: "flex",
+      flexDirection: "column",
+      gap: 8,
+    },
+    label: {
+      fontSize: 12,
+      fontWeight: 600,
+      color: "#2EE6A8",
+      textTransform: "uppercase",
+      letterSpacing: "0.5px",
+    },
     input: {
       width: "100%",
-      padding: "10px 14px",
-      borderRadius: 8,
-      border: "1px solid #2E3644",
-      backgroundColor: "rgba(255,255,255,0.03)",
+      padding: "12px 16px",
+      borderRadius: 10,
+      border: "1px solid #222f4a",
+      backgroundColor: "rgba(10, 13, 24, 0.6)",
       color: "#E8EDF2",
       fontSize: 15,
+      outline: "none",
       boxSizing: "border-box",
     },
     button: {
       marginTop: 8,
-      padding: "12px",
-      borderRadius: 999,
-      border: "1px solid rgba(46, 230, 168, 0.4)",
-      backgroundColor: "rgba(46, 230, 168, 0.08)",
-      color: "#2EE6A8",
+      padding: "14px",
+      borderRadius: 10,
+      border: "none",
+      backgroundColor: "#2EE6A8",
+      color: "#0A0D18",
       fontSize: 15,
       fontWeight: 600,
-      cursor: "pointer",
+      cursor: loading ? "not-allowed" : "pointer",
+      opacity: loading ? 0.7 : 1,
+      transition: "background-color 0.2s ease",
     },
     error: {
-      color: "#E85D5D",
-      fontSize: 14,
+      color: "#FF6B6B",
+      backgroundColor: "rgba(255, 107, 107, 0.1)",
+      border: "1px solid rgba(255, 107, 107, 0.2)",
+      borderRadius: 8,
+      padding: "10px",
+      fontSize: 13,
       textAlign: "center",
       margin: 0,
     },
     footer: {
-      marginTop: 20,
+      marginTop: 24,
       textAlign: "center",
       fontSize: 14,
       color: "#97A1B3",
     },
-    link: { color: "#2EE6A8", textDecoration: "none" },
+    link: {
+      color: "#2EE6A8",
+      textDecoration: "none",
+      fontWeight: 500,
+    },
   };
 
   return (
     <main className="page-wrap" style={styles.wrap}>
       <Header />
-      <h1 style={styles.heading}>Sign up</h1>
 
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <div>
-          <label style={styles.label} htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            required
-            style={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+      <div style={styles.card}>
+        <div style={styles.headerBox}>
+          <h1 style={styles.heading}>Create an account</h1>
+          <p style={styles.subheading}>
+            Sign up to start archiving and exploring traditional lullabies
+          </p>
         </div>
 
-        <div>
-          <label style={styles.label} htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            required
-            minLength={6}
-            style={styles.input}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <form style={styles.form} onSubmit={handleSubmit}>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label} htmlFor="email">
+              Email Address
+            </label>
+            <input
+              id="email"
+              type="email"
+              required
+              placeholder="name@example.com"
+              style={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        {error && <p style={styles.error}>{error}</p>}
+          <div style={styles.fieldGroup}>
+            <label style={styles.label} htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              required
+              placeholder="••••••••"
+              style={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "Creating account..." : "Sign up"}
-        </button>
-      </form>
+          {error && <p style={styles.error}>{error}</p>}
 
-      <p style={styles.footer}>
-        Already have an account? <Link href="/login" style={styles.link}>Log in</Link>
-      </p>
+          <button type="submit" style={styles.button} disabled={loading}>
+            {loading ? "Creating account..." : "Sign up"}
+          </button>
+        </form>
+
+        <p style={styles.footer}>
+          Already have an account?{" "}
+          <Link href="/login" style={styles.link}>
+            Log in
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }
