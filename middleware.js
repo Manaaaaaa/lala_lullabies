@@ -1,3 +1,3 @@
-import { middleware } from "./lib/supabase/middleware";
+import { middleware, config } from "./lib/supabase/middleware";
 
-export { middleware };
+export { middleware, config };
