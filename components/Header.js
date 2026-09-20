@@ -1,11 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLanguage } from "./LanguageProvider";
 import uiText from "./uiText";
 import collection from "../collection.config.js";
 import "./header.css";
+import { createClient } from "../lib/supabase/client";
 
 const FlowerIcon = () => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2EE6A8" strokeWidth="1.4">
@@ -45,6 +46,15 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   const navItems = [
     { href: "/", label: t.homeLink },
@@ -213,11 +223,31 @@ export default function Header() {
             <span style={language === "km" ? styles.active : {}}>ខ្មែរ</span>
           </button>
 
-          {/* Decorative only — no auth is implemented yet */}
-          <button className="sign-in-btn" style={styles.signInButton}>
-            <PersonIcon />
-            {t.signIn}
-          </button>
+          {user ? (
+            <>
+              <span style={{ ...styles.signInButton, cursor: "default", backgroundColor: "transparent", border: "none", color: "#E8EDF2" }}>
+                {user.email}
+              </span>
+              <button
+                className="sign-in-btn"
+                style={styles.signInButton}
+                onClick={() => {
+                  createClient().auth.signOut();
+                }}
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <div style={{ display: "flex", gap: 8 }}>
+              <Link href="/login" className="sign-in-btn" style={styles.signInButton}>
+                Log in
+              </Link>
+              <Link href="/signup" style={styles.signInButton}>
+                Sign up
+              </Link>
+            </div>
+          )}
 
           <button
             className="hamburger-btn"
@@ -242,10 +272,23 @@ export default function Header() {
             {item.label}
           </Link>
         ))}
-        <button style={styles.signInButton}>
-          <PersonIcon />
-          {t.signIn}
-        </button>
+        {user ? (
+          <button style={styles.signInButton} onClick={() => {
+            createClient().auth.signOut();
+            setMenuOpen(false);
+          }}>
+            Log out
+          </button>
+        ) : (
+          <div style={{ display: "flex", gap: 8, flexDirection: "column" }}>
+            <Link href="/login" className="sign-in-btn" style={styles.signInButton} onClick={() => setMenuOpen(false)}>
+              Log in
+            </Link>
+            <Link href="/signup" style={styles.signInButton} onClick={() => setMenuOpen(false)}>
+              Sign up
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
