@@ -21,6 +21,8 @@ const uiText = {
     pauseAudio: "Pause audio",
     audioProgress: "Audio progress",
     unknownPlace: "Unknown",
+    loading: "Loading lullabies...",
+    emptyArchive: "No lullabies have been added yet.",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -44,6 +46,8 @@ const uiText = {
     pauseAudio: "ផ្អាកបទចម្រៀង",
     audioProgress: "ការរីកចម្រើននៃបទចម្រៀង",
     unknownPlace: "មិនស្គាល់",
+    loading: "កំពុងផ្ទុកបទចម្រៀង...",
+    emptyArchive: "មិនទាន់មានបទចម្រៀងត្រូវបានបន្ថែមទេ។",
   },
 };
 

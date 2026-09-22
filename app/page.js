@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import collection from "../collection.config.js";
-import entries from "../data/entries.js";
 import EntryCard from "../components/EntryCard";
 import { useLanguage } from "../components/LanguageProvider";
 import uiText from "../components/uiText";
+import { createClient } from "../lib/supabase/client";
 import "./home.css";
 
 const CompassIcon = () => (
@@ -17,11 +18,41 @@ const CompassIcon = () => (
 export default function Home() {
   const { language } = useLanguage();
   const t = uiText[language];
-  const featuredRecordings = entries.slice(0, 3);
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const nameWords = collection.name.trim().split(" ");
   const lastWord = nameWords.pop();
   const heroLead = nameWords.join(" ");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadEntries() {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("entries")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Unable to load entries for the home page:", error);
+      }
+
+      if (active) {
+        setEntries(data || []);
+        setLoading(false);
+      }
+    }
+
+    loadEntries();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const featuredRecordings = entries.slice(0, 3);
 
   const styles = {
     wrap: {
@@ -120,19 +151,25 @@ export default function Home() {
           <div style={styles.divider} />
         </div>
 
-        <div className="card-grid">
-          {featuredRecordings.map((entry) => (
-            <EntryCard
-              key={entry.id}
-              title={entry.title}
-              description={entry.description}
-              contributor={entry.contributor}
-              place={entry.place}
-              image={entry.image}
-              audio={entry.audio}
-            />
-          ))}
-        </div>
+        {loading ? (
+          <p style={{ textAlign: "center", color: "#97A1B3" }}>{t.loading}</p>
+        ) : featuredRecordings.length === 0 ? (
+          <p style={{ textAlign: "center", color: "#97A1B3" }}>{t.emptyArchive}</p>
+        ) : (
+          <div className="card-grid">
+            {featuredRecordings.map((entry) => (
+              <EntryCard
+                key={entry.id}
+                title={entry.title}
+                description={entry.description}
+                contributor={entry.contributor}
+                place={entry.place}
+                image={entry.image}
+                audio={entry.audio}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Footer */}
