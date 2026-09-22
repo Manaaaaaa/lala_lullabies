@@ -53,4 +53,7 @@ header a,
   .mobile-panel.open {
     display: flex !important;
   }
+  .auth-controls {
+    display: none !important;
+  }
 }

@@ -260,23 +260,25 @@ export default function Header() {
             <span style={language === "km" ? styles.langActive : {}}>ខ្មែរ</span>
           </button>
 
-          {user ? (
-            <button
-              style={styles.langButton}
-              onClick={() => createClient().auth.signOut()}
-            >
-              Log out
-            </button>
-          ) : (
-            <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-              <Link href="/login" style={styles.authLink}>
-                Log in
-              </Link>
-              <Link href="/signup" style={styles.primaryAuthBtn}>
-                Sign up
-              </Link>
-            </div>
-          )}
+          <div className="auth-controls" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            {user ? (
+              <button
+                style={styles.langButton}
+                onClick={() => createClient().auth.signOut()}
+              >
+                Log out
+              </button>
+            ) : (
+              <>
+                <Link href="/login" style={styles.authLink}>
+                  Log in
+                </Link>
+                <Link href="/signup" style={styles.primaryAuthBtn}>
+                  Sign up
+                </Link>
+              </>
+            )}
+          </div>
 
           <button
             className="hamburger-btn"
