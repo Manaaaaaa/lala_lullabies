@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import collection from "../../collection.config.js";
 import entries from "../../data/entries.js";
 import SearchFilter from "../../components/SearchFilter";
-import Header from "../../components/Header";
 import { useLanguage } from "../../components/LanguageProvider";
 import { useSearchParams } from "next/navigation";
 import uiText from "../../components/uiText";
@@ -19,8 +18,6 @@ function BrowseContent() {
 
   return (
     <main className="page-wrap" style={{ maxWidth: 1200, margin: "0 auto" }}>
-      <Header />
-
       <p
         style={{
           fontFamily: "'Courier New', monospace",

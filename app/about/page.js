@@ -1,6 +1,5 @@
 "use client";
 import collection from "../../collection.config.js";
-import Header from "../../components/Header";
 import { useLanguage } from "../../components/LanguageProvider";
 import uiText from "../../components/uiText";
 import "../home.css";
@@ -55,8 +54,6 @@ export default function About() {
 
   return (
     <main className="page-wrap" style={styles.wrap}>
-      <Header />
-
       <p style={styles.kicker}>{t.kicker}</p>
       <h1 style={styles.title}>{t.aboutTitle}</h1>
       <p style={styles.description}>{collection.description}</p>
