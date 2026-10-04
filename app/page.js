@@ -164,8 +164,8 @@ export default function Home() {
                 description={entry.description}
                 contributor={entry.contributor}
                 place={entry.place}
-                image={entry.image}
-                audio={entry.audio}
+                image_url={entry.image_url}
+                audio_url={entry.audio_url}
               />
             ))}
           </div>

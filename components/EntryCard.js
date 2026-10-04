@@ -19,8 +19,8 @@ export default function EntryCard({
   description,
   contributor,
   place,
-  image,
-  audio,
+  image_url,
+  audio_url,
 }) {
   const { language } = useLanguage();
   const t = uiText[language];
@@ -175,7 +175,7 @@ export default function EntryCard({
   return (
     <article className="archive-card">
       <div style={styles.imageContainer}>
-        <img src={image} alt={title[language]} style={styles.cover} />
+        <img src={image_url} alt={title[language]} style={styles.cover} />
       </div>
 
       <div style={styles.contentContainer}>
@@ -234,8 +234,8 @@ export default function EntryCard({
 
         <audio
           ref={audioRef}
-          data-id={audio}
-          src={audio}
+          data-id={audio_url}
+          src={audio_url}
           onTimeUpdate={updateProgress}
           onEnded={() => {
             setPlaying(false);

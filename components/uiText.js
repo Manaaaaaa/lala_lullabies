@@ -5,7 +5,9 @@ const uiText = {
     place: "PLACE",
     exploreHeading: "Explore the Archive",
     exploreDesc: "Discover lullabies collected from Khmer communities.",
+    homeLink: "Home",
     browseLink: "Browse lullabies",
+    aboutLink: "About",
     featuredHeading: "Featured recordings",
     footer:
       "Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall 2026.",
@@ -23,6 +25,12 @@ const uiText = {
     unknownPlace: "Unknown",
     loading: "Loading lullabies...",
     emptyArchive: "No lullabies have been added yet.",
+    contributeNav: "Contribute",
+    contributeTitle: "Contribute a Lullaby",
+    contributeIntro: "Share a lullaby from your family or community with the archive.",
+    contributeLoggedOut: "You need an account to contribute. Log in or sign up to continue.",
+    loginLink: "Log in",
+    signupLink: "Sign up",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -30,7 +38,9 @@ const uiText = {
     place: "ទីកន្លែង",
     exploreHeading: "ស្វែងរកក្នុងបណ្ដុំឯកសារ",
     exploreDesc: "រកបទចម្រៀងដែលបានកត់ត្រាពីសហគមន៍ខ្មែរ។",
+    homeLink: "ទំព័រដើម",
     browseLink: "មើលបទចម្រៀងទាំងអស់",
+    aboutLink: "អំពី",
     featuredHeading: "ការថតសំឡេងដែលបានជ្រើសរើសជាពិសេស",
     footer:
       "បង្កើតឡើងក្នុងថ្នាក់ ICT 340 — Vibe Coding, សកលវិទ្យាល័យអាមេរិកកាំងភ្នំពេញ, Fall 2026.",
@@ -48,6 +58,12 @@ const uiText = {
     unknownPlace: "មិនស្គាល់",
     loading: "កំពុងផ្ទុកបទចម្រៀង...",
     emptyArchive: "មិនទាន់មានបទចម្រៀងត្រូវបានបន្ថែមទេ។",
+    contributeNav: "ចូលរួមចំណែក",
+    contributeTitle: "ចូលរួមចំណែកបទចម្រៀង",
+    contributeIntro: "ចែករំលែកបទចម្រៀងពីគ្រួសារ ឬសហគមន៍របស់អ្នកទៅកាន់បណ្ដុំឯកសារនេះ។",
+    contributeLoggedOut: "អ្នកត្រូវការគណនីដើម្បីចូលរួមចំណែក។ សូមចូលគណនី ឬបង្កើតគណនីដើម្បីបន្ត។",
+    loginLink: "ចូលគណនី",
+    signupLink: "បង្កើតគណនី",
   },
 };
 

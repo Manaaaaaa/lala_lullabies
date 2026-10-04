@@ -52,6 +52,7 @@ export default function Header() {
   const navItems = [
     { href: "/", label: t.homeLink },
     { href: "/browse", label: t.browseLink },
+    { href: "/submit", label: t.contributeNav },
     { href: "/about", label: t.aboutLink },
   ];
 
@@ -266,15 +267,15 @@ export default function Header() {
                 style={styles.langButton}
                 onClick={() => createClient().auth.signOut()}
               >
-                Log out
+                {t.logoutLink}
               </button>
             ) : (
               <>
                 <Link href="/login" style={styles.authLink}>
-                  Log in
+                  {t.loginLink}
                 </Link>
                 <Link href="/signup" style={styles.primaryAuthBtn}>
-                  Sign up
+                  {t.signupLink}
                 </Link>
               </>
             )}
@@ -311,15 +312,15 @@ export default function Header() {
               setMenuOpen(false);
             }}
           >
-            Log out
+            {t.logoutLink}
           </button>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
             <Link href="/login" style={styles.authLink} onClick={() => setMenuOpen(false)}>
-              Log in
+              {t.loginLink}
             </Link>
             <Link href="/signup" style={styles.primaryAuthBtn} onClick={() => setMenuOpen(false)}>
-              Sign up
+              {t.signupLink}
             </Link>
           </div>
         )}
