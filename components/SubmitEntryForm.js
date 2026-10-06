@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { createClient } from '../lib/supabase/client';
+import { useLanguage } from './LanguageProvider';
+import provinces from './provinces';
 
 export default function SubmitEntryForm() {
+  const { language } = useLanguage();
   const [loading, setLoading] = useState(false);
   const [titleEn, setTitleEn] = useState('');
   const [titleKm, setTitleKm] = useState('');
@@ -11,15 +14,20 @@ export default function SubmitEntryForm() {
   const [descKm, setDescKm] = useState('');
   const [contributorEn, setContributorEn] = useState('');
   const [contributorKm, setContributorKm] = useState('');
-  const [placeEn, setPlaceEn] = useState('');
-  const [placeKm, setPlaceKm] = useState('');
+  const [placeIndex, setPlaceIndex] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
+
+  const selectedProvince = placeIndex !== '' ? provinces[placeIndex] : null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageFile || !audioFile) {
       alert('Please select both an image and an audio file.');
+      return;
+    }
+    if (!selectedProvince) {
+      alert('Please select a province.');
       return;
     }
     setLoading(true);
@@ -33,14 +41,14 @@ export default function SubmitEntryForm() {
       const timestamp = Date.now();
 
       const imagePath = `${user.id}/${timestamp}.${fileExtImage}`;
-      const { error: imgUploadErr } = await supabase.storage.from('images').upload(imagePath, imageFile);
+      const { error: imgUploadErr } = await supabase.storage.from('image').upload(imagePath, imageFile);
       if (imgUploadErr) throw imgUploadErr;
 
       const audioPath = `${user.id}/${timestamp}.${fileExtAudio}`;
       const { error: audioUploadErr } = await supabase.storage.from('audio').upload(audioPath, audioFile);
       if (audioUploadErr) throw audioUploadErr;
 
-      const { data: imgUrlData } = supabase.storage.from('images').getPublicUrl(imagePath);
+      const { data: imgUrlData } = supabase.storage.from('image').getPublicUrl(imagePath);
       const { data: audioUrlData } = supabase.storage.from('audio').getPublicUrl(audioPath);
 
       const { error: insertError } = await supabase.from('entries').insert([{
@@ -48,7 +56,7 @@ export default function SubmitEntryForm() {
         title: { en: titleEn, km: titleKm },
         description: { en: descEn, km: descKm },
         contributor: { en: contributorEn, km: contributorKm },
-        place: { en: placeEn, km: placeKm },
+        place: { en: selectedProvince.en, km: selectedProvince.km },
         image_url: imgUrlData.publicUrl,
         audio_url: audioUrlData.publicUrl,
         category: 'Lullaby',
@@ -58,7 +66,7 @@ export default function SubmitEntryForm() {
       if (insertError) throw insertError;
       alert('Entry submitted successfully!');
       setTitleEn(''); setTitleKm(''); setDescEn(''); setDescKm('');
-      setContributorEn(''); setContributorKm(''); setPlaceEn(''); setPlaceKm('');
+      setContributorEn(''); setContributorKm(''); setPlaceIndex('');
       setImageFile(null); setAudioFile(null);
     } catch (err) {
       alert(`Error: ${err.message}`);
@@ -134,52 +142,56 @@ export default function SubmitEntryForm() {
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
       <h2 style={styles.heading}>Contribute a Lullaby</h2>
-      
-      {/* Title Inputs */}
+
       <div style={styles.fieldGroup}>
         <label style={styles.label}>Title (English)</label>
         <input type="text" placeholder="Enter title" value={titleEn} onChange={e => setTitleEn(e.target.value)} required style={styles.input} />
       </div>
-      
+
       <div style={styles.fieldGroup}>
         <label style={styles.label}>ចំណងជើង (ភាសាខ្មែរ)</label>
         <input type="text" placeholder="បញ្ចូលចំណងជើង" value={titleKm} onChange={e => setTitleKm(e.target.value)} required style={styles.input} />
       </div>
 
-      {/* Description Inputs */}
       <div style={styles.fieldGroup}>
         <label style={styles.label}>Description (English)</label>
         <textarea placeholder="Enter description" value={descEn} onChange={e => setDescEn(e.target.value)} required style={styles.textarea} />
       </div>
-      
+
       <div style={styles.fieldGroup}>
         <label style={styles.label}>ការពិពណ៌នា (ភាសាខ្មែរ)</label>
         <textarea placeholder="បញ្ចូលការពិពណ៌នា" value={descKm} onChange={e => setDescKm(e.target.value)} required style={styles.textarea} />
       </div>
 
-      {/* Contributor Inputs */}
       <div style={styles.fieldGroup}>
         <label style={styles.label}>Contributor (English)</label>
         <input type="text" placeholder="Enter contributor name" value={contributorEn} onChange={e => setContributorEn(e.target.value)} required style={styles.input} />
       </div>
-      
+
       <div style={styles.fieldGroup}>
         <label style={styles.label}>អ្នកចូលរួម (ភាសាខ្មែរ)</label>
         <input type="text" placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម" value={contributorKm} onChange={e => setContributorKm(e.target.value)} required style={styles.input} />
       </div>
 
-      {/* Location Inputs */}
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Province/Place (English)</label>
-        <input type="text" placeholder="Enter province or place" value={placeEn} onChange={e => setPlaceEn(e.target.value)} required style={styles.input} />
-      </div>
-      
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>ខេត្ត/ទីតាំង (ភាសាខ្មែរ)</label>
-        <input type="text" placeholder="បញ្ចូលខេត្ត និងទីតាំង" value={placeKm} onChange={e => setPlaceKm(e.target.value)} required style={styles.input} />
+        <label style={styles.label}>Province</label>
+        <select
+          value={placeIndex}
+          onChange={(e) => setPlaceIndex(e.target.value)}
+          required
+          style={styles.input}
+        >
+          <option value="" disabled>
+            Select a province
+          </option>
+          {provinces.map((p, i) => (
+            <option key={p.en} value={i}>
+              {language === "km" ? p.km : p.en}
+            </option>
+          ))}
+        </select>
       </div>
 
-      {/* Media Inputs */}
       <div style={styles.fieldGroup}>
         <label style={styles.label}>Cover Image (.jpg, .png)</label>
         <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} required style={styles.input} />
@@ -190,9 +202,9 @@ export default function SubmitEntryForm() {
         <input type="file" accept="audio/*" onChange={e => setAudioFile(e.target.files?.[0] || null)} required style={styles.input} />
       </div>
 
-      <button 
-        type="submit" 
-        disabled={loading} 
+      <button
+        type="submit"
+        disabled={loading}
         style={loading ? styles.buttonDisabled : styles.button}
       >
         {loading ? 'Submitting...' : 'Submit Entry'}
