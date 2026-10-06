@@ -35,6 +35,7 @@ export default function SubmitEntryForm() {
       const supabase = createClient();
       const { data: { user }, error: userError } = await supabase.auth.getUser();
       if (userError || !user) throw new Error('User not authenticated.');
+      console.log("Submitting as user.id:", user.id);
 
       const fileExtImage = imageFile.name.split('.').pop();
       const fileExtAudio = audioFile.name.split('.').pop();
