@@ -305,15 +305,24 @@ export default function Header() {
           </Link>
         ))}
         {user ? (
-          <button
-            style={styles.langButton}
-            onClick={() => {
-              createClient().auth.signOut();
-              setMenuOpen(false);
-            }}
-          >
-            {t.logoutLink}
-          </button>
+          <>
+            <Link
+              href="/my-contributions"
+              style={pathname === "/my-contributions" ? styles.activeLink : styles.link}
+              onClick={() => setMenuOpen(false)}
+            >
+              {t.myContributionsNav}
+            </Link>
+            <button
+              style={styles.langButton}
+              onClick={() => {
+                createClient().auth.signOut();
+                setMenuOpen(false);
+              }}
+            >
+              {t.logoutLink}
+            </button>
+          </>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
             <Link href="/login" style={styles.authLink} onClick={() => setMenuOpen(false)}>
