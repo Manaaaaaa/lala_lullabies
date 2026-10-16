@@ -55,6 +55,8 @@ const uiText = {
     adminBadge: "Admin",
     adminViewAll: "Show all contributions",
     adminViewMine: "Show only mine",
+    logoutLink: "Log out",
+    myContributionsNav: "My Contributions",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -112,6 +114,8 @@ const uiText = {
     adminBadge: "អ្នកគ្រប់គ្រង",
     adminViewAll: "បង្ហាញការចូលរួមទាំងអស់",
     adminViewMine: "បង្ហាញតែរបស់ខ្ញុំ",
+    logoutLink: "ចាកចេញ",
+    myContributionsNav: "ការចូលរួមរបស់ខ្ញុំ",
   },
 };
 
