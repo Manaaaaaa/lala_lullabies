@@ -9,51 +9,167 @@ header a,
   align-items: center;
 }
 
-/* Hide hamburger button completely on laptop / desktop */
+/* Hamburger: hidden on desktop */
 .hamburger-btn {
   display: none !important;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  font-size: 16px;
-  color: #E8EDF2;
   background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   flex-shrink: 0;
 }
 
-.mobile-panel {
-  display: none;
-  margin-top: 8px;
-  padding: 16px;
-  border-radius: 16px;
-  background-color: rgba(10, 14, 28, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  flex-direction: column;
-  gap: 12px;
+.hamburger-bar {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #e8edf2;
+  transition: transform 0.25s ease, opacity 0.2s ease;
 }
 
-@media (max-width: 900px) {
+/* Hamburger -> X */
+.hamburger-btn.open .hamburger-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.hamburger-btn.open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-btn.open .hamburger-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Full-screen menu: never shown on desktop */
+.mobile-panel {
+  display: none;
+}
+
+@media (max-width: 1100px) {
   .header-search {
     display: none !important;
   }
 }
 
-/* Only show hamburger and swap nav links on mobile devices */
 @media (max-width: 680px) {
   .nav-links {
+    display: none !important;
+  }
+  .auth-controls {
     display: none !important;
   }
   .hamburger-btn {
     display: inline-flex !important;
   }
-  .mobile-panel.open {
-    display: flex !important;
+
+  .mobile-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 110px 28px 32px;
+    overflow-y: auto;
+    background-color: rgba(10, 14, 28, 0.8);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
-  .auth-controls {
-    display: none !important;
+
+  .mobile-panel.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mobile-link {
+    display: block;
+    padding: 14px 0 14px 16px;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #97a1b3;
+    border-left: 2px solid transparent;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  /* Stagger the links in as the menu opens */
+  .mobile-panel.open .mobile-link {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s, 0s, calc(var(--i, 0) * 50ms), calc(var(--i, 0) * 50ms);
+  }
+
+  .mobile-link:hover,
+  .mobile-link:focus-visible {
+    color: #e8edf2;
+    border-left-color: rgba(46, 230, 168, 0.5);
+  }
+
+  .mobile-link.active {
+    color: #2ee6a8;
+    border-left-color: #2ee6a8;
+    font-weight: 600;
+  }
+
+  .mobile-actions {
+    margin-top: auto;
+    padding-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .mobile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 28px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e8edf2;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    cursor: pointer;
+  }
+
+  .mobile-btn.primary {
+    color: #0a0e1c;
+    background-color: #2ee6a8;
+    border-color: #2ee6a8;
+    font-weight: 600;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-panel,
+  .mobile-link,
+  .hamburger-bar {
+    transition: none !important;
   }
 }

@@ -49,6 +49,20 @@ export default function Header() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Lock page scroll while the full-screen menu is open; close on Escape / resize to desktop
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+    const onResize = () => window.innerWidth > 680 && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [menuOpen]);
+
   const navItems = [
     { href: "/", label: t.homeLink },
     { href: "/browse", label: t.browseLink },
@@ -66,6 +80,8 @@ export default function Header() {
     }
   };
 
+  const closeMenu = () => setMenuOpen(false);
+
   const styles = {
     wrap: {
       position: "sticky",
@@ -79,12 +95,14 @@ export default function Header() {
       padding: "0 16px",
     },
     pill: {
+      position: "relative",
+      zIndex: 2,
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
       gap: 16,
       width: "100%",
-      maxWidth: 1000,
+      maxWidth: 1200,
       margin: "0 auto",
       padding: "8px 16px",
       borderRadius: 999,
@@ -212,7 +230,7 @@ export default function Header() {
     <div style={styles.wrap}>
       <header style={styles.pill}>
         {/* Brand / Logo */}
-        <Link href="/" style={styles.logoGroup}>
+        <Link href="/" style={styles.logoGroup} onClick={closeMenu}>
           <FlowerIcon />
           <span style={styles.title}>{collection.name}</span>
         </Link>
@@ -283,57 +301,61 @@ export default function Header() {
           </div>
 
           <button
-            className="hamburger-btn"
+            className={`hamburger-btn${menuOpen ? " open" : ""}`}
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
-            ☰
+            <span className="hamburger-bar" />
+            <span className="hamburger-bar" />
+            <span className="hamburger-bar" />
           </button>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
-      <div className={`mobile-panel${menuOpen ? " open" : ""}`}>
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            style={pathname === item.href ? styles.activeLink : styles.link}
-            onClick={() => setMenuOpen(false)}
-          >
-            {item.label}
-          </Link>
-        ))}
-        {user ? (
-          <>
+      {/* Full-screen mobile menu */}
+      <div
+        id="mobile-menu"
+        className={`mobile-panel${menuOpen ? " open" : ""}`}
+        aria-hidden={!menuOpen}
+      >
+        <nav className="mobile-nav">
+          {navItems.map((item, i) => (
             <Link
-              href="/my-contributions"
-              style={pathname === "/my-contributions" ? styles.activeLink : styles.link}
-              onClick={() => setMenuOpen(false)}
+              key={item.href}
+              href={item.href}
+              className={`mobile-link${pathname === item.href ? " active" : ""}`}
+              style={{ "--i": i }}
+              onClick={closeMenu}
             >
-              {t.myContributionsNav}
+              {item.label}
             </Link>
+          ))}
+        </nav>
+
+        <div className="mobile-actions">
+          {user ? (
             <button
-              style={styles.langButton}
+              className="mobile-btn"
               onClick={() => {
                 createClient().auth.signOut();
-                setMenuOpen(false);
+                closeMenu();
               }}
             >
               {t.logoutLink}
             </button>
-          </>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
-            <Link href="/login" style={styles.authLink} onClick={() => setMenuOpen(false)}>
-              {t.loginLink}
-            </Link>
-            <Link href="/signup" style={styles.primaryAuthBtn} onClick={() => setMenuOpen(false)}>
-              {t.signupLink}
-            </Link>
-          </div>
-        )}
+          ) : (
+            <>
+              <Link href="/login" className="mobile-btn" onClick={closeMenu}>
+                {t.loginLink}
+              </Link>
+              <Link href="/signup" className="mobile-btn primary" onClick={closeMenu}>
+                {t.signupLink}
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
