@@ -49,15 +49,13 @@ export default function Header() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Lock page scroll while the full-screen menu is open; close on Escape / resize to desktop
+  // Close the menu on Escape, or when the window grows past the mobile breakpoint
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
     const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
     const onResize = () => window.innerWidth > 680 && setMenuOpen(false);
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
     };
@@ -88,10 +86,12 @@ export default function Header() {
       top: 16,
       zIndex: 50,
       width: "100%",
+      boxSizing: "border-box",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginBottom: 32,
+      marginBottom: menuOpen ? 10 : 32,
+      transition: "margin-bottom 0.25s ease",
       padding: "0 16px",
     },
     pill: {
@@ -227,106 +227,107 @@ export default function Header() {
   };
 
   return (
-    <div style={styles.wrap}>
-      <header style={styles.pill}>
-        {/* Brand / Logo */}
-        <Link href="/" style={styles.logoGroup} onClick={closeMenu}>
-          <FlowerIcon />
-          <span style={styles.title}>{collection.name}</span>
-        </Link>
+    <>
+      <div style={styles.wrap}>
+        <header style={styles.pill}>
+          {/* Brand / Logo */}
+          <Link href="/" style={styles.logoGroup} onClick={closeMenu}>
+            <FlowerIcon />
+            <span style={styles.title}>{collection.name}</span>
+          </Link>
 
-        {/* Navigation Links */}
-        <nav className="nav-links" style={styles.navGroup}>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              style={pathname === item.href ? styles.activeLink : styles.link}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Compact Search Bar */}
-        {pathname !== "/browse" && (
-          <form
-            className="header-search"
-            style={styles.searchWrap}
-            onSubmit={handleSearchSubmit}
-          >
-            <SearchIcon />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t.searchPlaceholder}
-              style={styles.searchInput}
-              aria-label={t.searchPlaceholder}
-            />
-          </form>
-        )}
-
-        {/* Language & Auth Actions */}
-        <div style={styles.rightControls}>
-          <button
-            onClick={toggleLanguage}
-            style={styles.langButton}
-            aria-label="Switch language"
-          >
-            <GlobeIcon />
-            <span style={language === "en" ? styles.langActive : {}}>EN</span>
-            <span style={{ opacity: 0.4 }}>/</span>
-            <span style={language === "km" ? styles.langActive : {}}>ខ្មែរ</span>
-          </button>
-
-          <div className="auth-controls" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            {user ? (
-              <button
-                style={styles.langButton}
-                onClick={() => createClient().auth.signOut()}
+          {/* Navigation Links */}
+          <nav className="nav-links" style={styles.navGroup}>
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                style={pathname === item.href ? styles.activeLink : styles.link}
               >
-                {t.logoutLink}
-              </button>
-            ) : (
-              <>
-                <Link href="/login" style={styles.authLink}>
-                  {t.loginLink}
-                </Link>
-                <Link href="/signup" style={styles.primaryAuthBtn}>
-                  {t.signupLink}
-                </Link>
-              </>
-            )}
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Compact Search Bar */}
+          {pathname !== "/browse" && (
+            <form
+              className="header-search"
+              style={styles.searchWrap}
+              onSubmit={handleSearchSubmit}
+            >
+              <SearchIcon />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t.searchPlaceholder}
+                style={styles.searchInput}
+                aria-label={t.searchPlaceholder}
+              />
+            </form>
+          )}
+
+          {/* Language & Auth Actions */}
+          <div style={styles.rightControls}>
+            <button
+              onClick={toggleLanguage}
+              style={styles.langButton}
+              aria-label="Switch language"
+            >
+              <GlobeIcon />
+              <span style={language === "en" ? styles.langActive : {}}>EN</span>
+              <span style={{ opacity: 0.4 }}>/</span>
+              <span style={language === "km" ? styles.langActive : {}}>ខ្មែរ</span>
+            </button>
+
+            <div className="auth-controls" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              {user ? (
+                <button
+                  style={styles.langButton}
+                  onClick={() => createClient().auth.signOut()}
+                >
+                  {t.logoutLink}
+                </button>
+              ) : (
+                <>
+                  <Link href="/login" style={styles.authLink}>
+                    {t.loginLink}
+                  </Link>
+                  <Link href="/signup" style={styles.primaryAuthBtn}>
+                    {t.signupLink}
+                  </Link>
+                </>
+              )}
+            </div>
+
+            <button
+              className={`hamburger-btn${menuOpen ? " open" : ""}`}
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span className="hamburger-bar" />
+              <span className="hamburger-bar" />
+              <span className="hamburger-bar" />
+            </button>
           </div>
+        </header>
+      </div>
 
-          <button
-            className={`hamburger-btn${menuOpen ? " open" : ""}`}
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-          >
-            <span className="hamburger-bar" />
-            <span className="hamburger-bar" />
-            <span className="hamburger-bar" />
-          </button>
-        </div>
-      </header>
-
-      {/* Full-screen mobile menu */}
+      {/* Mobile menu: sits in the page flow, so opening it pushes the content down */}
       <div
         id="mobile-menu"
         className={`mobile-panel${menuOpen ? " open" : ""}`}
         aria-hidden={!menuOpen}
       >
         <nav className="mobile-nav">
-          {navItems.map((item, i) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={`mobile-link${pathname === item.href ? " active" : ""}`}
-              style={{ "--i": i }}
               onClick={closeMenu}
             >
               {item.label}
@@ -357,6 +358,6 @@ export default function Header() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }
