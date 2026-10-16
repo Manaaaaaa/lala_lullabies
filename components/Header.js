@@ -53,6 +53,7 @@ export default function Header() {
     { href: "/", label: t.homeLink },
     { href: "/browse", label: t.browseLink },
     { href: "/submit", label: t.contributeNav },
+    ...(user ? [{ href: "/my-contributions", label: t.myContributionsNav }] : []),
     { href: "/about", label: t.aboutLink },
   ];
 
