@@ -40,6 +40,23 @@ export default function Header() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!user) { setIsAdmin(false); return; }
+    const supabase = createClient();
+    supabase.from("admins").select("user_id").eq("user_id", user.id).maybeSingle().then(({ data }) => {
+      setIsAdmin(!!data);
+    });
+  }, [user]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -66,6 +83,7 @@ export default function Header() {
     { href: "/browse", label: t.browseLink },
     { href: "/submit", label: t.contributeNav },
     ...(user ? [{ href: "/my-contributions", label: t.myContributionsNav }] : []),
+    ...(user && isAdmin ? [{ href: "/admin/review", label: t.adminReviewNav }] : []),
     { href: "/about", label: t.aboutLink },
   ];
 
