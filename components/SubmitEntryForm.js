@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { createClient } from '../lib/supabase/client';
 import { useLanguage } from './LanguageProvider';
 import provinces from './provinces';
+import SuccessConfirmation from './SuccessConfirmation';
 
 export default function SubmitEntryForm() {
   const { language } = useLanguage();
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [titleEn, setTitleEn] = useState('');
   const [titleKm, setTitleKm] = useState('');
   const [descEn, setDescEn] = useState('');
@@ -17,19 +20,32 @@ export default function SubmitEntryForm() {
   const [placeIndex, setPlaceIndex] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
+  const errorRef = useRef(null);
 
   const selectedProvince = placeIndex !== '' ? provinces[placeIndex] : null;
 
+  const clearForm = () => {
+    setTitleEn(''); setTitleKm(''); setDescEn(''); setDescKm('');
+    setContributorEn(''); setContributorKm(''); setPlaceIndex('');
+    setImageFile(null); setAudioFile(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg(null);
+
     if (!imageFile || !audioFile) {
-      alert('Please select both an image and an audio file.');
+      setErrorMsg('submitImageRequired');
+      errorRef.current?.focus();
       return;
     }
     if (!selectedProvince) {
-      alert('Please select a province.');
+      setErrorMsg('submitProvinceRequired');
+      errorRef.current?.focus();
       return;
     }
+    if (loading) return;
+
     setLoading(true);
     try {
       const supabase = createClient();
@@ -65,16 +81,34 @@ export default function SubmitEntryForm() {
       }]);
 
       if (insertError) throw insertError;
-      alert('Entry submitted successfully!');
-      setTitleEn(''); setTitleKm(''); setDescEn(''); setDescKm('');
-      setContributorEn(''); setContributorKm(''); setPlaceIndex('');
-      setImageFile(null); setAudioFile(null);
+
+      clearForm();
+      setSubmitted(true);
     } catch (err) {
-      alert(`Error: ${err.message}`);
+      console.error('Submission error:', err);
+      setErrorMsg('submitError');
+      errorRef.current?.focus();
     } finally {
       setLoading(false);
     }
   };
+
+  const t = {
+    submitImageRequired: "Please select both an image and an audio file.",
+    submitProvinceRequired: "Please select a province.",
+    submitError: "Submission failed. Please try again.",
+  };
+  const tKm = {
+    submitImageRequired: "សូមជ្រើសរើសឯកសាររូបភាព និងសំឡេង។",
+    submitProvinceRequired: "សូមជ្រើសរើសខេត្ត។",
+    submitError: "ការបញ្ជូនបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
+  };
+  const ui = language === "km" ? tKm : t;
+  const errorText = errorMsg ? ui[errorMsg] : null;
+
+  if (submitted) {
+    return <SuccessConfirmation />;
+  }
 
   const styles = {
     form: {
@@ -202,6 +236,26 @@ export default function SubmitEntryForm() {
         <label style={styles.label}>Audio File (.mp3)</label>
         <input type="file" accept="audio/*" onChange={e => setAudioFile(e.target.files?.[0] || null)} required style={styles.input} />
       </div>
+
+      {errorText && (
+        <p
+          ref={errorRef}
+          role="alert"
+          tabIndex={-1}
+          style={{
+            margin: 0,
+            padding: "10px 14px",
+            fontSize: 14,
+            color: "#E85D5D",
+            backgroundColor: "rgba(232, 93, 93, 0.08)",
+            border: "1px solid rgba(232, 93, 93, 0.3)",
+            borderRadius: 8,
+            textAlign: "center",
+          }}
+        >
+          {errorText}
+        </p>
+      )}
 
       <button
         type="submit"
