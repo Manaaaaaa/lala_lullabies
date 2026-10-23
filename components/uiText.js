@@ -57,6 +57,42 @@ const uiText = {
     adminViewMine: "Show only mine",
     logoutLink: "Log out",
     myContributionsNav: "My Contributions",
+    // Success confirmation
+    successHeading: "Contribution Submitted Successfully!",
+    successMessage:
+      "Thank you for helping preserve Cambodia's lullaby heritage. Your contribution has been received and is now pending review.",
+    successView: "View My Contribution",
+    successBrowse: "Continue Browsing",
+    // Submission error
+    submitError: "Submission failed. Please try again.",
+    submitImageRequired: "Please select both an image and an audio file.",
+    submitProvinceRequired: "Please select a province.",
+    // Status labels
+    statusPublished: "Published",
+    statusDraft: "Draft",
+    statusReturned: "Returned",
+    statusUnknown: "Unknown",
+    // Pending review
+    pendingReview: "Pending Review",
+    pendingReviewNote:
+      "Your contribution is awaiting review by the archive team before it can be published.",
+    // Irreversible delete clarification
+    irreversibleWarning:
+      "This action cannot be undone. The entry and its files will be permanently removed.",
+    // Admin review
+    adminReviewNav: "Review Entries",
+    adminReviewTitle: "Review Contributions",
+    adminReviewIntro: "Review pending submissions and decide whether to publish or return them.",
+    adminReviewEmpty: "No pending submissions to review.",
+    adminReviewLoading: "Loading pending submissions...",
+    adminReviewError: "Could not load pending submissions. Please try again.",
+    publishAction: "Publish",
+    returnAction: "Return for changes",
+    publishing: "Publishing...",
+    returning: "Returning...",
+    reviewSuccess: (action) =>
+      `Entry ${action === "published" ? "published" : "returned"} successfully.`,
+    reviewFailed: "Review action failed. Please try again.",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -116,6 +152,42 @@ const uiText = {
     adminViewMine: "បង្ហាញតែរបស់ខ្ញុំ",
     logoutLink: "ចាកចេញ",
     myContributionsNav: "ការចូលរួមរបស់ខ្ញុំ",
+    // Success confirmation — Khmer
+    successHeading: "បានបញ្ជូនការចូលរួមដោយជោគជ័យ!",
+    successMessage:
+      "សូមអរគុណដែលបានចូលរួម។ ការចូលរួមរបស់អ្នកត្រូវបានទទួល ហើយកំពុងរង់ចាំការត្រួតពិនិត្យ។",
+    successView: "មើលការចូលរួមរបស់ខ្ញុំ",
+    successBrowse: "បន្តការស្វែងរក",
+    // Submission error — Khmer
+    submitError: "ការបញ្ជូនបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
+    submitImageRequired: "សូមជ្រើសរើសឯកសាររូបភាព និងសំឡេង។",
+    submitProvinceRequired: "សូមជ្រើសរើសខេត្ត។",
+    // Status labels — Khmer
+    statusPublished: "បានបោះពុម្ពផ្សាយ",
+    statusDraft: "សេចក្តីព្រាង",
+    statusReturned: "បានបញ្ជូនត្រឡប់",
+    statusUnknown: "មិនស្គាល់",
+    // Pending review — Khmer
+    pendingReview: "កំពុងរង់ចាំការត្រួតពិនិត្យ",
+    pendingReviewNote:
+      "ការចូលរួមរបស់អ្នកកំពុងរង់ចាំការត្រួតពិនិត្យដោយក្រុមការងារមុនពេលត្រូវបានបោះពុម្ពផ្សាយ។",
+    // Irreversible delete clarification — Khmer
+    irreversibleWarning:
+      "សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។ ឯកសាររបស់វានឹងត្រូវបានលុបជាអចិន្ត្រៃយ៍។",
+    // Admin review — Khmer
+    adminReviewNav: "ពិនិត្យការចូលរួម",
+    adminReviewTitle: "ពិនិត្យការចូលរួម",
+    adminReviewIntro: "ពិនិត្យការចូលរួមដែលកំពុងរង់ចាំ ហើយសម្រេចចិត្តបោះពុម្ពផ្សាយ ឬបញ្ជូនត្រឡប់។",
+    adminReviewEmpty: "មិនទាន់មានការចូលរួមដែលកំពុងរង់ចាំការពិនិត្យទេ។",
+    adminReviewLoading: "កំពុងផ្ទុកការចូលរួមដែលកំពុងរង់ចាំ...",
+    adminReviewError: "មិនអាចផ្ទុកការចូលរួមបានទេ។ សូមព្យាយាមម្តងទៀត។",
+    publishAction: "បោះពុម្ពផ្សាយ",
+    returnAction: "បញ្ជូនត្រឡប់",
+    publishing: "កំពុងបោះពុម្ពផ្សាយ...",
+    returning: "កំពុងបញ្ជូនត្រឡប់...",
+    reviewSuccess: (action) =>
+      `បាន${action === "published" ? "បោះពុម្ពផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
+    reviewFailed: "សកម្មភាពនេះបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
   },
 };
 
