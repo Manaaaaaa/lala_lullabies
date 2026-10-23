@@ -42,6 +42,21 @@ export default function ConfirmDeleteDialog({ title, t, deleting, onCancel, onCo
       >
         <h2 id="confirm-delete-title" style={styles.heading}>{t.confirmDeleteTitle}</h2>
         <p style={styles.body}>{t.confirmDeleteBody(title)}</p>
+        <p
+          style={{
+            margin: "0 0 24px",
+            padding: "8px 12px",
+            fontSize: 13,
+            lineHeight: 1.5,
+            color: "#E85D5D",
+            backgroundColor: "rgba(232, 93, 93, 0.06)",
+            border: "1px solid rgba(232, 93, 93, 0.2)",
+            borderRadius: 8,
+            textAlign: "center",
+          }}
+        >
+          {t.irreversibleWarning}
+        </p>
         <div style={styles.actions}>
           <button autoFocus style={styles.cancel} onClick={onCancel} disabled={deleting}>
             {t.cancel}
