@@ -170,18 +170,36 @@ export default function MyContributions() {
               <Link href="/submit" className="cta-button">{t.contributeCta}</Link>
             </div>
           ) : (
-            <ul style={styles.list}>
-              {entries.map((entry) => (
-                <ContributionRow
-                  key={entry.id}
-                  entry={entry}
-                  language={language}
-                  t={t}
-                  showOwner={isAdmin && showAll}
-                  onDelete={setTarget}
-                />
-              ))}
-            </ul>
+            <>
+              <div
+                style={{
+                  margin: "0 0 20px",
+                  padding: "12px 16px",
+                  fontSize: 13,
+                  lineHeight: 1.6,
+                  color: "#F0C040",
+                  backgroundColor: "rgba(240, 192, 64, 0.06)",
+                  border: "1px solid rgba(240, 192, 64, 0.2)",
+                  borderRadius: 10,
+                  textAlign: "center",
+                }}
+                role="status"
+              >
+                {t.pendingReviewNote}
+              </div>
+              <ul style={styles.list}>
+                {entries.map((entry) => (
+                  <ContributionRow
+                    key={entry.id}
+                    entry={entry}
+                    language={language}
+                    t={t}
+                    showOwner={isAdmin && showAll}
+                    onDelete={setTarget}
+                  />
+                ))}
+              </ul>
+            </>
           )}
         </>
       )}
