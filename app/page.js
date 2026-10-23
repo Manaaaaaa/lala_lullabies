@@ -33,6 +33,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from("entries")
         .select("*")
+        .or("status.eq.published,status.is.null")
         .order("created_at", { ascending: false });
 
       if (error) {
