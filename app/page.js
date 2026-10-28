@@ -167,6 +167,7 @@ export default function Home() {
                 place={entry.place}
                 image_url={entry.image_url}
                 audio_url={entry.audio_url}
+                admin_edited_by={entry.admin_edited_by}
               />
             ))}
           </div>

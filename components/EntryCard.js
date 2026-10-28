@@ -21,6 +21,7 @@ export default function EntryCard({
   place,
   image_url,
   audio_url,
+  admin_edited_by,
 }) {
   const { language } = useLanguage();
   const t = uiText[language];
@@ -129,6 +130,12 @@ export default function EntryCard({
       fontSize: 14,
       color: "#E8EDF2",
     },
+    editedNote: {
+      fontSize: 11,
+      color: "#F0C040",
+      display: "block",
+      marginTop: 4,
+    },
     player: {
       display: "flex",
       alignItems: "center",
@@ -189,6 +196,9 @@ export default function EntryCard({
           <p style={styles.metaItem}>
             <span style={styles.metaLabel}>{t.contributor}</span>
             <span style={styles.metaValue}>{contributor[language]}</span>
+            {!!admin_edited_by && (
+              <span style={styles.editedNote}>{t.editedByAdmin}</span>
+            )}
           </p>
 
           <p style={styles.metaItem}>

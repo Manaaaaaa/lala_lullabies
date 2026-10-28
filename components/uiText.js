@@ -93,11 +93,20 @@ const uiText = {
     reviewSuccess: (action) =>
       `Entry ${action === "published" ? "published" : "returned"} successfully.`,
     reviewFailed: "Review action failed. Please try again.",
+    // Entry editing
+    editAction: "Edit",
+    editAndResubmit: "Edit & Resubmit",
+    saveAction: "Save",
+    saving: "Saving...",
+    editedByAdmin: "Edited by admin",
+    contributorReadOnly: "Contributor is preserved as originally submitted by the owner.",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
     contributor: "ចូលរួមច្រៀងដោយ",
     place: "ទីកន្លែង",
+    editedByAdmin: "កែសម្រួលដោយអ្នកគ្រប់គ្រង",
+    contributorReadOnly: "ឈ្មោះអ្នកចូលរួមត្រូវបានរក្សាទុកដូចដែលម្ចាស់បានដាក់ស្នើដំបូង។",
     exploreHeading: "ស្វែងរកក្នុងបណ្ដុំឯកសារ",
     exploreDesc: "រកបទចម្រៀងដែលបានកត់ត្រាពីសហគមន៍ខ្មែរ។",
     homeLink: "ទំព័រដើម",
@@ -161,33 +170,38 @@ const uiText = {
     // Submission error — Khmer
     submitError: "ការបញ្ជូនបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
     submitImageRequired: "សូមជ្រើសរើសឯកសាររូបភាព និងសំឡេង។",
-    submitProvinceRequired: "សូមជ្រើសរើសខេត្ត។",
+    submitProvinceRequired: "សូមជ្រើសរើសខេត្តរបស់អ្នក។",
     // Status labels — Khmer
-    statusPublished: "បានបោះពុម្ពផ្សាយ",
+    statusPublished: "បានផ្សព្វផ្សាយ",
     statusDraft: "សេចក្តីព្រាង",
     statusReturned: "បានបញ្ជូនត្រឡប់",
     statusUnknown: "មិនស្គាល់",
     // Pending review — Khmer
     pendingReview: "កំពុងរង់ចាំការត្រួតពិនិត្យ",
     pendingReviewNote:
-      "ការចូលរួមរបស់អ្នកកំពុងរង់ចាំការត្រួតពិនិត្យដោយក្រុមការងារមុនពេលត្រូវបានបោះពុម្ពផ្សាយ។",
+      "ការចូលរួមរបស់អ្នកកំពុងរង់ចាំការត្រួតពិនិត្យដោយក្រុមការងារមុនពេលត្រូវបានផ្សព្វផ្សាយ។",
     // Irreversible delete clarification — Khmer
     irreversibleWarning:
       "សកម្មភាពនេះមិនអាចត្រឡប់វិញបានទេ។ ឯកសាររបស់វានឹងត្រូវបានលុបជាអចិន្ត្រៃយ៍។",
     // Admin review — Khmer
     adminReviewNav: "ពិនិត្យការចូលរួម",
     adminReviewTitle: "ពិនិត្យការចូលរួម",
-    adminReviewIntro: "ពិនិត្យការចូលរួមដែលកំពុងរង់ចាំ ហើយសម្រេចចិត្តបោះពុម្ពផ្សាយ ឬបញ្ជូនត្រឡប់។",
+    adminReviewIntro: "ពិនិត្យការចូលរួមដែលកំពុងរង់ចាំ មុនសម្រេចចិត្តផ្សព្វផ្សាយ ឬបញ្ជូនត្រឡប់។",
     adminReviewEmpty: "មិនទាន់មានការចូលរួមដែលកំពុងរង់ចាំការពិនិត្យទេ។",
     adminReviewLoading: "កំពុងផ្ទុកការចូលរួមដែលកំពុងរង់ចាំ...",
     adminReviewError: "មិនអាចផ្ទុកការចូលរួមបានទេ។ សូមព្យាយាមម្តងទៀត។",
-    publishAction: "បោះពុម្ពផ្សាយ",
+    publishAction: "ផ្សព្វផ្សាយ",
     returnAction: "បញ្ជូនត្រឡប់",
-    publishing: "កំពុងបោះពុម្ពផ្សាយ...",
+    publishing: "កំពុងផ្សព្វផ្សាយ...",
     returning: "កំពុងបញ្ជូនត្រឡប់...",
     reviewSuccess: (action) =>
-      `បាន${action === "published" ? "បោះពុម្ពផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
+      `បាន${action === "published" ? "បានផ្សព្វផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
     reviewFailed: "សកម្មភាពនេះបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
+    // Entry editing — Khmer
+    editAction: "កែសម្រួល",
+    editAndResubmit: "កែសម្រួល និងបញ្ជូនម្ដងទៀត",
+    saveAction: "រក្សាទុក",
+    saving: "កំពុងរក្សាទុក...",
   },
 };
 

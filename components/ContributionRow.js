@@ -1,14 +1,47 @@
 "use client";
 
+import { useState } from "react";
+import { createClient } from "../lib/supabase/client";
+import EntryEditor from "./EntryEditor";
+
 export default function ContributionRow({ entry, language, t, showOwner, onDelete }) {
-  const title = entry.title?.[language] || entry.title?.en || entry.title?.km || "";
-  const description = entry.description?.[language] || t.noDescription;
-  const contributor = entry.contributor?.[language] || "";
-  const date = entry.created_at
-    ? new Date(entry.created_at).toLocaleDateString(language === "km" ? "km-KH" : "en-US", {
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [currentEntry, setCurrentEntry] = useState(entry);
+
+  const title = currentEntry.title?.[language] || currentEntry.title?.en || currentEntry.title?.km || "";
+  const description = currentEntry.description?.[language] || t.noDescription;
+  const contributor = currentEntry.contributor?.[language] || "";
+  const date = currentEntry.created_at
+    ? new Date(currentEntry.created_at).toLocaleDateString(language === "km" ? "km-KH" : "en-US", {
         year: "numeric", month: "short", day: "numeric",
       })
     : "";
+
+  const handleSave = async (updates) => {
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.rpc("resubmit_entry", {
+        p_entry_id: currentEntry.id,
+        p_title: updates.title,
+        p_description: updates.description,
+        p_contributor: updates.contributor,
+        p_place: updates.place,
+      });
+      if (error) throw error;
+      if (!data.ok) throw new Error(data.error || "Save failed");
+      setCurrentEntry({ ...currentEntry, ...updates, status: "pending" });
+      setEditing(false);
+    } catch (err) {
+      console.error("Resubmit save error:", err);
+      setSaveError(err.message || "Save failed");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   // Actual database statuses:
   //   NULL  → legacy entry (already published before status tracking)
@@ -16,7 +49,7 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
   //   "pending"   → Pending Review
   //   "draft"     → Draft
   //   "returned"  → Returned
-  const status = entry.status ?? null;
+  const status = currentEntry.status ?? null;
 
   const statusStyles = {
     legacy: {
@@ -103,29 +136,63 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
       padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontSize: 13,
       color: "#E85D5D", backgroundColor: "transparent", border: "1px solid rgba(232, 93, 93, 0.5)",
     },
+    resubmit: {
+      padding: "8px 16px", borderRadius: 999, cursor: "pointer", fontSize: 13,
+      color: "#F0C040", backgroundColor: "rgba(240, 192, 64, 0.08)",
+      border: "1px solid rgba(240, 192, 64, 0.5)",
+    },
   };
 
   return (
     <li style={{ listStyle: "none" }}>
       <div style={styles.card}>
-        {entry.image_url && <img src={entry.image_url} alt="" style={styles.thumb} />}
-        <div style={styles.info}>
-          <div style={styles.titleRow}>
-            <h3 style={styles.title}>{title}</h3>
-            <span style={badgeStyle} aria-label={statusLabel}>
-              {statusLabel}
-            </span>
-          </div>
-          <p style={styles.meta}>
-            {entry.category}
-            {date && ` · ${t.submittedOn} ${date}`}
-            {showOwner && ` · ${t.byLabel} ${contributor || "—"} (${entry.owner ? entry.owner.slice(0, 8) : "no owner"})`}
-          </p>
-          <p style={styles.desc}>{description}</p>
-        </div>
-        <button style={styles.del} onClick={() => onDelete(entry)} aria-label={`${t.deleteAction}: ${title}`}>
-          {t.deleteAction}
-        </button>
+        {editing ? (
+          <>
+            {saveError && (
+              <p role="alert" style={{ color: "#E85D5D", margin: "0 0 10px" }}>{saveError}</p>
+            )}
+            <EntryEditor
+              entry={currentEntry}
+              language={language}
+              t={t}
+              onSave={handleSave}
+              onCancel={() => { setEditing(false); setSaveError(null); }}
+              saving={saving}
+            />
+          </>
+        ) : (
+          <>
+            {currentEntry.image_url && <img src={currentEntry.image_url} alt="" style={styles.thumb} />}
+            <div style={styles.info}>
+              <div style={styles.titleRow}>
+                <h3 style={styles.title}>{title}</h3>
+                <span style={badgeStyle} aria-label={statusLabel}>
+                  {statusLabel}
+                </span>
+              </div>
+              <p style={styles.meta}>
+                {currentEntry.category}
+                {date && ` · ${t.submittedOn} ${date}`}
+                {showOwner && ` · ${t.byLabel} ${contributor || "—"} (${currentEntry.owner ? currentEntry.owner.slice(0, 8) : "no owner"})`}
+              </p>
+              <p style={styles.desc}>{description}</p>
+            </div>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-start" }}>
+              {status === "returned" && (
+                <button
+                  style={styles.resubmit}
+                  onClick={() => setEditing(true)}
+                  aria-label={`Edit & resubmit: ${title}`}
+                >
+                  {t.editAndResubmit || "Edit & Resubmit"}
+                </button>
+              )}
+              <button style={styles.del} onClick={() => onDelete(currentEntry)} aria-label={`${t.deleteAction}: ${title}`}>
+                {t.deleteAction}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </li>
   );

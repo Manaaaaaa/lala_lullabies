@@ -1,18 +1,57 @@
 "use client";
 
+import { useState } from "react";
+import { createClient } from "../lib/supabase/client";
+import EntryEditor from "./EntryEditor";
+
 export default function AdminReviewRow({ entry, language, t, onPublish, onReturn, busy }) {
-  const title = entry.title?.[language] || entry.title?.en || entry.title?.km || "";
-  const description = entry.description?.[language] || t.noDescription;
-  const contributor = entry.contributor?.[language] || "";
-  const contribEn = entry.contributor?.en || "";
-  const place = entry.place?.[language] || entry.place?.en || "";
-  const category = entry.category || "";
-  const date = entry.created_at
-    ? new Date(entry.created_at).toLocaleDateString(language === "km" ? "km-KH" : "en-US", {
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState(null);
+  const [currentEntry, setCurrentEntry] = useState(entry);
+
+  const title = currentEntry.title?.[language] || currentEntry.title?.en || currentEntry.title?.km || "";
+  const description = currentEntry.description?.[language] || t.noDescription;
+  const contributor = currentEntry.contributor?.[language] || "";
+  const contribEn = currentEntry.contributor?.en || "";
+  const place = currentEntry.place?.[language] || currentEntry.place?.en || "";
+  const category = currentEntry.category || "";
+  const date = currentEntry.created_at
+    ? new Date(currentEntry.created_at).toLocaleDateString(language === "km" ? "km-KH" : "en-US", {
         year: "numeric", month: "short", day: "numeric",
       })
     : "";
-  const ownerLabel = entry.owner ? entry.owner.slice(0, 8) : "—";
+  const ownerLabel = currentEntry.owner ? currentEntry.owner.slice(0, 8) : "—";
+
+  const handleSave = async (updates) => {
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const supabase = createClient();
+      // The admin RPC updates title/description/place only. Contributor is
+      // preserved server-side and cannot be replaced with the admin's name.
+      const { data, error } = await supabase.rpc("admin_update_entry", {
+        p_entry_id: currentEntry.id,
+        p_title: updates.title,
+        p_description: updates.description,
+        p_place: updates.place,
+      });
+      if (error) throw error;
+      if (!data.ok) throw new Error(data.error || "Save failed");
+      setCurrentEntry({
+        ...currentEntry,
+        ...updates,
+        admin_edited_by: data.admin_edited_by ?? currentEntry.admin_edited_by,
+        admin_edited_at: data.admin_edited_at ?? currentEntry.admin_edited_at,
+      });
+      setEditing(false);
+    } catch (err) {
+      console.error("Edit save error:", err);
+      setSaveError(err.message || "Save failed");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const styles = {
     card: {
@@ -33,11 +72,18 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
     },
     meta: { margin: "0 0 4px", fontSize: 13, color: "#97A1B3", lineHeight: 1.6 },
     label: { color: "#5A6373", fontFamily: "'Courier New', monospace", fontSize: 11, letterSpacing: 0.5 },
+    editedLabel: { color: "#F0C040", fontFamily: "'Courier New', monospace", fontSize: 11, letterSpacing: 0.5 },
     desc: {
       margin: "12px 0 0", fontSize: 14, lineHeight: 1.6, color: "#97A1B3",
       whiteSpace: "pre-wrap",
     },
     actions: { marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap" },
+    editBtn: {
+      padding: "10px 20px", borderRadius: 999, cursor: busy ? "not-allowed" : "pointer",
+      fontSize: 14, fontWeight: 500, color: "#97A1B3",
+      backgroundColor: "transparent", border: "1px solid rgba(151, 161, 179, 0.5)",
+      opacity: busy ? 0.4 : 1,
+    },
     publishBtn: {
       padding: "10px 20px", borderRadius: 999, cursor: busy ? "not-allowed" : "pointer",
       fontSize: 14, fontWeight: 600, color: "#060818", backgroundColor: "#2EE6A8",
@@ -54,50 +100,89 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
   return (
     <li style={{ listStyle: "none" }}>
       <div style={styles.card}>
-        <div style={styles.row}>
-          {(entry.image_url || entry.audio_url) && (
-            <div style={styles.mediaCol}>
-              {entry.image_url && (
-                <img src={entry.image_url} alt="" style={styles.thumb} />
+        {editing ? (
+          <>
+            {saveError && (
+              <p role="alert" style={{ color: "#E85D5D", margin: "0 0 10px" }}>{saveError}</p>
+            )}
+            <EntryEditor
+              entry={currentEntry}
+              language={language}
+              t={t}
+              onSave={handleSave}
+              onCancel={() => { setEditing(false); setSaveError(null); }}
+              saving={saving}
+              allowContributor={false}
+            />
+          </>
+        ) : (
+          <>
+            <div style={styles.row}>
+              {(currentEntry.image_url || currentEntry.audio_url) && (
+                <div style={styles.mediaCol}>
+                  {currentEntry.image_url && (
+                    <img src={currentEntry.image_url} alt="" style={styles.thumb} />
+                  )}
+                  {currentEntry.audio_url && (
+                    <audio controls preload="none" style={styles.audioPlayer} aria-label={t.playAudio}>
+                      <source src={currentEntry.audio_url} />
+                    </audio>
+                  )}
+                </div>
               )}
-              {entry.audio_url && (
-                <audio controls preload="none" style={styles.audioPlayer} aria-label={t.playAudio}>
-                  <source src={entry.audio_url} />
-                </audio>
-              )}
+              <div style={styles.infoCol}>
+                <h3 style={styles.title}>{title}</h3>
+                <span style={styles.badge}>{t.pendingReview}</span>
+                <p style={styles.meta}>
+                  <span style={styles.label}>{t.submittedOn}</span> {date}<br />
+                  <span style={styles.label}>{t.byLabel}</span> {contributor || contribEn || "—"}{" "}
+                  ({ownerLabel})<br />
+                  <span style={styles.label}>{t.place}</span> {place}<br />
+                  {category && <><span style={styles.label}>{t.category || "Category"}</span> {category}</>}
+                  {currentEntry.admin_edited_at && (
+                    <>
+                      <br />
+                      <span style={styles.editedLabel}>
+                        {t.editedByAdmin} ·{" "}
+                        {new Date(currentEntry.admin_edited_at).toLocaleDateString(
+                          language === "km" ? "km-KH" : "en-US",
+                          { year: "numeric", month: "short", day: "numeric" }
+                        )}
+                      </span>
+                    </>
+                  )}
+                </p>
+                <p style={styles.desc}>{description}</p>
+              </div>
             </div>
-          )}
-          <div style={styles.infoCol}>
-            <h3 style={styles.title}>{title}</h3>
-            <span style={styles.badge}>{t.pendingReview}</span>
-            <p style={styles.meta}>
-              <span style={styles.label}>{t.submittedOn}</span> {date}<br />
-              <span style={styles.label}>{t.byLabel}</span> {contributor || contribEn || "—"}{" "}
-              ({ownerLabel})<br />
-              <span style={styles.label}>{t.place}</span> {place}<br />
-              {category && <><span style={styles.label}>{t.category || "Category"}</span> {category}</>}
-            </p>
-            <p style={styles.desc}>{description}</p>
-          </div>
-        </div>
-        <div style={styles.actions}>
-          <button
-            style={styles.publishBtn}
-            onClick={() => onPublish(entry)}
-            disabled={busy}
-            aria-label={`${t.publishAction}: ${title}`}
-          >
-            {busy ? t.publishing : t.publishAction}
-          </button>
-          <button
-            style={styles.returnBtn}
-            onClick={() => onReturn(entry)}
-            disabled={busy}
-            aria-label={`${t.returnAction}: ${title}`}
-          >
-            {busy ? t.returning : t.returnAction}
-          </button>
-        </div>
+            <div style={styles.actions}>
+              <button
+                style={styles.editBtn}
+                onClick={() => setEditing(true)}
+                disabled={busy}
+                aria-label={`Edit: ${title}`}
+              >
+                {t.editAction || "Edit"}
+              </button>
+              <button
+                style={styles.publishBtn}
+                onClick={() => onPublish(currentEntry)}
+                disabled={busy}
+                aria-label={`${t.publishAction}: ${title}`}
+              >
+                {busy ? t.publishing : t.publishAction}
+              </button>
+              <button
+                style={styles.returnBtn}
+                onClick={() => onReturn(currentEntry)}
+                disabled={busy}
+                aria-label={`${t.returnAction}: ${title}`}
+              >
+                {busy ? t.returning : t.returnAction}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </li>
   );
