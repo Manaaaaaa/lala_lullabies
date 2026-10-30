@@ -98,6 +98,7 @@ const uiText = {
     editAndResubmit: "Edit & Resubmit",
     saveAction: "Save",
     saving: "Saving...",
+    submitAction: "Resubmit",
     editedByAdmin: "Edited by admin",
     contributorReadOnly: "Contributor is preserved as originally submitted by the owner.",
   },
@@ -195,13 +196,15 @@ const uiText = {
     publishing: "កំពុងផ្សព្វផ្សាយ...",
     returning: "កំពុងបញ្ជូនត្រឡប់...",
     reviewSuccess: (action) =>
-      `បាន${action === "published" ? "បានផ្សព្វផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
+      `បាន${action === "published" ? "ផ្សព្វផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
     reviewFailed: "សកម្មភាពនេះបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
     // Entry editing — Khmer
     editAction: "កែសម្រួល",
     editAndResubmit: "កែសម្រួល និងបញ្ជូនម្ដងទៀត",
     saveAction: "រក្សាទុក",
     saving: "កំពុងរក្សាទុក...",
+    submitting: "កំពុងបញ្ជូន...",
+    submitAction: "ដាក់បញ្ជូនបម្ដងទៀត",
   },
 };
 
