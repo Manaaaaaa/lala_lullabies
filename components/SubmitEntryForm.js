@@ -179,32 +179,32 @@ export default function SubmitEntryForm() {
       <h2 style={styles.heading}>Contribute a Lullaby</h2>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Title (English)</label>
+        <label style={styles.label}>Title</label>
         <input type="text" placeholder="Enter title" value={titleEn} onChange={e => setTitleEn(e.target.value)} required style={styles.input} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>ចំណងជើង (ភាសាខ្មែរ)</label>
+        <label style={styles.label}>ចំណងជើង</label>
         <input type="text" placeholder="បញ្ចូលចំណងជើង" value={titleKm} onChange={e => setTitleKm(e.target.value)} required style={styles.input} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Description (English)</label>
+        <label style={styles.label}>Description</label>
         <textarea placeholder="Enter description" value={descEn} onChange={e => setDescEn(e.target.value)} required style={styles.textarea} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>ការពិពណ៌នា (ភាសាខ្មែរ)</label>
+        <label style={styles.label}>ការពិពណ៌នា</label>
         <textarea placeholder="បញ្ចូលការពិពណ៌នា" value={descKm} onChange={e => setDescKm(e.target.value)} required style={styles.textarea} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Contributor (English)</label>
+        <label style={styles.label}>Contributor's Name (Lastname, Firstname)</label>
         <input type="text" placeholder="Enter contributor name" value={contributorEn} onChange={e => setContributorEn(e.target.value)} required style={styles.input} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>អ្នកចូលរួម (ភាសាខ្មែរ)</label>
+        <label style={styles.label}>ឈ្មោះរបស់អ្នកចូលរួម (ត្រកូល , នាម )</label>
         <input type="text" placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម" value={contributorKm} onChange={e => setContributorKm(e.target.value)} required style={styles.input} />
       </div>
 
