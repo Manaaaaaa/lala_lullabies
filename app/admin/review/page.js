@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../../../components/LanguageProvider";
 import uiText from "../../../components/uiText";
 import { createClient } from "../../../lib/supabase/client";
@@ -19,6 +19,8 @@ export default function AdminReview() {
   const [loadError, setLoadError] = useState(false);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState(null);
+  const [sortOrder, setSortOrder] = useState("oldest");
+  const [sortFocus, setSortFocus] = useState(false);
 
   // Authenticate and check admin status
   useEffect(() => {
@@ -47,7 +49,6 @@ export default function AdminReview() {
       .from("entries")
       .select("*")
       .eq("status", "pending")
-      .order("created_at", { ascending: false })
       .then(({ data, error }) => {
         if (!active) return;
         if (error) setLoadError(true);
@@ -56,6 +57,23 @@ export default function AdminReview() {
       });
     return () => { active = false; };
   }, [checked, isAdmin]);
+
+  // Client-side stable sort. Missing created_at is treated as the oldest.
+  const sortedEntries = useMemo(() => {
+    const toTime = (s) => {
+      if (!s) return -Infinity;
+      const t = new Date(s).getTime();
+      return Number.isNaN(t) ? -Infinity : t;
+    };
+    const list = [...entries];
+    list.sort((a, b) => {
+      const aTime = toTime(a.created_at);
+      const bTime = toTime(b.created_at);
+      if (sortOrder === "oldest") return aTime - bTime;
+      return bTime - aTime;
+    });
+    return list;
+  }, [entries, sortOrder]);
 
   const handleReview = async (entry, newStatus) => {
     if (busy) return;
@@ -107,6 +125,30 @@ export default function AdminReview() {
     },
     boxTitle: { margin: "0 0 8px", fontSize: 18, color: "#E8EDF2" },
     boxText: { margin: "0 0 20px", color: "#97A1B3", fontSize: 15, lineHeight: 1.6 },
+    sortBar: {
+      display: "flex", alignItems: "center", justifyContent: "flex-end",
+      gap: 10, flexWrap: "wrap", margin: "0 0 16px",
+    },
+    sortLabel: { fontSize: 14, color: "#E2E8F0" },
+    sortSelect: {
+      backgroundColor: "rgba(255,255,255,0.05)",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: 10,
+      color: "#E8EDF2",
+      // colorScheme tells the browser to render the native dropdown popup
+      // (and its selection highlight) with the dark palette instead of the
+      // OS light theme's white background / blue highlight.
+      colorScheme: "dark",
+      padding: "8px 12px",
+      fontSize: 14,
+      cursor: "pointer",
+      fontFamily: "inherit",
+    },
+    sortOption: {
+      backgroundColor: "#0F172A",
+      color: "#E8EDF2",
+    },
+    sortFocusRing: { outline: "2px solid #2EE6A8", outlineOffset: 2 },
   };
 
   return (
@@ -147,19 +189,37 @@ export default function AdminReview() {
           <Link href="/my-contributions" className="cta-button">{t.myContributionsNav}</Link>
         </div>
       ) : (
-        <ul style={styles.list}>
-          {entries.map((entry) => (
-            <AdminReviewRow
-              key={entry.id}
-              entry={entry}
-              language={language}
-              t={t}
-              onPublish={(e) => handleReview(e, "published")}
-              onReturn={(e) => handleReview(e, "returned")}
-              busy={busy}
-            />
-          ))}
-        </ul>
+        <>
+          <div style={styles.sortBar}>
+            <label htmlFor="review-sort" style={styles.sortLabel}>
+              {t.sortLabel}
+            </label>
+            <select
+              id="review-sort"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+              onFocus={() => setSortFocus(true)}
+              onBlur={() => setSortFocus(false)}
+              style={{ ...styles.sortSelect, ...(sortFocus ? styles.sortFocusRing : {}) }}
+            >
+              <option value="oldest" style={styles.sortOption}>{t.sortOldest}</option>
+              <option value="newest" style={styles.sortOption}>{t.sortNewest}</option>
+            </select>
+          </div>
+          <ul style={styles.list}>
+            {sortedEntries.map((entry) => (
+              <AdminReviewRow
+                key={entry.id}
+                entry={entry}
+                language={language}
+                t={t}
+                onPublish={(e) => handleReview(e, "published")}
+                onReturn={(e) => handleReview(e, "returned")}
+                busy={busy}
+              />
+            ))}
+          </ul>
+        </>
       )}
     </main>
   );
