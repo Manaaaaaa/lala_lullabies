@@ -9,6 +9,7 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [currentEntry, setCurrentEntry] = useState(entry);
+  const [editSubmitted, setEditSubmitted] = useState(false);
 
   const title = currentEntry.title?.[language] || currentEntry.title?.en || currentEntry.title?.km || "";
   const description = currentEntry.description?.[language] || t.noDescription;
@@ -24,19 +25,38 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
     setSaveError(null);
     try {
       const supabase = createClient();
-      const { data, error } = await supabase.rpc("resubmit_entry", {
-        p_entry_id: currentEntry.id,
-        p_title: updates.title,
-        p_description: updates.description,
-        p_contributor: updates.contributor,
-        p_place: updates.place,
-      });
-      if (error) throw error;
-      if (!data.ok) throw new Error(data.error || "Save failed");
-      setCurrentEntry({ ...currentEntry, ...updates, status: "pending" });
+
+      if (isPublished && !editSubmitted) {
+        // Published entry edit → submitted for admin re-review
+        const { data, error } = await supabase.rpc("submit_edit_published_entry", {
+          p_entry_id: currentEntry.id,
+          p_title: updates.title,
+          p_description: updates.description,
+          p_contributor: updates.contributor,
+          p_place: updates.place,
+        });
+        if (error) throw error;
+        if (!data.ok) throw new Error(data.error || "Save failed");
+        // Do NOT overwrite currentEntry — the original values stay displayed;
+        // just flag the edit as submitted so the badge changes.
+        setEditSubmitted(true);
+      } else {
+        // status === "returned" — existing resubmit flow (status changes to pending)
+        const { data, error } = await supabase.rpc("resubmit_entry", {
+          p_entry_id: currentEntry.id,
+          p_title: updates.title,
+          p_description: updates.description,
+          p_contributor: updates.contributor,
+          p_place: updates.place,
+        });
+        if (error) throw error;
+        if (!data.ok) throw new Error(data.error || "Save failed");
+        setCurrentEntry({ ...currentEntry, ...updates, status: "pending" });
+      }
+
       setEditing(false);
     } catch (err) {
-      console.error("Resubmit save error:", err);
+      console.error("Save error:", err);
       setSaveError(err.message || "Save failed");
     } finally {
       setSaving(false);
@@ -50,6 +70,7 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
   //   "draft"     → Draft
   //   "returned"  → Returned
   const status = currentEntry.status ?? null;
+  const isPublished = status === "published" || status === null;
 
   const statusStyles = {
     legacy: {
@@ -88,15 +109,17 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
   const statusLabel
     = status === null
       ? t.statusPublished
-      : status === "published"
-        ? t.statusPublished
-        : status === "pending"
-          ? t.pendingReview
-          : status === "draft"
-            ? t.statusDraft
-            : status === "returned"
-              ? t.statusReturned
-              : t.statusUnknown;
+      : status === "published" && editSubmitted
+        ? t.pendingReview
+        : status === "published"
+          ? t.statusPublished
+          : status === "pending"
+            ? t.pendingReview
+            : status === "draft"
+              ? t.statusDraft
+              : status === "returned"
+                ? t.statusReturned
+                : t.statusUnknown;
 
   const badgeStyle = {
     display: "inline-block",
@@ -108,7 +131,9 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
     whiteSpace: "nowrap",
     ...(status === null
       ? statusStyles.legacy
-      : statusStyles[status] || neutralStyle),
+      : status === "published" && editSubmitted
+        ? statusStyles.pending
+        : statusStyles[status] || neutralStyle),
   };
 
   const styles = {
@@ -178,13 +203,13 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
               <p style={styles.desc}>{description}</p>
             </div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-start" }}>
-              {status === "returned" && (
+              {(status === "returned" || (isPublished && !editSubmitted)) && (
                 <button
-                  style={styles.resubmit}
+                  style={isPublished ? { ...styles.resubmit, color: "#2EE6A8", borderColor: "rgba(46, 230, 168, 0.5)" } : styles.resubmit}
                   onClick={() => setEditing(true)}
-                  aria-label={`Edit & resubmit: ${title}`}
+                  aria-label={`Edit: ${title}`}
                 >
-                  {t.editAndResubmit || "Edit & Resubmit"}
+                  {isPublished ? t.editAction : t.editAndResubmit || "Edit & Resubmit"}
                 </button>
               )}
               <button style={styles.del} onClick={() => onDelete(currentEntry)} aria-label={`${t.deleteAction}: ${title}`}>

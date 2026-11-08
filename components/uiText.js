@@ -104,6 +104,17 @@ const uiText = {
     submitAction: "Resubmit",
     editedByAdmin: "Edited by admin",
     contributorReadOnly: "Contributor is preserved as originally submitted by the owner.",
+    editSubmitMessage:
+      "Your changes have been submitted for review. The updated lullaby will become publicly visible after an administrator approves it.",
+    editApproved: "Edit approved. Changes are now publicly visible.",
+    editRejected: "Edit rejected. The original published version has been preserved.",
+    approveEditAction: "Approve Edit",
+    rejectEditAction: "Reject Edit",
+    editProposedLabel: "Proposed:",
+    publishedVersionLabel: "Published version",
+    proposedVersionLabel: "Proposed changes",
+    editProposedBadge: "Edit awaiting review",
+    descriptionLabel: "Description",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -211,6 +222,17 @@ const uiText = {
     saving: "កំពុងរក្សាទុក...",
     submitting: "កំពុងបញ្ជូន...",
     submitAction: "ដាក់បញ្ជូនបម្ដងទៀត",
+    editSubmitMessage:
+      "ការកែសម្រួលរបស់អ្នកត្រូវបានបញ្ជូន។ បទចម្រៀងដែលកែសម្រួល នឹងអាចមើលបានសាធារណៈបន្ទាប់ពីអ្នកគ្រប់គ្រងអនុម័ត។",
+    editApproved: "កែសម្រួលអានុម័ត។",
+    editRejected: "កែសម្រួលត្រូវបាកាបញ្ជូនត្រឡប់។ បទចម្រៀងដើមត្រូវបានរក្សាទុក។",
+    approveEditAction: "អនុម័តការកែសម្រួល",
+    rejectEditAction: "បដិសេធការកែសម្រួល",
+    editProposedLabel: "ស្នើរសុំកែសម្រួល",
+    publishedVersionLabel: "កំណែដែលបានផ្សព្វផ្សាយ",
+    proposedVersionLabel: "ការកែប្រែដែលបានស្នើ",
+    editProposedBadge: "ការកែប្រែកំពុងរង់ចាំការពិនិត្យ",
+    descriptionLabel: "ការពិពណ៌នា",
   },
 };
 

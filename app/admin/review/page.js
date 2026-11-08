@@ -6,6 +6,7 @@ import { useLanguage } from "../../../components/LanguageProvider";
 import uiText from "../../../components/uiText";
 import { createClient } from "../../../lib/supabase/client";
 import AdminReviewRow from "../../../components/AdminReviewRow";
+import AdminEditReviewRow from "../../../components/AdminEditReviewRow";
 import "../../home.css";
 
 export default function AdminReview() {
@@ -38,23 +39,49 @@ export default function AdminReview() {
     })();
   }, []);
 
-  // Load pending entries
+  // Load pending entries and pending edit proposals
   useEffect(() => {
     if (!checked || !isAdmin) return;
     let active = true;
     setLoading(true);
     setLoadError(false);
     const supabase = createClient();
-    supabase
-      .from("entries")
-      .select("*")
-      .eq("status", "pending")
-      .then(({ data, error }) => {
-        if (!active) return;
-        if (error) setLoadError(true);
-        else setEntries(data || []);
+
+    Promise.all([
+      // 1. New submissions (status = pending)
+      supabase.from("entries").select("*").eq("status", "pending"),
+      // 2. Proposed edits joined with their original entries
+      supabase.from("pending_entry_edits").select("*, entries!entry_id(*)"),
+    ]).then(async ([pendingRes, editsRes]) => {
+      if (!active) return;
+
+      if (pendingRes.error && editsRes.error) {
+        setLoadError(true);
         setLoading(false);
+        return;
+      }
+
+      const pending = pendingRes.data || [];
+      // Map each pending edit into a flattened row with the original entry data
+      // plus the pending values, so AdminEditReviewRow gets all fields it needs.
+      const editRows = (editsRes.data || []).map((pe) => {
+        const orig = pe.entries || {};
+        return {
+          // Spread the original entry values (title, description, etc.)
+          ...orig,
+          // Override with the proposed values under the pending_ prefix
+          pending_title: pe.title,
+          pending_description: pe.description,
+          pending_contributor: pe.contributor,
+          pending_place: pe.place,
+          pending_submitted_at: pe.created_at,
+          pending_edit_id: pe.id,
+        };
       });
+
+      setEntries([...pending, ...editRows]);
+      setLoading(false);
+    });
     return () => { active = false; };
   }, [checked, isAdmin]);
 
@@ -95,6 +122,46 @@ export default function AdminReview() {
       setNotice({ type: "success", text: t.reviewSuccess(newStatus) });
     } catch (err) {
       console.error("Review error:", err);
+      setNotice({ type: "error", text: err.message || t.reviewFailed });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleApproveEdit = async (entry) => {
+    if (busy) return;
+    setBusy(true);
+    setNotice(null);
+    const supabase = createClient();
+    try {
+      const { data, error } = await supabase.rpc("admin_approve_edit", {
+        p_edit_id: entry.pending_edit_id,
+      });
+      if (error) throw error;
+      if (!data.ok) throw new Error(data.error || "Failed to approve edit");
+      setEntries((prev) => prev.filter((e) => e.id !== entry.id));
+      setNotice({ type: "success", text: t.editApproved || "Edit approved and published." });
+    } catch (err) {
+      setNotice({ type: "error", text: err.message || t.reviewFailed });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRejectEdit = async (entry) => {
+    if (busy) return;
+    setBusy(true);
+    setNotice(null);
+    const supabase = createClient();
+    try {
+      const { data, error } = await supabase.rpc("admin_reject_edit", {
+        p_edit_id: entry.pending_edit_id,
+      });
+      if (error) throw error;
+      if (!data.ok) throw new Error(data.error || "Failed to reject edit");
+      setEntries((prev) => prev.filter((e) => e.id !== entry.id));
+      setNotice({ type: "success", text: t.editRejected || "Edit rejected. Original preserved." });
+    } catch (err) {
       setNotice({ type: "error", text: err.message || t.reviewFailed });
     } finally {
       setBusy(false);
@@ -208,15 +275,27 @@ export default function AdminReview() {
           </div>
           <ul style={styles.list}>
             {sortedEntries.map((entry) => (
-              <AdminReviewRow
-                key={entry.id}
-                entry={entry}
-                language={language}
-                t={t}
-                onPublish={(e) => handleReview(e, "published")}
-                onReturn={(e) => handleReview(e, "returned")}
-                busy={busy}
-              />
+              entry.pending_edit_id ? (
+                <AdminEditReviewRow
+                  key={entry.pending_edit_id}
+                  entry={entry}
+                  language={language}
+                  t={t}
+                  onApprove={handleApproveEdit}
+                  onReject={handleRejectEdit}
+                  busy={busy}
+                />
+              ) : (
+                <AdminReviewRow
+                  key={entry.id}
+                  entry={entry}
+                  language={language}
+                  t={t}
+                  onPublish={(e) => handleReview(e, "published")}
+                  onReturn={(e) => handleReview(e, "returned")}
+                  busy={busy}
+                />
+              )
             ))}
           </ul>
         </>
