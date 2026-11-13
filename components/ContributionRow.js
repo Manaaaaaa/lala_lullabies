@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client";
+import uploadMedia from "../lib/mediaUpload";
 import EntryEditor from "./EntryEditor";
 
 export default function ContributionRow({ entry, language, t, showOwner, onDelete }) {
@@ -25,6 +26,14 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
     setSaveError(null);
     try {
       const supabase = createClient();
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) throw new Error("User not authenticated.");
+
+      // Upload newly selected files; keep existing URLs when none chosen.
+      let imageUrl = currentEntry.image_url || null;
+      let audioUrl = currentEntry.audio_url || null;
+      if (updates.imageFile) imageUrl = await uploadMedia(supabase, user.id, updates.imageFile, "image");
+      if (updates.audioFile) audioUrl = await uploadMedia(supabase, user.id, updates.audioFile, "audio");
 
       if (isPublished && !editSubmitted) {
         // Published entry edit → submitted for admin re-review
@@ -34,6 +43,8 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
           p_description: updates.description,
           p_contributor: updates.contributor,
           p_place: updates.place,
+          p_image_url: imageUrl,
+          p_audio_url: audioUrl,
         });
         if (error) throw error;
         if (!data.ok) throw new Error(data.error || "Save failed");
@@ -48,10 +59,21 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
           p_description: updates.description,
           p_contributor: updates.contributor,
           p_place: updates.place,
+          p_image_url: imageUrl,
+          p_audio_url: audioUrl,
         });
         if (error) throw error;
         if (!data.ok) throw new Error(data.error || "Save failed");
-        setCurrentEntry({ ...currentEntry, ...updates, status: "pending" });
+        setCurrentEntry({
+          ...currentEntry,
+          title: updates.title,
+          description: updates.description,
+          contributor: updates.contributor,
+          place: updates.place,
+          image_url: imageUrl,
+          audio_url: audioUrl,
+          status: "pending",
+        });
       }
 
       setEditing(false);

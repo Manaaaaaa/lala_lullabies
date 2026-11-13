@@ -76,6 +76,8 @@ export default function AdminReview() {
           pending_place: pe.place,
           pending_submitted_at: pe.created_at,
           pending_edit_id: pe.id,
+          pending_image_url: pe.image_url ?? null,
+          pending_audio_url: pe.audio_url ?? null,
         };
       });
 

@@ -115,6 +115,8 @@ const uiText = {
     proposedVersionLabel: "Proposed changes",
     editProposedBadge: "Edit awaiting review",
     descriptionLabel: "Description",
+    coverImageLabel: "Cover Image",
+    audioLabel: "Audio File",
   },
   km: {
     searchPlaceholder: "ស្វែងរកបទចម្រៀង…",
@@ -233,6 +235,8 @@ const uiText = {
     proposedVersionLabel: "ការកែប្រែដែលបានស្នើ",
     editProposedBadge: "ការកែប្រែកំពុងរង់ចាំការពិនិត្យ",
     descriptionLabel: "ការពិពណ៌នា",
+    coverImageLabel: "រូបភាពគម្រប",
+    audioLabel: "ឯកសារសំឡេង",
   },
 };
 

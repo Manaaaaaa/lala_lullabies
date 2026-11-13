@@ -19,6 +19,11 @@ export default function AdminEditReviewRow({ entry, language, t, onApprove, onRe
       )
     : "";
   const ownerLabel = entry.owner ? entry.owner.slice(0, 8) : "—";
+  const proposedImage = entry.pending_image_url || null;
+  const proposedAudio = entry.pending_audio_url || null;
+  const mediaChanged =
+    (proposedImage !== null && proposedImage !== entry.image_url) ||
+    (proposedAudio !== null && proposedAudio !== entry.audio_url);
 
   const rows = [
     [t.contributeTitle || "Title", currentTitle, proposedTitle],
@@ -47,6 +52,8 @@ export default function AdminEditReviewRow({ entry, language, t, onApprove, onRe
     value: { margin: 0, fontSize: 14, lineHeight: 1.5, color: "#97A1B3" },
     diffValue: { margin: 0, fontSize: 14, lineHeight: 1.5, color: "#E8EDF2" },
     actions: { marginTop: 16, display: "flex", gap: 10, flexWrap: "wrap" },
+    proposedThumb: { width: 120, height: 120, objectFit: "cover", borderRadius: 8, backgroundColor: "#0F172A" },
+    proposedAudio: { width: 180, borderRadius: 8 },
     approveBtn: {
       padding: "10px 20px", borderRadius: 999, cursor: busy ? "not-allowed" : "pointer",
       fontSize: 14, fontWeight: 600, color: "#060818", backgroundColor: "#2EE6A8",
@@ -98,6 +105,20 @@ export default function AdminEditReviewRow({ entry, language, t, onApprove, onRe
                     <p style={s.diffValue}>{propVal || "—"}</p>
                   </div>
                 ))}
+                {mediaChanged && proposedImage && proposedImage !== entry.image_url && (
+                  <div style={{ margin: "0 0 8px" }}>
+                    <p style={s.fieldLabel}>{t.coverImageLabel}</p>
+                    <img src={proposedImage} alt="" style={s.proposedThumb} />
+                  </div>
+                )}
+                {mediaChanged && proposedAudio && proposedAudio !== entry.audio_url && (
+                  <div style={{ margin: "0 0 8px" }}>
+                    <p style={s.fieldLabel}>{t.audioLabel}</p>
+                    <audio controls preload="none" style={s.proposedAudio}>
+                      <source src={proposedAudio} />
+                    </audio>
+                  </div>
+                )}
               </div>
             </div>
 

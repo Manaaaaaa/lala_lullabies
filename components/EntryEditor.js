@@ -53,6 +53,13 @@ const s = {
   readOnly: { opacity: 0.75, minHeight: 0 },
   hint: { margin: 0, fontSize: 13, color: "#F0C040" },
   actions: { display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4 },
+  previewImg: {
+    width: 160, height: 110, objectFit: "cover", borderRadius: 8,
+    border: "1px solid rgba(255, 255, 255, 0.1)", backgroundColor: "#0F172A",
+  },
+  previewAudio: { width: "100%", maxWidth: 320 },
+  fileSelected: { margin: 0, fontSize: 13, color: "#2EE6A8" },
+  fileKeep: { margin: 0, fontSize: 13, color: "#97A1B3" },
 };
 
 export default function EntryEditor({ entry, language, t, onSave, onCancel, saving, allowContributor = true }) {
@@ -64,6 +71,8 @@ export default function EntryEditor({ entry, language, t, onSave, onCancel, savi
   const [contribEn, setContribEn] = useState(entry.contributor?.en || "");
   const [contribKm, setContribKm] = useState(entry.contributor?.km || "");
   const [placeIdx, setPlaceIdx] = useState(findProvinceIndex(entry.place));
+  const [imageFile, setImageFile] = useState(null);
+  const [audioFile, setAudioFile] = useState(null);
 
   const handleSave = () => {
     const selected = placeIdx !== "" ? provinces[Number(placeIdx)] : entry.place;
@@ -76,6 +85,10 @@ export default function EntryEditor({ entry, language, t, onSave, onCancel, savi
         ? { en: contribEn, km: contribKm }
         : entry.contributor || { en: "", km: "" },
       place: selected,
+      // Selected replacement files, if any. When null, the caller keeps the
+      // entry's current image/audio unchanged.
+      imageFile,
+      audioFile,
     });
   };
 
@@ -176,6 +189,44 @@ export default function EntryEditor({ entry, language, t, onSave, onCancel, savi
             <option key={p.en} value={String(i)}>{language === "km" ? p.km : p.en}</option>
           ))}
         </select>
+      </div>
+
+      <div style={s.group}>
+        <label style={s.label} htmlFor={id("image")}>Cover Image</label>
+        {entry.image_url && <img src={entry.image_url} alt="" style={s.previewImg} />}
+        <input
+          id={id("image")}
+          type="file"
+          accept="image/*"
+          className="entry-field"
+          style={{ ...s.field, padding: "8px 12px" }}
+          onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+        />
+        {imageFile ? (
+          <p style={s.fileSelected}>New image: {imageFile.name}</p>
+        ) : entry.image_url ? (
+          <p style={s.fileKeep}>Leave unchanged to keep the current image.</p>
+        ) : null}
+      </div>
+
+      <div style={s.group}>
+        <label style={s.label} htmlFor={id("audio")}>Audio File</label>
+        {entry.audio_url && (
+          <audio controls preload="none" src={entry.audio_url} style={s.previewAudio} />
+        )}
+        <input
+          id={id("audio")}
+          type="file"
+          accept="audio/*"
+          className="entry-field"
+          style={{ ...s.field, padding: "8px 12px" }}
+          onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+        />
+        {audioFile ? (
+          <p style={s.fileSelected}>New audio: {audioFile.name}</p>
+        ) : entry.audio_url ? (
+          <p style={s.fileKeep}>Leave unchanged to keep the current audio.</p>
+        ) : null}
       </div>
 
       <div style={s.actions}>

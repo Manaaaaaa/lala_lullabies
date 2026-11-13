@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client";
+import uploadMedia from "../lib/mediaUpload";
 import EntryEditor from "./EntryEditor";
 
 export default function AdminReviewRow({ entry, language, t, onPublish, onReturn, busy }) {
@@ -28,19 +29,34 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
     setSaveError(null);
     try {
       const supabase = createClient();
-      // The admin RPC updates title/description/place only. Contributor is
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) throw new Error("User not authenticated.");
+
+      // Upload newly selected files; keep existing URLs when none chosen.
+      let imageUrl = currentEntry.image_url || null;
+      let audioUrl = currentEntry.audio_url || null;
+      if (updates.imageFile) imageUrl = await uploadMedia(supabase, user.id, updates.imageFile, "image");
+      if (updates.audioFile) audioUrl = await uploadMedia(supabase, user.id, updates.audioFile, "audio");
+
+      // The admin RPC updates title/description/place/media only. Contributor is
       // preserved server-side and cannot be replaced with the admin's name.
       const { data, error } = await supabase.rpc("admin_update_entry", {
         p_entry_id: currentEntry.id,
         p_title: updates.title,
         p_description: updates.description,
         p_place: updates.place,
+        p_image_url: imageUrl,
+        p_audio_url: audioUrl,
       });
       if (error) throw error;
       if (!data.ok) throw new Error(data.error || "Save failed");
       setCurrentEntry({
         ...currentEntry,
-        ...updates,
+        title: updates.title,
+        description: updates.description,
+        place: updates.place,
+        image_url: imageUrl,
+        audio_url: audioUrl,
         admin_edited_by: data.admin_edited_by ?? currentEntry.admin_edited_by,
         admin_edited_at: data.admin_edited_at ?? currentEntry.admin_edited_at,
       });
