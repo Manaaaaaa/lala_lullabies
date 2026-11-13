@@ -96,6 +96,9 @@ const uiText = {
     reviewSuccess: (action) =>
       `Entry ${action === "published" ? "published" : "returned"} successfully.`,
     reviewFailed: "Review action failed. Please try again.",
+    returnCommentLabel: "Feedback for contributor",
+    returnCommentPlaceholder: "Explain what needs to be changed before it can be published…",
+    adminFeedbackLabel: "Feedback from admin",
     // Entry editing
     editAction: "Edit",
     editAndResubmit: "Edit & Resubmit",
@@ -217,6 +220,9 @@ const uiText = {
     reviewSuccess: (action) =>
       `បាន${action === "published" ? "ផ្សព្វផ្សាយ" : "បញ្ជូនត្រឡប់"}ដោយជោគជ័យ។`,
     reviewFailed: "សកម្មភាពនេះបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
+    returnCommentLabel: "មតិសម្រាប់អ្នកចូលរួម",
+    returnCommentPlaceholder: "ពន្យល់ពីអ្វីដែលត្រូវកែប្រែ មុនពេលអាចផ្សព្វផ្សាយ…",
+    adminFeedbackLabel: "មតិពីអ្នកគ្រប់គ្រង",
     // Entry editing — Khmer
     editAction: "កែសម្រួល",
     editAndResubmit: "កែសម្រួល និងបញ្ជូនម្ដងទៀត",

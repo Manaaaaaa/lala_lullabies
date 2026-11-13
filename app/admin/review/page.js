@@ -104,7 +104,7 @@ export default function AdminReview() {
     return list;
   }, [entries, sortOrder]);
 
-  const handleReview = async (entry, newStatus) => {
+  const handleReview = async (entry, newStatus, comment) => {
     if (busy) return;
     setBusy(true);
     setNotice(null);
@@ -114,6 +114,7 @@ export default function AdminReview() {
       const { data, error } = await supabase.rpc("admin_review_entry", {
         p_entry_id: entry.id,
         p_new_status: newStatus,
+        p_comment: comment || null,
       });
 
       if (error) throw error;
@@ -294,7 +295,7 @@ export default function AdminReview() {
                   language={language}
                   t={t}
                   onPublish={(e) => handleReview(e, "published")}
-                  onReturn={(e) => handleReview(e, "returned")}
+                  onReturn={(e, comment) => handleReview(e, "returned", comment)}
                   busy={busy}
                 />
               )

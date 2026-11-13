@@ -10,6 +10,7 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [currentEntry, setCurrentEntry] = useState(entry);
+  const [returnComment, setReturnComment] = useState("");
 
   const title = currentEntry.title?.[language] || currentEntry.title?.en || currentEntry.title?.km || "";
   const description = currentEntry.description?.[language] || t.noDescription;
@@ -111,6 +112,22 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
       backgroundColor: "transparent", border: "1px solid rgba(232, 93, 93, 0.5)",
       opacity: busy ? 0.4 : 1, transition: "opacity 0.2s",
     },
+    commentBox: {
+      margin: "16px 0 0", padding: "12px 14px", borderRadius: 10,
+      backgroundColor: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(232, 93, 93, 0.25)",
+    },
+    commentLabel: {
+      display: "block", fontSize: 13, fontWeight: 500, color: "#E2E8F0",
+      margin: "0 0 6px",
+    },
+    commentField: {
+      width: "100%", boxSizing: "border-box",
+      padding: "10px 12px", minHeight: 60, resize: "vertical",
+      fontSize: 14, lineHeight: 1.5, fontFamily: "inherit",
+      color: "#FFFFFF", backgroundColor: "rgba(255, 255, 255, 0.05)",
+      border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: 8,
+      outline: "none",
+    },
   };
 
   return (
@@ -190,12 +207,24 @@ export default function AdminReviewRow({ entry, language, t, onPublish, onReturn
               </button>
               <button
                 style={styles.returnBtn}
-                onClick={() => onReturn(currentEntry)}
+                onClick={() => onReturn(currentEntry, returnComment)}
                 disabled={busy}
                 aria-label={`${t.returnAction}: ${title}`}
               >
                 {busy ? t.returning : t.returnAction}
               </button>
+            </div>
+
+            <div style={styles.commentBox}>
+              <label style={styles.commentLabel} htmlFor="return-comment">{t.returnCommentLabel}</label>
+              <textarea
+                id="return-comment"
+                style={styles.commentField}
+                placeholder={t.returnCommentPlaceholder}
+                value={returnComment}
+                onChange={(e) => setReturnComment(e.target.value)}
+                disabled={busy}
+              />
             </div>
           </>
         )}

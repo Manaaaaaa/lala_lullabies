@@ -164,6 +164,18 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
       padding: 16, borderRadius: 14,
       backgroundColor: "rgba(19, 25, 43, 0.8)", border: "1px solid #222f4a",
     },
+    feedbackBox: {
+      margin: "12px 0 0", padding: "12px 14px", borderRadius: 10,
+      backgroundColor: "rgba(232, 93, 93, 0.06)", border: "1px solid rgba(232, 93, 93, 0.2)",
+    },
+    feedbackLabel: {
+      margin: "0 0 4px", fontSize: 12, fontWeight: 600,
+      color: "#E85D5D", fontFamily: "'Courier New', monospace", letterSpacing: 0.5,
+    },
+    feedbackText: {
+      margin: 0, fontSize: 14, lineHeight: 1.5, color: "#E2E8F0",
+      whiteSpace: "pre-wrap",
+    },
     thumb: { width: 96, height: 96, objectFit: "cover", borderRadius: 8, flexShrink: 0, backgroundColor: "#0F172A" },
     info: { flex: 1, minWidth: 200 },
     titleRow: {
@@ -223,6 +235,12 @@ export default function ContributionRow({ entry, language, t, showOwner, onDelet
                 {showOwner && ` · ${t.byLabel} ${contributor || "—"} (${currentEntry.owner ? currentEntry.owner.slice(0, 8) : "no owner"})`}
               </p>
               <p style={styles.desc}>{description}</p>
+            {status === "returned" && currentEntry.review_comment && (
+              <div style={styles.feedbackBox}>
+                <p style={styles.feedbackLabel}>{t.adminFeedbackLabel}</p>
+                <p style={styles.feedbackText}>{currentEntry.review_comment}</p>
+              </div>
+            )}
             </div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-start" }}>
               {(status === "returned" || (isPublished && !editSubmitted)) && (
