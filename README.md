@@ -116,7 +116,7 @@ This project was built with AI assistance through several tools and models:
 - **ChatGPT** (free web version) — used to plan the project structure, design the database schema, and reason through the contribution-review-publish flow before writing code.
 - **Gemini** (free web version) — used to help visualize UI layout decisions and get styling inspiration.
 
-Aside from `collection.config.js`, `provinces.js`, and most of `uiText.js` (the Khmer labels were written by the owner of the repository), the code is AI-generated and was reviewed, tested, and adjusted by the owner of the repository.
+Aside from `provinces.js`, and most of `uiText.js` (the Khmer labels were written by the owner of the repository), the code is AI-generated and was reviewed, tested, and adjusted by the owner of the repository.
 
 | Task | Tool / Model | What the AI wrote | What was changed after review |
 |------|-------------|-------------------|-------------------------------|
