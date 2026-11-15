@@ -80,7 +80,7 @@ function BrowseContent() {
           margin: 0,
         }}
       >
-        {collection.description}
+        {collection[`description_${language}`] || collection.description}
       </p>
 
       {loading ? (

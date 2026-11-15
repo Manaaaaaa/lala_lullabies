@@ -128,7 +128,7 @@ export default function Home() {
         <h1 style={styles.heroTitle}>
           {heroLead} <span style={styles.heroTitleAccent}>{lastWord}</span>
         </h1>
-        <p style={styles.heroDescription}>{collection.description}</p>
+        <p style={styles.heroDescription}>{collection[`description_${language}`] || collection.description}</p>
       </section>
 
       {/* Explore the Archive Section */}

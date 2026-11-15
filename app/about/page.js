@@ -56,16 +56,16 @@ export default function About() {
     <main className="page-wrap" style={styles.wrap}>
       <p style={styles.kicker}>{t.kicker}</p>
       <h1 style={styles.title}>{t.aboutTitle}</h1>
-      <p style={styles.description}>{collection.description}</p>
+      <p style={styles.description}>{collection[`description_${language}`] || collection.description}</p>
 
       <div style={styles.block}>
-        <p style={styles.label}>{t.creatorLabel}</p>
-        <p style={styles.value}>{collection.creator}</p>
+        <p style={styles.label}>{t.curatorLabel}</p>
+        <p style={styles.value}>{collection[`curator_${language}`] || collection.curator}</p>
       </div>
 
       <div style={styles.block}>
         <p style={styles.label}>{t.sourceLabel}</p>
-        <p style={styles.value}>{collection.source}</p>
+        <p style={styles.value}>{collection[`source_${language}`] || collection.source}</p>
       </div>
     </main>
   );
