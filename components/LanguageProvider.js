@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const LanguageContext = createContext({
-  language: "en",
+  language: "km",
   setLanguage: () => {},
   toggleLanguage: () => {},
 });
@@ -13,7 +13,7 @@ export function useLanguage() {
 }
 
 export default function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("km");
 
   useEffect(() => {
     try {
