@@ -11,7 +11,7 @@ const collection = {
   name: "Localized lullabies",
   // One sentence: what is this archive, and why does it matter?
   description: "A curated collection of Khmer cradle songs, collected from the voices of people across Cambodia and especially Takeo province. Learned in infancy and carried into adulthood, these remembered lullabies serve as intimate sonic anchors of memory, identity, and longing.",
-  description_km: "ការប្រមូលផ្តុំសម្រាំងនូវបទចម្រៀងលួងកូនរបស់ប្រជាជនខ្មែរ​ ដែលប្រមូលផ្ដុំពីសម្លេងរបស់ប្រជាជនទូទាំងប្រទេសកម្ពុជា និងជាពិសេសពីខេត្តតាកែវ។ បទដែលបានស្ដាប់តាំងពីវ័យកុមារ និងបន្តចងចាំរហូតដល់វ័យជំទង់ និងវ័យចាស់ទុំ បទចម្រៀងលួងលោមទាំងនេះបម្រើជាយុថ្កាខ្សែកថា ឬចំណងសោរដ៏ស្និទ្ធស្នាលនៃអនុស្សាវរីយ៍ អត្តសញ្ញាណ និងសេចក្តីស្រឡាញ់នឹករលឹក។",
+  description_km: "ការប្រមូលផ្តុំសម្រាំងនូវបទចម្រៀងលួងកូនរបស់ប្រជាជនខ្មែរ​ ដែលប្រមូលផ្ដុំពីសម្លេងរបស់ប្រជាជនទូទាំងប្រទេសកម្ពុជា និងជាពិសេសពីខេត្តតាកែវ។ បទដែលបានស្ដាប់តាំងពីវ័យកុមារ និងបន្តចងចាំរហូតដល់វ័យជំទង់ និងវ័យចាស់ទុំ បទចម្រៀងលួងលោមទាំងនេះបម្រើជាចំណងសោរដ៏ស្និទ្ធស្នាលនៃអនុស្សាវរីយ៍ អត្តសញ្ញាណ និងសេចក្តីស្រឡាញ់នឹករលឹក។",
 
   // Who is building this archive? Your name, as you want it shown.
   curator: "Kimsourmana",
