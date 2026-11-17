@@ -3,9 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "../../components/LanguageProvider";
+import uiText from "../../components/uiText";
 import { createClient } from "../../lib/supabase/client";
+import "../home.css";
 
 export default function Login() {
+  const { language } = useLanguage();
+  const t = uiText[language];
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +31,7 @@ export default function Login() {
     setLoading(false);
 
     if (signInError) {
-      setError("Invalid email or password");
+      setError(t.invalidCredentials);
       return;
     }
 
@@ -57,7 +62,11 @@ export default function Login() {
       fontWeight: 700,
       color: "#FFFFFF",
       margin: "0 0 8px",
-      letterSpacing: "-0.5px",
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      letterSpacing: 0,
+      lineHeight: 1.5,
+      paddingTop: "0.25em",
+      paddingBottom: "0.25em",
     },
     subheading: {
       fontSize: 14,
@@ -78,8 +87,11 @@ export default function Login() {
       fontSize: 12,
       fontWeight: 600,
       color: "#2EE6A8",
-      textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      letterSpacing: 0,
+      lineHeight: 1.5,
+      paddingTop: "0.15em",
+      paddingBottom: "0.15em",
     },
     input: {
       width: "100%",
@@ -89,18 +101,22 @@ export default function Login() {
       backgroundColor: "rgba(10, 13, 24, 0.6)",
       color: "#E8EDF2",
       fontSize: 15,
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      lineHeight: 1.5,
       outline: "none",
       boxSizing: "border-box",
     },
     button: {
       marginTop: 8,
-      padding: "14px",
+      padding: "12px 24px",
       borderRadius: 10,
       border: "none",
       backgroundColor: "#2EE6A8",
       color: "#0A0D18",
       fontSize: 15,
       fontWeight: 600,
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      lineHeight: 1.4,
       cursor: loading ? "not-allowed" : "pointer",
       opacity: loading ? 0.7 : 1,
       transition: "background-color 0.2s ease",
@@ -132,20 +148,20 @@ export default function Login() {
     <main className="page-wrap" style={styles.wrap}>
       <div style={styles.card}>
         <div style={styles.headerBox}>
-          <h1 style={styles.heading}>Welcome back</h1>
-          <p style={styles.subheading}>Log in to access your saved archive</p>
+          <h1 style={styles.heading}>{t.logInTitle}</h1>
+          <p style={styles.subheading}>{t.logInSubtitle}</p>
         </div>
 
         <form style={styles.form} onSubmit={handleSubmit}>
           <div style={styles.fieldGroup}>
             <label style={styles.label} htmlFor="email">
-              Email Address
+              {t.emailLabel}
             </label>
             <input
               id="email"
               type="email"
               required
-              placeholder="name@example.com"
+              placeholder={t.emailPlaceholder}
               style={styles.input}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -154,7 +170,7 @@ export default function Login() {
 
           <div style={styles.fieldGroup}>
             <label style={styles.label} htmlFor="password">
-              Password
+              {t.passwordLabel}
             </label>
             <input
               id="password"
@@ -170,14 +186,14 @@ export default function Login() {
           {error && <p style={styles.error}>{error}</p>}
 
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? "Logging in..." : "Log in"}
+            {loading ? t.loggingIn : t.logInAction}
           </button>
         </form>
 
         <p style={styles.footer}>
-          Don't have an account?{" "}
+          {t.noAccount}{" "}
           <Link href="/signup" style={styles.link}>
-            Sign up
+            {t.signupLink}
           </Link>
         </p>
       </div>

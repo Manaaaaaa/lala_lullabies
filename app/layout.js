@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
           backgroundColor: "#060818",
           color: "#E8EDF2",
           fontFamily:
-            "'Kantumruy Pro', 'Siemreap', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            "'Kantumruy Pro', 'Siemreap', 'Leelawadee UI', 'Khmer UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",

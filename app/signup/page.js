@@ -3,9 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "../../components/LanguageProvider";
+import uiText from "../../components/uiText";
 import { createClient } from "../../lib/supabase/client";
+import "../home.css";
 
 export default function SignUp() {
+  const { language } = useLanguage();
+  const t = uiText[language];
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +62,11 @@ export default function SignUp() {
       fontWeight: 700,
       color: "#FFFFFF",
       margin: "0 0 8px",
-      letterSpacing: "-0.5px",
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      letterSpacing: 0,
+      lineHeight: 1.5,
+      paddingTop: "0.25em",
+      paddingBottom: "0.25em",
     },
     subheading: {
       fontSize: 14,
@@ -78,8 +87,11 @@ export default function SignUp() {
       fontSize: 12,
       fontWeight: 600,
       color: "#2EE6A8",
-      textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      letterSpacing: 0,
+      lineHeight: 1.5,
+      paddingTop: "0.15em",
+      paddingBottom: "0.15em",
     },
     input: {
       width: "100%",
@@ -89,18 +101,22 @@ export default function SignUp() {
       backgroundColor: "rgba(10, 13, 24, 0.6)",
       color: "#E8EDF2",
       fontSize: 15,
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      lineHeight: 1.5,
       outline: "none",
       boxSizing: "border-box",
     },
     button: {
       marginTop: 8,
-      padding: "14px",
+      padding: "12px 24px",
       borderRadius: 10,
       border: "none",
       backgroundColor: "#2EE6A8",
       color: "#0A0D18",
       fontSize: 15,
       fontWeight: 600,
+      fontFamily: "'Siemreap', 'Leelawadee UI', 'Khmer UI', sans-serif",
+      lineHeight: 1.4,
       cursor: loading ? "not-allowed" : "pointer",
       opacity: loading ? 0.7 : 1,
       transition: "background-color 0.2s ease",
@@ -132,22 +148,22 @@ export default function SignUp() {
     <main className="page-wrap" style={styles.wrap}>
       <div style={styles.card}>
         <div style={styles.headerBox}>
-          <h1 style={styles.heading}>Create an account</h1>
+          <h1 style={styles.heading}>{t.signUpTitle}</h1>
           <p style={styles.subheading}>
-            Sign up to start archiving and exploring traditional lullabies
+            {t.signUpSubtitle}
           </p>
         </div>
 
         <form style={styles.form} onSubmit={handleSubmit}>
           <div style={styles.fieldGroup}>
             <label style={styles.label} htmlFor="email">
-              Email Address
+              {t.emailLabel}
             </label>
             <input
               id="email"
               type="email"
               required
-              placeholder="name@example.com"
+              placeholder={t.emailPlaceholder}
               style={styles.input}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -156,7 +172,7 @@ export default function SignUp() {
 
           <div style={styles.fieldGroup}>
             <label style={styles.label} htmlFor="password">
-              Password
+              {t.passwordLabel}
             </label>
             <input
               id="password"
@@ -172,14 +188,14 @@ export default function SignUp() {
           {error && <p style={styles.error}>{error}</p>}
 
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? "Creating account..." : "Sign up"}
+            {loading ? t.creatingAccount : t.signUpAction}
           </button>
         </form>
 
         <p style={styles.footer}>
-          Already have an account?{" "}
+          {t.alreadyHaveAccount}{" "}
           <Link href="/login" style={styles.link}>
-            Log in
+            {t.loginLink}
           </Link>
         </p>
       </div>
