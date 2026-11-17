@@ -15,7 +15,7 @@ const collection = {
 
   // Who is building this archive? Your name, as you want it shown.
   curator: "Kimsourmana",
-  curator_km: "គឹម សួគ៌ម៉ាណា",
+  curator_km: "គីមសួគ៌ម៉ាណា",
 
   // Where does your knowledge come from? A person, a place, a community.
   source: "To be gathered from recording sisters, brothers, fathers, mothers, and grandmothers singing lullabies to their children, and from the Khmer community in Takeo province, Cambodia.",
