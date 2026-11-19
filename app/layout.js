@@ -3,6 +3,13 @@ import NightSky from "../components/NightSky";
 import LanguageProvider from "../components/LanguageProvider";
 import AudioProvider from "../components/AudioContext";
 import Header from "../components/Header";
+import { Kantumruy_Pro } from "next/font/google";
+
+const kantumruy = Kantumruy_Pro({
+  subsets: ["khmer", "latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata = {
   title: `${collection.name} — Khmer Living Archive`,
@@ -14,13 +21,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning
+        className={kantumruy.className}
         style={{
           margin: 0,
           padding: 0,
           backgroundColor: "#060818",
           color: "#E8EDF2",
           fontFamily:
-            "'Kantumruy Pro', 'Siemreap', 'Leelawadee UI', 'Khmer UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+            kantumruy.style.fontFamily + ", 'Siemreap', 'Leelawadee UI', 'Khmer UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",

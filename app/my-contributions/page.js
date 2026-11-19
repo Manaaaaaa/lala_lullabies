@@ -113,15 +113,15 @@ export default function MyContributions() {
 
   const styles = {
     wrap: { maxWidth: 800, margin: "0 auto" },
-    kicker: { fontFamily: "'Courier New', monospace", color: "#2EE6A8", fontSize: 14, letterSpacing: 1, textAlign: "center", marginBottom: 16 },
-    title: { fontSize: 40, fontWeight: 700, margin: "0 0 16px", lineHeight: 1.1, color: "#E8EDF2", textAlign: "center" },
-    intro: { fontSize: 17, color: "#97A1B3", lineHeight: 1.6, margin: "0 0 28px", textAlign: "center" },
+    kicker: { fontFamily: "'Courier New', monospace", color: "#2EE6A8", fontSize: 14, letterSpacing: 0, lineHeight: 1.5, textAlign: "center", marginBottom: 16 },
+    title: { fontSize: 40, fontWeight: 700, margin: "0 0 16px", lineHeight: 1.5, color: "#E8EDF2", textAlign: "center", letterSpacing: 0, paddingTop: "0.15em", paddingBottom: "0.15em" },
+    intro: { fontSize: 17, color: "#97A1B3", lineHeight: 1.6, margin: "0 0 28px", textAlign: "center", letterSpacing: 0 },
     bar: { display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12, margin: "0 0 20px", color: "#97A1B3", fontSize: 14 },
-    toggle: { padding: "6px 14px", borderRadius: 999, cursor: "pointer", fontSize: 13, color: "#2EE6A8", backgroundColor: "rgba(46,230,168,0.08)", border: "1px solid rgba(46,230,168,0.4)" },
+    toggle: { padding: "6px 14px", borderRadius: 999, cursor: "pointer", fontSize: 13, color: "#2EE6A8", backgroundColor: "rgba(46,230,168,0.08)", border: "1px solid rgba(46,230,168,0.4)", letterSpacing: 0 },
     list: { margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 12 },
     box: { padding: "32px 28px", textAlign: "center", borderRadius: 16, backgroundColor: "rgba(19,25,43,0.8)", border: "1px solid #222f4a" },
-    boxTitle: { margin: "0 0 8px", fontSize: 18, color: "#E8EDF2" },
-    boxText: { margin: "0 0 20px", color: "#97A1B3", fontSize: 15, lineHeight: 1.6 },
+    boxTitle: { margin: "0 0 8px", fontSize: 18, color: "#E8EDF2", letterSpacing: 0, lineHeight: 1.5, paddingTop: "0.15em", paddingBottom: "0.15em" },
+    boxText: { margin: "0 0 20px", color: "#97A1B3", fontSize: 15, lineHeight: 1.6, letterSpacing: 0 },
     center: { textAlign: "center", color: "#97A1B3" },
   };
 
