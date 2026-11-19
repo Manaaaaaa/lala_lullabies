@@ -269,8 +269,7 @@ export default function Header() {
           </nav>
 
           {/* Compact Search Bar */}
-          {pathname !== "/browse" && (
-            <form
+          <form
               className="header-search"
               style={styles.searchWrap}
               onSubmit={handleSearchSubmit}
@@ -285,7 +284,6 @@ export default function Header() {
                 aria-label={t.searchPlaceholder}
               />
             </form>
-          )}
 
           {/* Language & Auth Actions */}
           <div style={styles.rightControls}>

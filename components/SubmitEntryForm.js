@@ -110,12 +110,6 @@ export default function SubmitEntryForm() {
       flexDirection: 'column',
       gap: '16px',
     },
-    heading: {
-      fontSize: '24px',
-      fontWeight: 700,
-      margin: '0 0 8px',
-      color: '#E8EDF2',
-    },
     fieldGroup: {
       display: 'flex',
       flexDirection: 'column',
@@ -167,8 +161,6 @@ export default function SubmitEntryForm() {
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
-      <h2 style={styles.heading}>Contribute a Lullaby</h2>
-
       <div style={styles.fieldGroup}>
         <label style={styles.label}>Title</label>
         <input type="text" placeholder="Enter title" value={titleEn} onChange={e => setTitleEn(e.target.value)} required style={styles.input} />
