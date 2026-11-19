@@ -2,9 +2,27 @@
   padding: 80px 24px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .page-wrap {
-    padding: 64px 32px;
+    padding: 64px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .page-wrap {
+    padding: 48px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .browse-heading {
+    font-size: 32px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .browse-heading {
+    font-size: 26px !important;
   }
 }
 

@@ -22,6 +22,12 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 480px) {
+  .archive-card {
+    padding: 16px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .archive-card {
     transition: none;

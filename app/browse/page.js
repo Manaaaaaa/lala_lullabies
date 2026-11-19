@@ -61,6 +61,7 @@ function BrowseContent() {
       </p>
 
       <h1
+        className="browse-heading"
         style={{
           fontSize: 48,
           fontWeight: 700,
