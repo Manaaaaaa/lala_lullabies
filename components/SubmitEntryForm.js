@@ -3,11 +3,13 @@
 import { useState, useRef } from 'react';
 import { createClient } from '../lib/supabase/client';
 import { useLanguage } from './LanguageProvider';
+import uiText from './uiText';
 import provinces from './provinces';
 import SuccessConfirmation from './SuccessConfirmation';
 
 export default function SubmitEntryForm() {
   const { language } = useLanguage();
+  const t = uiText[language];
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -93,18 +95,7 @@ export default function SubmitEntryForm() {
     }
   };
 
-  const t = {
-    submitImageRequired: "Please select both an image and an audio file.",
-    submitProvinceRequired: "Please select a province.",
-    submitError: "Submission failed. Please try again.",
-  };
-  const tKm = {
-    submitImageRequired: "សូមជ្រើសរើសឯកសាររូបភាព និងសំឡេង។",
-    submitProvinceRequired: "សូមជ្រើសរើសខេត្ត។",
-    submitError: "ការបញ្ជូនបានបរាជ័យ។ សូមព្យាយាមម្តងទៀត។",
-  };
-  const ui = language === "km" ? tKm : t;
-  const errorText = errorMsg ? ui[errorMsg] : null;
+  const errorText = errorMsg ? t[errorMsg] : null;
 
   if (submitted) {
     return <SuccessConfirmation />;
@@ -209,7 +200,7 @@ export default function SubmitEntryForm() {
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Province</label>
+        <label style={styles.label}>{t.provinceLabel}</label>
         <select
           value={placeIndex}
           onChange={(e) => setPlaceIndex(e.target.value)}
@@ -217,7 +208,7 @@ export default function SubmitEntryForm() {
           style={styles.input}
         >
           <option value="" disabled>
-            Select a province
+            {t.selectProvince}
           </option>
           {provinces.map((p, i) => (
             <option key={p.en} value={i}>
@@ -228,12 +219,12 @@ export default function SubmitEntryForm() {
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Cover Image (.jpg, .png)</label>
+        <label style={styles.label}>{t.coverImageLabel}</label>
         <input type="file" accept="image/*" onChange={e => setImageFile(e.target.files?.[0] || null)} required style={styles.input} />
       </div>
 
       <div style={styles.fieldGroup}>
-        <label style={styles.label}>Audio File (.mp3)</label>
+        <label style={styles.label}>{t.audioLabel}</label>
         <input type="file" accept="audio/*" onChange={e => setAudioFile(e.target.files?.[0] || null)} required style={styles.input} />
       </div>
 
@@ -262,7 +253,7 @@ export default function SubmitEntryForm() {
         disabled={loading}
         style={loading ? styles.buttonDisabled : styles.button}
       >
-        {loading ? 'Submitting...' : 'Submit Entry'}
+        {loading ? t.submittingEntry : t.submitEntry}
       </button>
     </form>
   );

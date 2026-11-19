@@ -52,8 +52,16 @@ export default function Submit() {
       fontSize: 18,
       color: "#97A1B3",
       lineHeight: 1.7,
+      margin: "0 0 12px",
+      textAlign: "center",
+    },
+    helpText: {
+      fontSize: 15,
+      color: "#8892A8",
+      lineHeight: 1.6,
       margin: "0 0 40px",
       textAlign: "center",
+      fontStyle: "italic",
     },
     gate: {
       maxWidth: 480,
@@ -87,6 +95,7 @@ export default function Submit() {
       <p style={styles.kicker}>{t.kicker}</p>
       <h1 style={styles.title}>{t.contributeTitle}</h1>
       <p style={styles.description}>{t.contributeIntro}</p>
+      <p style={styles.helpText}>{t.contributeHelp}</p>
 
       {!checked ? (
         <p style={styles.loading}>{t.loading}</p>
