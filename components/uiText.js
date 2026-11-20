@@ -1,4 +1,4 @@
-const uiText = {
+﻿const uiText = {
   en: {
     searchPlaceholder: "Search lullabies...",
     contributor: "CONTRIBUTOR",
@@ -28,7 +28,6 @@ const uiText = {
     contributeNav: "Contribute",
     contributeTitle: "Contribute a Lullaby",
     contributeIntro: "Share a lullaby from your family or community with the archive.",
-    contributeHelp: 'Please add the word "need help" in any box that you need translation assistance.',
     provinceLabel: "Province",
     selectProvince: "Select a province",
     submitEntry: "Submit Entry",
@@ -146,7 +145,7 @@ const uiText = {
     place: "ទីកន្លែង",
     editedByAdmin: "កែសម្រួលដោយអ្នកគ្រប់គ្រង",
     contributorReadOnly: "ឈ្មោះអ្នកចូលរួមត្រូវបានរក្សាទុកដូចដែលម្ចាស់បានដាក់ស្នើដំបូង។",
-    exploreHeading: "ស្វែងរកក្នុងបណ្ដុំឯកសារ",
+    exploreHeading: "ស្វែងរកក្នុងបណ្ណសារ",
     exploreDesc: "រកបទចម្រៀងដែលបានកត់ត្រាពីសហគមន៍ខ្មែរ។",
     homeLink: "ទំព័រដើម",
     browseLink: "មើលបទចម្រៀងទាំងអស់",
@@ -154,10 +153,10 @@ const uiText = {
     featuredHeading: "ការថតសំឡេងដែលបានជ្រើសរើសជាពិសេស",
     footer:
       "បង្កើតឡើងក្នុងថ្នាក់ ICT 340 — Vibe Coding, សកលវិទ្យាល័យអាមេរិកកាំងភ្នំពេញ, Fall 2026.",
-    aboutTitle: "អំពីបណ្ដុំឯកសារនេះ",
+    aboutTitle: "អំពីបណ្ណសារនេះ",
     creatorLabel: "បង្កើតដោយ",
     sourceLabel: "ប្រភព",
-    kicker: "បណ្ដុំឯកសារចម្រៀងខ្មែរ",
+    kicker: "បណ្ណសារចម្រៀងខ្មែរ",
     emptyKhmer: "គ្មានបទចម្រៀងដែលត្រូវនឹងការស្វែងរករបស់អ្នក។",
     emptyDetail: (query) =>
       `មិនមានបទចម្រៀងណាដែលត្រូវនឹង "${query}"ទេ។ សូមពិនិត្យមើលពាក្យផ្សេង ឬលុបការស្វែងរកដើម្បីមើលបទចម្រៀងទាំងអស់។`,
@@ -170,8 +169,7 @@ const uiText = {
     emptyArchive: "មិនទាន់មានបទចម្រៀងត្រូវបានបន្ថែមទេ។",
     contributeNav: "ចូលរួមចំណែក",
     contributeTitle: "ចូលរួមចំណែកបទចម្រៀង",
-    contributeIntro: "ចែករំលែកបទចម្រៀងពីគ្រួសារ ឬសហគមន៍របស់អ្នកទៅកាន់បណ្ដុំឯកសារនេះ។",
-contributeHelp: 'សូមបន្ថែមពាក្យ "ត្រូវការជំនួយ" ក្នុងប្រអប់ណាមួយដែលអ្នកត្រូវការជំនួយក្នុងការបកប្រែ។',
+    contributeIntro: "ចែករំលែកបទចម្រៀងពីគ្រួសារ ឬសហគមន៍របស់អ្នកទៅកាន់បណ្ណសារនេះ។",
 provinceLabel: "ខេត្ត",
     selectProvince: "ជ្រើសរើសខេត្ត",
     submitEntry: "ដាក់បញ្ជូន",
@@ -182,7 +180,7 @@ provinceLabel: "ខេត្ត",
     signUpTitle: "បង្កើតគណនី",
     signUpSubtitle: "ចុះឈ្មោះដើម្បីចាប់ផ្ដើមរក្សាទុក និងស្វែងរកបទចម្រៀងលួងកូនបែបប្រពៃណី",
     logInTitle: "សូមស្វាគមន៍ការត្រឡប់មកវិញ",
-    logInSubtitle: "ចូលគណនីដើម្បីចូលមើលបណ្ដុំឯកសាររបស់អ្នក",
+    logInSubtitle: "ចូលគណនីដើម្បីចូលមើលបណ្ណសាររបស់អ្នក",
     emailLabel: "គនណីអ៊ីមែល",
     emailPlaceholder: "name@example.com",
     passwordLabel: "ពាក្យសម្ងាត់",
@@ -195,7 +193,7 @@ provinceLabel: "ខេត្ត",
     invalidCredentials: "អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
     myContributionsNav: "ការចូលរួមរបស់ខ្ញុំ",
     myContributionsTitle: "ការចូលរួមរបស់ខ្ញុំ",
-    myContributionsIntro: "គ្រប់គ្រងបទចម្រៀងដែលអ្នកបានបញ្ជូនទៅបណ្ដុំឯកសារ។",
+    myContributionsIntro: "គ្រប់គ្រងបទចម្រៀងដែលអ្នកបានបញ្ជូនទៅបណ្ណសារ។",
     contributionsCount: (n) => `ការចូលរួមសរុប ${n}`,
     contributionsEmptyTitle: "អ្នកមិនទាន់បានចូលរួមអ្វីនៅឡើយទេ។",
     contributionsEmptyBody: "ការចូលរួមរបស់អ្នកនឹងបង្ហាញនៅទីនេះបន្ទាប់ពីអ្នកបញ្ជូន។",
@@ -285,3 +283,4 @@ provinceLabel: "ខេត្ត",
 };
 
 export default uiText;
+

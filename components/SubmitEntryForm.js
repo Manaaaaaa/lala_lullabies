@@ -161,35 +161,43 @@ export default function SubmitEntryForm() {
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>Title</label>
-        <input type="text" placeholder="Enter title" value={titleEn} onChange={e => setTitleEn(e.target.value)} required style={styles.input} />
-      </div>
+      {language === "en" && (
+        <>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>Title</label>
+            <input type="text" placeholder="Enter title" value={titleEn} onChange={e => setTitleEn(e.target.value)} required style={styles.input} />
+          </div>
 
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>ចំណងជើង</label>
-        <input type="text" placeholder="បញ្ចូលចំណងជើង" value={titleKm} onChange={e => setTitleKm(e.target.value)} required style={styles.input} />
-      </div>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>Description</label>
+            <textarea placeholder="Enter description" value={descEn} onChange={e => setDescEn(e.target.value)} required style={styles.textarea} />
+          </div>
 
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>Description</label>
-        <textarea placeholder="Enter description" value={descEn} onChange={e => setDescEn(e.target.value)} required style={styles.textarea} />
-      </div>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>Contributor's Name (Lastname, Firstname)</label>
+            <input type="text" placeholder="Enter contributor name" value={contributorEn} onChange={e => setContributorEn(e.target.value)} required style={styles.input} />
+          </div>
+        </>
+      )}
 
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>ការពិពណ៌នា</label>
-        <textarea placeholder="បញ្ចូលការពិពណ៌នា" value={descKm} onChange={e => setDescKm(e.target.value)} required style={styles.textarea} />
-      </div>
+      {language === "km" && (
+        <>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>ចំណងជើង</label>
+            <input type="text" placeholder="បញ្ចូលចំណងជើង" value={titleKm} onChange={e => setTitleKm(e.target.value)} required style={styles.input} />
+          </div>
 
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>Contributor's Name (Lastname, Firstname)</label>
-        <input type="text" placeholder="Enter contributor name" value={contributorEn} onChange={e => setContributorEn(e.target.value)} required style={styles.input} />
-      </div>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>ការពិពណ៌នា</label>
+            <textarea placeholder="បញ្ចូលការពិពណ៌នា" value={descKm} onChange={e => setDescKm(e.target.value)} required style={styles.textarea} />
+          </div>
 
-      <div style={styles.fieldGroup}>
-        <label style={styles.label}>ឈ្មោះរបស់អ្នកចូលរួម (ត្រកូល , នាម )</label>
-        <input type="text" placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម" value={contributorKm} onChange={e => setContributorKm(e.target.value)} required style={styles.input} />
-      </div>
+          <div style={styles.fieldGroup}>
+            <label style={styles.label}>ឈ្មោះរបស់អ្នកចូលរួម (ត្រកូល , នាម )</label>
+            <input type="text" placeholder="បញ្ចូលឈ្មោះអ្នកចូលរួម" value={contributorKm} onChange={e => setContributorKm(e.target.value)} required style={styles.input} />
+          </div>
+        </>
+      )}
 
       <div style={styles.fieldGroup}>
         <label style={styles.label}>{t.provinceLabel}</label>
