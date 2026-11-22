@@ -112,9 +112,9 @@ Public browse only returns entries with `status = 'published'` or `status IS NUL
 This project was built with AI assistance through several tools and models:
 
 - **Cline** (VS Code agent mode) with **DeepSeek-V4-Flash** — wrote the majority of the React components, page layouts, Supabase integration, and the edit/review flows. The code was then reviewed and adjusted by the student.
-- **Claude** (free web chatbot at claude.ai) — used alongside Cline to help implement specific code patterns and debug issues.
-- **ChatGPT** (free web version) — used to plan the project structure, design the database schema, and reason through the contribution-review-publish flow before writing code.
-- **Gemini** (free web version) — used to help visualize UI layout decisions and get styling inspiration.
+- **Claude** (free web chatbot at claude.ai)  **Claude Sonnet 5.5** and **Claude Haiku 5.5**  — used alongside Cline to help implement specific code patterns and debug issues.
+- **ChatGPT** (free web version) **GPT-5.6 Luna** and **GPT-6 Luna** — used to plan the project structure, design the database schema, and reason through the contribution-review-publish flow before writing code.
+- **Gemini** (free web version) **Gemini 3.5 Flash-Lite** — used to help visualize UI layout decisions and get styling inspiration.
 
 Aside from `provinces.js`, and most of `uiText.js` (the Khmer labels were written by the owner of the repository), the code is AI-generated and was reviewed, tested, and adjusted by the owner of the repository.
 
@@ -173,3 +173,21 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOi...
 ```
 
 Both values are in your Supabase dashboard under **Project Settings → API**. The publishable/anon key is safe to expose in the browser when RLS and database-side authorization are correctly configured. The `service_role` key must never be exposed in frontend code or committed to the repository.
+## 8. Submission checklist
+
+- Live URL loads logged out and shows published entries only: yes, https://lala-lullabies.vercel.app/
+- A stranger cannot publish their own entry through the page or the console: yes, tested (22 Nov 2026)
+- Logged out, the API returns nothing pending or returned: yes, tested (on 22 Nov 2026)
+- Contributors can edit and delete only their own entries: yes
+- No secrets anywhere in the repo history: yes, checked with (checked with `git log --all -p -S "secret\|password\|token\|key\|service_role" -- .`)
+- At least eight real entries, each with a credited source: yes
+- Khmer renders on every screen a user meets, including the queue: yes
+- Works at phone width: yes, tested on (device or browser width)
+- No test entries, lorem ipsum or TODO comments in shipped pages: yes
+- No console errors on the main pages: yes
+- jesseorndorff is a collaborator on this repo: yes
+- Supabase project restored and awake on (on 22 Nov 2026)
+- Demo video link opens in a private window: yes, (link)
+- Reflection pasted in the Canvas submission: yes
+- Posted in the Show Your Archive discussion: yes
+- Q&A slot booked for (04 Dec 2026, 9:30AM)
