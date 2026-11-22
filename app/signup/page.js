@@ -12,7 +12,9 @@ export default function SignUp() {
   const { language } = useLanguage();
   const t = uiText[language];
   const router = useRouter();
+  const [method, setMethod] = useState("email");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,10 +25,10 @@ export default function SignUp() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-    });
+    const credentials = method === "email"
+      ? { email, password }
+      : { phone, password };
+    const { error: signUpError } = await supabase.auth.signUp(credentials);
 
     setLoading(false);
 
@@ -71,6 +73,35 @@ export default function SignUp() {
       fontSize: 14,
       color: "#97A1B3",
       margin: 0,
+    },
+    toggleGroup: {
+      display: "flex",
+      gap: 0,
+      border: "1px solid #222f4a",
+      borderRadius: 10,
+      overflow: "hidden",
+    },
+    toggle: {
+      flex: 1,
+      padding: "10px 16px",
+      border: "none",
+      backgroundColor: "rgba(10, 13, 24, 0.6)",
+      color: "#97A1B3",
+      fontSize: 14,
+      fontWeight: 500,
+      cursor: "pointer",
+      transition: "background-color 0.2s ease",
+    },
+    toggleActive: {
+      flex: 1,
+      padding: "10px 16px",
+      border: "none",
+      backgroundColor: "#2EE6A8",
+      color: "#0A0D18",
+      fontSize: 14,
+      fontWeight: 600,
+      cursor: "pointer",
+      transition: "background-color 0.2s ease",
     },
     form: {
       display: "flex",
@@ -151,20 +182,54 @@ export default function SignUp() {
         </div>
 
         <form style={styles.form} onSubmit={handleSubmit}>
-          <div style={styles.fieldGroup}>
-            <label style={styles.label} htmlFor="email">
-              {t.emailLabel}
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder={t.emailPlaceholder}
-              style={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <div style={styles.toggleGroup}>
+            <button
+              type="button"
+              style={method === "email" ? styles.toggleActive : styles.toggle}
+              onClick={() => setMethod("email")}
+            >
+              {t.emailTab}
+            </button>
+            <button
+              type="button"
+              style={method === "phone" ? styles.toggleActive : styles.toggle}
+              onClick={() => setMethod("phone")}
+            >
+              {t.phoneTab}
+            </button>
           </div>
+
+          {method === "email" ? (
+            <div style={styles.fieldGroup}>
+              <label style={styles.label} htmlFor="email">
+                {t.emailLabel}
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder={t.emailPlaceholder}
+                style={styles.input}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div style={styles.fieldGroup}>
+              <label style={styles.label} htmlFor="phone">
+                {t.phoneLabel}
+              </label>
+              <input
+                id="phone"
+                type="tel"
+                required
+                placeholder={t.phonePlaceholder}
+                style={styles.input}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+          )}
 
           <div style={styles.fieldGroup}>
             <label style={styles.label} htmlFor="password">
