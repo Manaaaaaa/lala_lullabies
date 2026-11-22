@@ -147,7 +147,7 @@ Every lullaby in this archive was collected from a person in Takeo province, wit
 | Rooster Crowing (Morn Rongeav) — a song sung to help children fall asleep, with a voice that soothes the heart | Mang Malis | Takeo |
 | Gloomy Sky (Pel Mek Srotom) — a song of deep, melancholy emotion, filled with tenderness and affection | Mang Malis | Takeo |
 | Tak Ting Nung Nung — a song older sisters sang to soothe their younger siblings to sleep when they were crying | Seang Kunthea | Takeo |
-| Reminiscing Mother's Love (Sronos Mday Thnom) — a song of a mother's love, cherishing her child from infancy until they grow up and marry | Khat Sukheam | Takeo |
+| Reminiscing Mother's Love (Sronos Mday Thnom) — a song of a mother's love, cherishing her child from infancy until they grow up and marry | Ly Sokpisey| Kampong Speu |
 | Years of Waiting for You (Yoo Chnam Del Cham Aun) — gentle, showing true love, waiting, and longing that lasts a long time | Sath Kunthy | Takeo |
 | The Breeze of Pailin (Jumno Pailin) — a timeless song filled with nostalgia and soft emotion | Sath Kunthy | Takeo |
 | The Fisherman's Daughter (Kon Srey Neak Nesat) — a touching story of simple life, devotion, and gentle emotion along the peaceful waterside | Sath Kunthy | Takeo |
