@@ -125,7 +125,7 @@ export default function AdminEditReviewRow({ entry, language, t, onApprove, onRe
             <div style={s.actions}>
               <button
                 style={s.approveBtn}
-                onClick={() => onApprove(entry.pending_edit_id)}
+                onClick={() => onApprove(entry)}
                 disabled={busy}
                 aria-label={`${t.approveEditAction || "Approve Edit"}: ${currentTitle}`}
               >
@@ -133,7 +133,7 @@ export default function AdminEditReviewRow({ entry, language, t, onApprove, onRe
               </button>
               <button
                 style={s.rejectBtn}
-                onClick={() => onReject(entry.pending_edit_id)}
+                onClick={() => onReject(entry)}
                 disabled={busy}
               >
                 {busy ? t.reviewFailed || "Rejecting..." : t.rejectEditAction || "Reject Edit"}
