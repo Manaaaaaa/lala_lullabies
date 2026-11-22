@@ -138,7 +138,7 @@ export default function AdminReview() {
     const supabase = createClient();
     try {
       const { data, error } = await supabase.rpc("admin_approve_edit", {
-        p_edit_id: entry.pending_edit_id,
+        p_entry_id: entry.id,
       });
       if (error) throw error;
       if (!data.ok) throw new Error(data.error || "Failed to approve edit");
@@ -158,7 +158,7 @@ export default function AdminReview() {
     const supabase = createClient();
     try {
       const { data, error } = await supabase.rpc("admin_reject_edit", {
-        p_edit_id: entry.pending_edit_id,
+        p_entry_id: entry.id,
       });
       if (error) throw error;
       if (!data.ok) throw new Error(data.error || "Failed to reject edit");
